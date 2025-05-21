@@ -1,0 +1,109 @@
+<mat-sidenav-container>
+
+  <mat-sidenav #drawer class="sidenav" fixedInViewport position="end"
+               [attr.role]="navService.pinSideNav() ? 'navigation' : 'dialog'"
+               [mode]="navService.pinSideNav() ? 'side' : 'over'"
+               [opened]="navService.pinSideNav()"
+               [disableClose]="navService.pinSideNav()"
+               [autoFocus]="false"
+               (click)="closeDrawer()">
+
+    <mat-toolbar style="padding: 0 16px">
+      <span style="flex-grow: 1">Menu</span>
+      @if (navService.pinSideNav()) {
+        <button mat-icon-button type="button" aria-label="Close sidenav" (click)="navService.setPinSideNav(false)">
+          <mat-icon>menu</mat-icon>
+        </button>
+      }
+    </mat-toolbar>
+    <mat-nav-list>
+
+      @if (navService.navTools().length > 0) {
+        <h3 matSubheader>Outils</h3>
+        @for (tool of navService.navTools(); track tool.name) {
+          <mat-list-item (click)="navService.navToolClicked(tool.name); closeDrawer()">
+            <mat-icon style="margin-right: 5px">{{ tool.icon }}</mat-icon>
+            <span>{{ tool.name }}</span>
+          </mat-list-item>
+        }
+      }
+
+      <h3 matSubheader>Paramètres</h3>
+
+      <mat-list-item>
+        <mat-slide-toggle color="accent" [checked]="settingsService.darkMode()"
+                          (change)="settingsService.setDarkMode($event.checked)">
+          Mode sombre
+        </mat-slide-toggle>
+      </mat-list-item>
+
+      @if (navService.displayUpdatesAvailable()) {
+        <mat-list-item (click)="navService.update()">
+          <mat-icon color="warn" style="margin-right: 5px">update</mat-icon>
+          <span>MàJ disponible</span>
+        </mat-list-item>
+      }
+
+      @if (navService.displayUpdatesActivated()) {
+        <mat-list-item>
+          <mat-icon style="margin-right: 5px">sync</mat-icon>
+          <span>MàJ activée</span>
+        </mat-list-item>
+      }
+
+      <mat-list-item (click)="navService.checkForUpdates()">
+        <span class="very-light-text">
+          Version {{ appVersion }}
+        </span>
+      </mat-list-item>
+
+    </mat-nav-list>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+
+    <!-- Toolbar on top -->
+    <mat-toolbar color="primary">
+
+      @if (navService.showBackButton()) {
+        <button type="button" aria-label="Back button" mat-icon-button (click)="navService.backClicked()">
+          <mat-icon aria-label="Back arrow icon">arrow_back</mat-icon>
+        </button>
+      }
+
+      <app-icon-book routerLink="/" class="main-icon hide-focus"
+                     [size]="deviceService.slimToolbar() ? 32 : 42"
+      ></app-icon-book>
+      <span routerLink="/" class="main-title hide-focus">
+        {{ navService.mainTitle() || 'Carnet JdR' }}
+      </span>
+
+      @for (buttonId of navService.navButtons(); track buttonId) {
+        <button
+          mat-icon-button
+          type="button"
+          [attr.aria-label]="'Button' + buttonId"
+          (click)="navService.navButtonClicked(buttonId)">
+          <mat-icon>{{ buttonId }}</mat-icon>
+        </button>
+      }
+
+      @if (!navService.pinSideNav()) {
+        <button mat-icon-button type="button" aria-label="Open sidenav" (click)="openDrawer()">
+          <mat-icon aria-label="Side nav toggle icon"
+                    aria-hidden="false"
+                    [matBadge]="navService.notificationBadge()"
+                    matBadgeColor="warn">
+            menu
+          </mat-icon>
+        </button>
+      }
+
+    </mat-toolbar>
+
+    <!-- Main application area -->
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

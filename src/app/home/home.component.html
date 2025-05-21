@@ -1,0 +1,32 @@
+<p style="margin: 0 0 24px">Mon Carnet JdR</p>
+
+<h1>Titre h1</h1>
+
+<h2>Titre h2</h2>
+
+<h3>Titre h3</h3>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+  <button mat-button color="primary">
+    mat button
+  </button>
+
+  <button mat-raised-button color="primary">
+    mat raised button
+  </button>
+
+  <button mat-flat-button color="primary">
+    mat flat button
+  </button>
+</div>
+
+<form style="display: flex; justify-content: center; margin-top: 16px">
+  <mat-form-field>
+    <mat-label>Formulaire</mat-label>
+    <input matInput
+           type="text"
+           autocomplete="off"
+           maxlength="8"
+           [formControl]="testFormControl">
+  </mat-form-field>
+</form>

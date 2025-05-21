@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  carnet_jdr:
+    image: aymericbernard/carnet-jdr:latest
+    container_name: carnet_jdr
+    restart: always
+    environment:
+      - VIRTUAL_HOST=carnet-jdr.example.com
+      - LETSENCRYPT_HOST=carnet-jdr.example.com
+      - LETSENCRYPT_EMAIL=contact@example.com
+      - APP_SHORT_NAME=JdR
+      - NGX_websiteUrl="https://carnet-jdr.example.com"
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external:
+      name: nginx-proxy
