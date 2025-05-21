@@ -1,7 +1,7 @@
 {
   "name": "Carnet JdR",
   "short_name": "Carnet JdR",
-  "theme_color": "#a86650",
+  "theme_color": "#7d432f",
   "background_color": "#fcfbfa",
   "display": "standalone",
   "scope": "./",
