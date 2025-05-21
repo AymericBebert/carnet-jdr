@@ -29,7 +29,7 @@ import {Component, input} from '@angular/core';
       />
       <path id="bookmark" fill="none" stroke="currentColor"
             style="stroke-width:10;stroke-linecap:round;stroke-linejoin:round"
-            d="M 70,208 H 116 V 241 L 93,231 70,241 Z"
+            d="M 70,208 H 116 V 245 L 93,235 70,245 Z"
       />
       <path id="book" fill="none" stroke="currentColor"
             style="stroke-width:10;stroke-linecap:round;stroke-linejoin:round"
