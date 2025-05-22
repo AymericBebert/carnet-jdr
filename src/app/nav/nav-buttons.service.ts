@@ -3,7 +3,7 @@ import {inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
-import {simplifyURL} from '../utils/utils';
+import {simplifyURL} from '../utils/simplify-url';
 
 @Injectable({
   providedIn: 'root',

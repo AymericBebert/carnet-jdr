@@ -1,0 +1,18 @@
+<h2>Nouveau personnage</h2>
+
+<form style="display: flex; flex-direction: column; align-items: center">
+  <mat-form-field>
+    <mat-label>Nom</mat-label>
+    <input matInput type="text" autocomplete="off" [formControl]="form.controls.name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>PV max</mat-label>
+    <input matInput type="number" autocomplete="off" [formControl]="form.controls.hpMax">
+  </mat-form-field>
+
+  <button type="submit" mat-flat-button color="primary" [disabled]="form.invalid" (click)="create()">
+    <mat-icon>done</mat-icon>
+    Créer
+  </button>
+</form>

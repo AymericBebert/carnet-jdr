@@ -60,10 +60,10 @@ export class AppComponent {
         mergeMap(r => r.data),
       )
       .subscribe(data => {
-        this.navService.showBackButton.set(data.hasBack || !!data.backRouterNavigate);
-        this.navService.navButtons.set(data.navButtons || []);
-        this.navService.navTools.set(data.navTools || []);
-        this.navService.setBackRouterLink(data.backRouterNavigate);
+        this.navService.showBackButton.set(data.hasBack as boolean || !!data.backRouterNavigate);
+        this.navService.navButtons.set(data.navButtons as string[] || []);
+        this.navService.navTools.set(data.navTools as { name: string, icon: string }[] || []);
+        this.navService.setBackRouterLink(data.backRouterNavigate as string);
       });
   }
 

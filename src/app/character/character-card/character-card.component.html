@@ -1,0 +1,13 @@
+@let char = character();
+
+@if (char.image) {
+  <img [ngSrc]="char.image" alt="Image de {{ char.name }}" width="48" height="48">
+} @else {
+  <div style="background-color: #88888888; width: 48px; height: 48px"></div>
+}
+<span style="font-weight: bold; font-size: 1.4em">{{ char.name }}</span>
+
+<span style="flex-grow: 1"></span>
+
+<mat-icon>favorite</mat-icon>
+<span>{{ char.hp }}/{{ char.hpMax }}</span>

@@ -1,7 +1,3 @@
-export function isNotNull<T>(value: T): value is NonNullable<T> {
-  return value != null;
-}
-
 export function simplifyURL(rawSegments: string[]): string[] {
   return rawSegments.reverse().reduce((acc, s) => {
     if (s === '..') {

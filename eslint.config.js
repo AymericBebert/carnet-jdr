@@ -1,7 +1,7 @@
 const eslint = require('@eslint/js');
 const tsEslint = require('typescript-eslint');
 const angularEslint = require('angular-eslint');
-const stylistic = require('@stylistic/eslint-plugin');
+const stylisticTs = require('@stylistic/eslint-plugin-ts');
 
 module.exports = tsEslint.config(
   {
@@ -34,24 +34,25 @@ module.exports = tsEslint.config(
     },
 
     plugins: {
-      '@stylistic': stylistic,
+      '@stylistic/ts': stylisticTs,
     },
 
     rules: {
       'max-len': ['error', {code: 120}],
       'semi': ['error', 'always'],
       'id-blacklist': 'error',
-      '@stylistic/quotes': ['error', 'single', {avoidEscape: true}],
+      '@stylistic/ts/quotes': ['error', 'single', {avoidEscape: true}],
       '@typescript-eslint/naming-convention': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-floating-promises': 'off',
-      '@typescript-eslint/no-misused-promises': 'off',
-      '@typescript-eslint/no-unsafe-argument': 'off',
-      '@typescript-eslint/no-unsafe-assignment': 'off',
-      '@typescript-eslint/no-unsafe-call': 'off',
-      '@typescript-eslint/no-unsafe-member-access': 'off',
-      '@typescript-eslint/no-unsafe-return': 'off',
-      '@typescript-eslint/no-unused-vars': 'off',
+      // '@typescript-eslint/no-floating-promises': 'off',
+      // '@typescript-eslint/no-misused-promises': 'off',
+      // '@typescript-eslint/no-unsafe-argument': 'off',
+      // '@typescript-eslint/no-unsafe-assignment': 'off',
+      // '@typescript-eslint/no-unsafe-call': 'off',
+      // '@typescript-eslint/no-unsafe-member-access': 'off',
+      // '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unused-vars': ['error', {'argsIgnorePattern': '^_'}],
+      '@typescript-eslint/unbound-method': ['error', {'ignoreStatic': true}],
       'space-before-function-paren': ['error', {
         anonymous: 'always',
         asyncArrow: 'always',

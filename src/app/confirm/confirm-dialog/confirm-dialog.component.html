@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>{{ data.title || 'Confirmer ?' }}</h1>
+
+<mat-dialog-content>
+  @if (data.subTitle) {
+    <p style="font-weight: bold">{{ data.subTitle }}</p>
+  }
+  @if (data.description) {
+    <p>{{ data.description }}</p>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button mat-button [mat-dialog-close]=0>
+    {{ data.noText || 'Non' }}
+  </button>
+  <button mat-raised-button [color]="data.yesColor || 'primary'" [mat-dialog-close]=1 cdkfocusinitial>
+    {{ data.yesText || 'Confirmer' }}
+  </button>
+</mat-dialog-actions>

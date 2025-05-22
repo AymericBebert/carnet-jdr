@@ -21,6 +21,7 @@ export class RoomComponent implements OnInit {
     this.navButtonsService.navButtonClicked$()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(btn => {
+        console.log('RoomComponent: navButtonClicked', btn);
         // switch (btn) {
         //   case 'share':
         //     this.shareRoom(this.displayedRoom());

@@ -60,6 +60,11 @@ body {
   opacity: 0.2;
 }
 
+.lesser {
+  font-style: italic;
+  opacity: 0.7;
+}
+
 :root {
   @include mat.expansion-overrides((
     container-text-size: var(--mat-sys-body-medium-size),
