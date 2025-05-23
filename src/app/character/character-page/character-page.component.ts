@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
+import {NavService} from '../../nav/nav.service';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {Character} from '../character.model';
 
@@ -21,7 +22,8 @@ import {Character} from '../character.model';
     CharacterCardComponent,
   ],
 })
-export class CharacterPageComponent implements OnInit {
+export class CharacterPageComponent implements OnInit, OnDestroy {
+  private readonly navService = inject(NavService);
   private readonly navButtonsService = inject(NavButtonsService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -33,8 +35,10 @@ export class CharacterPageComponent implements OnInit {
     this.route.data
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        this.character.set(data.character);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const char: Character = data.character;
+        this.character.set(char);
+        this.navService.mainTitle.set(char.name);
       });
 
     this.navButtonsService.navButtonClicked$()
@@ -49,5 +53,9 @@ export class CharacterPageComponent implements OnInit {
             break;
         }
       });
+  }
+
+  ngOnDestroy(): void {
+    this.navService.mainTitle.set('');
   }
 }

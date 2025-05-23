@@ -1,5 +1,5 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {MatSnackBar, MatSnackBarRef, TextOnlySnackBar} from '@angular/material/snack-bar';
 import {EMPTY, MonoTypeOperatorFunction, of, OperatorFunction} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
@@ -8,12 +8,10 @@ import {catchError, tap} from 'rxjs/operators';
   providedIn: 'root',
 })
 export class SnackbarService {
+  private readonly matSnackbar = inject(MatSnackBar);
 
   private readonly success = 'Operation success!';
   private readonly failure = 'Operation failed';
-
-  constructor(private matSnackbar: MatSnackBar) {
-  }
 
   public simpleSnackTap<T>(okMessage = '',
                            errorMessage = '',

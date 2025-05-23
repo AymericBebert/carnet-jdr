@@ -28,13 +28,13 @@ export class CharacterCardComponent {
     const darkMode = this.settingsService.darkMode();
     const characterTheme = this.character().theme;
     // return `oklch(${darkMode ? '0.1' : '0.98'} 0.3 ${characterTheme / 100 * 360})`;
-    return `hsl(${characterTheme / 100 * 360} 80% ${darkMode ? '7%' : '93%'})`;
+    return `hsl(${characterTheme / 100 * 360} 80% ${darkMode ? '10%' : '93%'})`;
   });
 
   protected readonly borderColor = computed<string>(() => {
     const darkMode = this.settingsService.darkMode();
     const characterTheme = this.character().theme;
     // return `oklch(${darkMode ? '0.1' : '0.9'} 0.2 ${characterTheme / 100 * 360})`;
-    return `hsl(${characterTheme / 100 * 360} 80% ${darkMode ? '10%' : '90%'})`;
+    return `hsl(${characterTheme / 100 * 360} 80% ${darkMode ? '15%' : '88%'})`;
   });
 }

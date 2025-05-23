@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {DBSchema, IDBPDatabase, openDB} from 'idb';
 import {ConfirmService} from '../confirm/confirm.service';
 import {getRandomString} from '../utils/get-random-string';
@@ -15,10 +15,9 @@ interface CharacterDB extends DBSchema {
   providedIn: 'root',
 })
 export class CharacterService {
-  private dbPromise: Promise<IDBPDatabase<CharacterDB>> | null = null;
+  private readonly confirm = inject(ConfirmService);
 
-  constructor(private readonly confirm: ConfirmService) {
-  }
+  private dbPromise: Promise<IDBPDatabase<CharacterDB>> | null = null;
 
   public async createCharacter(character: NewCharacterDto): Promise<void> {
     const id = getRandomString(8);

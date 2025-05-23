@@ -1,10 +1,11 @@
-import {Component, DestroyRef, inject, OnInit, signal} from '@angular/core';
+import {Component, DestroyRef, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NavService} from '../../nav/nav.service';
 import {CharacterHeaderFormComponent} from '../character-header-form/character-header-form.component';
 import {Character, NewCharacterDto, toCharacter, toCharacterHeader} from '../character.model';
 import {CharacterService} from '../character.service';
@@ -21,13 +22,14 @@ import {CharacterService} from '../character.service';
     CharacterHeaderFormComponent,
   ],
 })
-export class EditCharacterPageComponent implements OnInit {
-  protected readonly character = signal<Character | null>(null);
-
+export class EditCharacterPageComponent implements OnInit, OnDestroy {
+  private readonly navService = inject(NavService);
   private readonly characterService = inject(CharacterService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+
+  protected readonly character = signal<Character | null>(null);
 
   protected readonly form = new FormControl<NewCharacterDto | null>(null, Validators.required);
 
@@ -39,7 +41,12 @@ export class EditCharacterPageComponent implements OnInit {
         const char: Character = toCharacter(data.character);
         this.character.set(char);
         this.form.setValue(toCharacterHeader(char));
+        this.navService.mainTitle.set(`Modifier ${char.name}`);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.navService.mainTitle.set('');
   }
 
   protected async save(): Promise<void> {

@@ -1,4 +1,4 @@
-import {Component, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
@@ -19,11 +19,12 @@ import {SnackbarService} from '../service/snackbar.service';
   ],
 })
 export class HomeComponent {
+  private readonly characterService = inject(CharacterService);
+  private readonly snackbar = inject(SnackbarService);
+
   protected characters = signal<CharacterHeader[]>([]);
 
-  constructor(private readonly characterService: CharacterService,
-              private readonly snackbar: SnackbarService,
-  ) {
+  constructor() {
     this.characterService.listCharacters()
       .then(chars => this.characters.set(chars))
       .catch(err => this.snackbar.openError('Error loading characters', err));
