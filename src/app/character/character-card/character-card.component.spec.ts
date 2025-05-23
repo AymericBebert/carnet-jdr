@@ -4,7 +4,6 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {EMPTY} from 'rxjs';
-import {ConfigTestingModule} from '../../testing/config-testing.module';
 import {toCharacter} from '../character.model';
 import {CharacterCardComponent} from './character-card.component';
 
@@ -17,7 +16,6 @@ describe('CharacterCardComponent', () => {
       declarations: [],
       imports: [
         CharacterCardComponent,
-        ConfigTestingModule,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),

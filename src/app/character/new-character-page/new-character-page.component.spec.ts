@@ -4,7 +4,6 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {EMPTY} from 'rxjs';
-import {ConfigTestingModule} from '../../testing/config-testing.module';
 import {NewCharacterPageComponent} from './new-character-page.component';
 
 describe('NewCharacterPageComponent', () => {
@@ -16,7 +15,6 @@ describe('NewCharacterPageComponent', () => {
       declarations: [],
       imports: [
         NewCharacterPageComponent,
-        ConfigTestingModule,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),

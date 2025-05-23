@@ -55,7 +55,7 @@ export class CharacterService {
     return updated;
   }
 
-  public async deleteCharacter(toDelete: Character): Promise<void> {
+  public async deleteCharacter(toDelete: Character): Promise<boolean> {
     const confirmed = await this.confirm.confirm({
       // eslint-disable-next-line no-irregular-whitespace
       title: `Supprimer ${toDelete.name} ?`,
@@ -66,7 +66,9 @@ export class CharacterService {
     if (confirmed) {
       const db = await this.getDb();
       await db.delete('characters', toDelete.id);
+      return true;
     }
+    return false;
   }
 
   private getDb() {

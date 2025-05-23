@@ -1,0 +1,16 @@
+<app-character-card [character]="preview()" style="margin-bottom: 20px"></app-character-card>
+
+<mat-form-field>
+  <mat-label>Nom</mat-label>
+  <input matInput type="text" autocomplete="off" [formControl]="form.controls.name">
+</mat-form-field>
+
+<mat-form-field>
+  <mat-label>PV max</mat-label>
+  <input matInput type="number" autocomplete="off" [formControl]="form.controls.hpMax">
+</mat-form-field>
+
+<p style="margin-bottom: 0">Theme</p>
+<mat-slider [max]="100" [min]="0" [step]="1" style="margin-bottom: 20px">
+  <input matSliderThumb [formControl]="form.controls.theme">
+</mat-slider>

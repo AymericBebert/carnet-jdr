@@ -2,7 +2,7 @@ export interface CharacterHeader {
   id: string;
   name: string;
   image: string;
-  theme: string;
+  theme: number;
   game: string;
   hp: number;
   hpMax: number;
@@ -13,7 +13,7 @@ export function toCharacterHeader(character: Partial<Character>): CharacterHeade
     id: character.id || '',
     name: character.name || '?',
     image: character.image || '',
-    theme: character.theme || '',
+    theme: character.theme || 0,
     game: character.game || '',
     hp: character.hp || 0,
     hpMax: character.hpMax || 0,

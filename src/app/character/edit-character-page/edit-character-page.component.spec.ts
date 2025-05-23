@@ -4,17 +4,17 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {EMPTY} from 'rxjs';
-import {RoomComponent} from './room.component';
+import {EditCharacterPageComponent} from './edit-character-page.component';
 
-describe('RoomComponent', () => {
-  let component: RoomComponent;
-  let fixture: ComponentFixture<RoomComponent>;
+describe('EditCharacterPageComponent', () => {
+  let component: EditCharacterPageComponent;
+  let fixture: ComponentFixture<EditCharacterPageComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        RoomComponent,
+        EditCharacterPageComponent,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),
@@ -24,7 +24,7 @@ describe('RoomComponent', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(RoomComponent);
+    fixture = TestBed.createComponent(EditCharacterPageComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
