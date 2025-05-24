@@ -3,34 +3,32 @@ import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
-import {of} from 'rxjs';
-import {ConfigTestingModule} from '../../testing/config-testing.module';
-import {UpdaterTestingModule} from '../../testing/updater-testing.module';
-import {toCharacter} from '../character.model';
-import {EditCharacterPageComponent} from './edit-character-page.component';
+import {EMPTY} from 'rxjs';
+import {toCharacter} from '../../character/character.model';
+import {spellsFr} from '../spells-fr';
+import {SpellCardComponent} from './spell-card.component';
 
-describe('EditCharacterPageComponent', () => {
-  let component: EditCharacterPageComponent;
-  let fixture: ComponentFixture<EditCharacterPageComponent>;
+describe('SpellCardComponent', () => {
+  let component: SpellCardComponent;
+  let fixture: ComponentFixture<SpellCardComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        EditCharacterPageComponent,
-        ConfigTestingModule,
-        UpdaterTestingModule,
+        SpellCardComponent,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-        {provide: ActivatedRoute, useValue: {data: of({character: toCharacter({})})}},
+        {provide: ActivatedRoute, useValue: {paramMap: EMPTY}},
       ],
     });
 
-    fixture = TestBed.createComponent(EditCharacterPageComponent);
+    fixture = TestBed.createComponent(SpellCardComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('spell', spellsFr[0]);
     await fixture.whenStable();
   });
 

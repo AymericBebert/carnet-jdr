@@ -6,6 +6,15 @@
 </mat-form-field>
 
 <mat-form-field>
+  <mat-label>Classe</mat-label>
+  <mat-select [formControl]="form.controls.class">
+    @for (cls of characterClasses; track $index) {
+      <mat-option [value]="cls">{{ cls }}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<mat-form-field>
   <mat-label>PV max</mat-label>
   <input matInput type="number" autocomplete="off" [formControl]="form.controls.hpMax">
 </mat-form-field>

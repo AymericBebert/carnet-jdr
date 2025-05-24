@@ -1,7 +1,7 @@
 import {Component, inject, viewChild} from '@angular/core';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
-import {MatIconModule} from '@angular/material/icon';
+import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -31,6 +31,7 @@ import {SettingsService} from './service/settings.service';
   ],
 })
 export class AppComponent {
+  readonly matIconReg = inject(MatIconRegistry);
   readonly navService = inject(NavService);
   readonly settingsService = inject(SettingsService);
   readonly deviceService = inject(DeviceService);
@@ -44,6 +45,7 @@ export class AppComponent {
   constructor() {
     const route = inject(ActivatedRoute);
 
+    this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
     this.navService.applyStoredPinSideNav();
 
     this.router.events

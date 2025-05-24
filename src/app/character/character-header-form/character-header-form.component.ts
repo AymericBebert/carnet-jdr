@@ -15,9 +15,16 @@ import {
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
 import {MatSliderModule} from '@angular/material/slider';
 import {CharacterCardComponent} from '../character-card/character-card.component';
-import {CharacterHeader, NewCharacterDto, toCharacterHeader} from '../character.model';
+import {
+  CharacterClass,
+  characterClasses,
+  CharacterHeader,
+  NewCharacterDto,
+  toCharacterHeader
+} from '../character.model';
 
 @Component({
   selector: 'app-character-header-form',
@@ -27,6 +34,7 @@ import {CharacterHeader, NewCharacterDto, toCharacterHeader} from '../character.
     MatButtonModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatSliderModule,
     ReactiveFormsModule,
     CharacterCardComponent,
@@ -40,12 +48,14 @@ export class CharacterHeaderFormComponent implements OnInit, ControlValueAccesso
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly preview = signal<CharacterHeader>(toCharacterHeader({}));
+  protected readonly characterClasses = characterClasses;
 
   protected readonly form = new FormGroup({
     name: new FormControl<string>('', {nonNullable: true, validators: Validators.required}),
     image: new FormControl<string>('', {nonNullable: true}),
     theme: new FormControl<number>(0, {nonNullable: true}),
     game: new FormControl<string>('', {nonNullable: true}),
+    class: new FormControl<CharacterClass>('Barde', {nonNullable: true}),
     hpMax: new FormControl<number>(0, {nonNullable: true, validators: [Validators.required, Validators.min(0)]}),
   });
 
@@ -97,6 +107,7 @@ export class CharacterHeaderFormComponent implements OnInit, ControlValueAccesso
       image: formValue.image,
       theme: formValue.theme,
       game: formValue.game,
+      class: formValue.class,
       hp: formValue.hpMax,
       hpMax: formValue.hpMax,
     };

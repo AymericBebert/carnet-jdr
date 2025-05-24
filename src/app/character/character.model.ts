@@ -1,9 +1,23 @@
+export const characterClasses = [
+  'Barde',
+  'Clerc',
+  'Druide',
+  'Ensorceleur',
+  'Magicien',
+  'Occultiste',
+  'Paladin',
+  'Rôdeur',
+  'Artificier',
+] as const;
+export type CharacterClass = typeof characterClasses[number];
+
 export interface CharacterHeader {
   id: string;
   name: string;
   image: string;
   theme: number;
   game: string;
+  class: CharacterClass;
   hp: number;
   hpMax: number;
 }
@@ -15,6 +29,7 @@ export function toCharacterHeader(character: Partial<Character>): CharacterHeade
     image: character.image || '',
     theme: character.theme || 0,
     game: character.game || '',
+    class: character.class || 'Barde',
     hp: character.hp || 0,
     hpMax: character.hpMax || 0,
   };
@@ -45,36 +60,6 @@ export interface SkillWithSlots {
   maxSlots: number;
   refillLongSleep: number;
   refillDieLongSleep: number;
-}
-
-export interface Spell {
-  id: string;
-  name: string;
-  description: string;
-  level: number;
-  type: string;
-  range: string;
-  duration: string;
-  castingTime: string;
-  components: string[];
-  classes: string[];
-  school: string;
-  source: string;
-  page: number;
-  material: string;
-  ritual: boolean;
-  concentration: boolean;
-  attackType: string;
-  damage: string;
-  damageType: string;
-  save: string;
-  area: string;
-  effect: string;
-  target: string;
-  targets: string;
-  durationType: string;
-  durationAmount: number;
-  durationUnit: string;
 }
 
 export interface SpellChoice {

@@ -1,0 +1,60 @@
+:host ::ng-deep {
+  .spell-details {
+    h1, .trad, .source, .classe, .tcoe {
+      display: none;
+    }
+
+    .ecole, .t, .r, .c, .d {
+      margin-top: 4px;
+    }
+
+    .description {
+      margin: 16px 0;
+    }
+
+    br + strong {
+      display: inline-block;
+      margin-top: 8px;
+
+      > em {
+        //font-style: normal;
+      }
+    }
+
+    table {
+      margin-top: 12px;
+      border-spacing: 0;
+
+      tr:nth-child(even) {
+        background-color: #88888822;
+      }
+
+      th, td {
+        min-width: 45px;
+        padding: 2px 4px;
+        text-align: left;
+      }
+
+      td {
+        vertical-align: top;
+      }
+    }
+  }
+}
+
+:host > h3 {
+  //font-variant: small-caps;
+  margin: 12px 0 0;
+}
+
+:host > p {
+  margin: 4px 0 0;
+}
+
+.key {
+  font-weight: bold;
+}
+
+.additional {
+  opacity: 0.5;
+}

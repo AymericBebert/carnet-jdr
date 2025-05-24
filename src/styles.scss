@@ -1,7 +1,6 @@
 @use '@angular/material' as mat;
 @use 'theme-colors' as tc;
 @use 'theming';
-@use 'fonts';
 
 html {
   color-scheme: light;
@@ -10,7 +9,7 @@ html {
       primary: tc.$primary-palette,
       tertiary: tc.$tertiary-palette,
     ),
-    typography: Roboto,
+    typography: Amiri,
   ));
 
   &:not([dark-theme=true]) {
@@ -48,7 +47,7 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: Amiri, "Times New Roman", serif
 }
 
 .hide-focus:focus {

@@ -1,5 +1,9 @@
-@if (character(); as char) {
-  <app-character-card [character]="char"></app-character-card>
-} @else {
-  <p>Personnage non trouvé</p>
-}
+<div style="max-width: 800px; margin: auto">
+  @if (character(); as char) {
+    <app-character-card [character]="char"></app-character-card>
+  } @else {
+    <p>Personnage non trouvé</p>
+  }
+
+  <app-spell-card [spell]="testSpell"></app-spell-card>
+</div>

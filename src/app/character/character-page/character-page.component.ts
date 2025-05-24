@@ -7,6 +7,8 @@ import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
+import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
+import {spellsFr} from '../../spells/spells-fr';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {Character} from '../character.model';
 
@@ -20,6 +22,7 @@ import {Character} from '../character.model';
     MatInputModule,
     ReactiveFormsModule,
     CharacterCardComponent,
+    SpellCardComponent,
   ],
 })
 export class CharacterPageComponent implements OnInit, OnDestroy {
@@ -30,6 +33,8 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly character = signal<Character | null>(null);
+
+  protected readonly testSpell = spellsFr.find(spell => spell.id === 'dissipation-de-la-magie')!;
 
   ngOnInit(): void {
     this.route.data

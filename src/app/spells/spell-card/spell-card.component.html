@@ -1,0 +1,29 @@
+@let sp = spell();
+
+<h3>{{ sp.name }}</h3>
+
+<!--<p>Niveau {{ sp.level }} - {{ sp.school }}</p>-->
+
+<!--<p>-->
+<!--  <span class="key">Temps d'incantation : </span>-->
+<!--  <span>{{ sp.incantation }}</span>-->
+<!--</p>-->
+
+<div class="spell-details" [innerHTML]="sp.details"></div>
+
+<p class="additional">
+  <span class="key">Classes : </span>
+  @for (cl of sp.classes; track cl; let last = $last) {
+    <span>{{ cl + (last ? '' : ', ') }}</span>
+  }
+</p>
+
+<p class="additional">
+  <span class="key">Source : </span>
+  <span>{{ sp.source }}</span>
+</p>
+
+<p class="additional">
+  <span class="key">VO : </span>
+  <span>{{ sp.vo }}</span>
+</p>
