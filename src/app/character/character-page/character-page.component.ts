@@ -2,9 +2,11 @@ import {Component, computed, DestroyRef, inject, OnDestroy, OnInit, signal} from
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
+import {MatDialog} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
+import {filter} from 'rxjs/operators';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
@@ -12,6 +14,8 @@ import {spellsFr} from '../../spells/spells-fr';
 import {Spell} from '../../spells/spells.model';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {Character} from '../character.model';
+import {CharacterService} from '../character.service';
+import {HpDialogComponent, HpDialogData} from './hp-dialog/hp-dialog.component';
 
 interface SpellsInLevel {
   level: number;
@@ -33,8 +37,10 @@ interface SpellsInLevel {
   ],
 })
 export class CharacterPageComponent implements OnInit, OnDestroy {
+  private readonly characterService = inject(CharacterService);
   private readonly navService = inject(NavService);
   private readonly navButtonsService = inject(NavButtonsService);
+  private readonly matDialog = inject(MatDialog);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -86,5 +92,43 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.navService.mainTitle.set('');
+  }
+
+  changeHp(title: string, label: string, negative: boolean, temp: boolean): void {
+    this.matDialog.open<HpDialogComponent, HpDialogData, number>(
+      HpDialogComponent,
+      {
+        data: {
+          title,
+          label,
+          ...temp ? {initial: this.character()?.hpTemp || undefined} : {},
+        }
+      },
+    ).afterClosed().pipe(
+      filter(hp => hp != null),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(hp => {
+      const char = this.character();
+      if (!char) {
+        return;
+      }
+      let hpChange = negative ? -hp : hp;
+      if (temp) {
+        hpChange = hp - char.hpTemp;
+        this.characterService.updateCharacter(char.id, {
+          hpTemp: hp,
+          hp: char.hp + hpChange,
+        })
+          .then(updatedChar => this.character.set(updatedChar))
+          .catch(err => console.error('Error updating character temp HP:', err));
+      } else {
+        const newHp = Math.min(char.hpMax + char.hpTemp, char.hp + hpChange);
+        this.characterService.updateCharacter(char.id, {
+          hp: newHp,
+        })
+          .then(updatedChar => this.character.set(updatedChar))
+          .catch(err => console.error('Error updating character HP:', err));
+      }
+    });
   }
 }

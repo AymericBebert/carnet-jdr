@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>{{ data.title }}</h1>
+
+<mat-dialog-content>
+  <form mat-dialog-content style="display: flex; align-items: center" (ngSubmit)="ref.close(score())">
+    <mat-form-field subscriptSizing="dynamic" style="flex: 1 1 120px">
+      <mat-label>{{ data.label }}</mat-label>
+      <!-- eslint-disable @angular-eslint/template/no-autofocus -->
+      <input matInput type="number" autocomplete="off" name="score" [(ngModel)]="score" [autofocus]="true">
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null">
+    Annuler
+  </button>
+  <button mat-flat-button [mat-dialog-close]="score()" type="submit">
+    Confirmer
+  </button>
+</div>

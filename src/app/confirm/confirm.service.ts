@@ -16,7 +16,10 @@ export class ConfirmService {
    * @param filterTrue If true, only return true values
    */
   public confirm$(data: ConfirmDialogData = {}, filterTrue = false): Observable<boolean> {
-    return this.matDialog.open(ConfirmDialogComponent, {data}).afterClosed().pipe(
+    return this.matDialog.open<ConfirmDialogComponent, ConfirmDialogData, boolean>(
+      ConfirmDialogComponent,
+      {data},
+    ).afterClosed().pipe(
       map(e => !!e),
       filter(e => !filterTrue || e),
     );

@@ -119,6 +119,7 @@ export class CharacterHeaderFormComponent implements OnInit, ControlValueAccesso
       class: formValue.class,
       hp: formValue.hpMax,
       hpMax: formValue.hpMax,
+      hpTemp: 0,
       skillWithSlots: [],
       spellSlots: formValue.spellSlots,
     };

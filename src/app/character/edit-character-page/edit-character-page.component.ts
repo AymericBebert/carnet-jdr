@@ -56,9 +56,11 @@ export class EditCharacterPageComponent implements OnInit, OnDestroy {
     if (this.form.invalid || !formValue || !character) {
       return;
     }
+    // We do not want to update some values
     const update = removeUndefinedValues({
       ...formValue,
       hp: undefined,
+      hpTemp: undefined,
     });
     await this.characterService.updateCharacter(character.id, update);
     void this.router.navigate(['../..'], {relativeTo: this.activatedRoute});
