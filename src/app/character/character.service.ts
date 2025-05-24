@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {DBSchema, IDBPDatabase, openDB} from 'idb';
 import {ConfirmService} from '../confirm/confirm.service';
 import {getRandomString} from '../utils/get-random-string';
-import {Character, CharacterHeader, NewCharacterDto, toCharacterHeader} from './character.model';
+import {Character, CharacterHeader, NewCharacterDto, toCharacter, toCharacterHeader} from './character.model';
 
 interface CharacterDB extends DBSchema {
   characters: {
@@ -25,8 +25,9 @@ export class CharacterService {
       ...character,
       id,
       hpTemp: 0,
-      spellChoices: [],
       skillWithSlots: [],
+      spellChoices: [],
+      spellSlots: [],
     };
     const db = await this.getDb();
     await db.put('characters', newCharacter);
@@ -42,7 +43,7 @@ export class CharacterService {
     const db = await this.getDb();
     const character = await db.get('characters', id);
     if (!character) throw new Error('Character not found');
-    return character;
+    return toCharacter(character);
   }
 
   public async updateCharacter(id: string, update: Partial<Character>): Promise<Character> {
@@ -51,7 +52,7 @@ export class CharacterService {
     if (!existing) throw new Error('Character not found');
     const updated = {...existing, ...update};
     await db.put('characters', updated);
-    return updated;
+    return toCharacter(updated);
   }
 
   public async deleteCharacter(toDelete: Character): Promise<boolean> {

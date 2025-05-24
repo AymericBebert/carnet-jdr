@@ -3,6 +3,7 @@ import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   ControlValueAccessor,
+  FormArray,
   FormControl,
   FormGroup,
   NG_VALIDATORS,
@@ -57,6 +58,9 @@ export class CharacterHeaderFormComponent implements OnInit, ControlValueAccesso
     game: new FormControl<string>('', {nonNullable: true}),
     class: new FormControl<CharacterClass>('Barde', {nonNullable: true}),
     hpMax: new FormControl<number>(0, {nonNullable: true, validators: [Validators.required, Validators.min(0)]}),
+    spellSlots: new FormArray<FormControl<number>>(
+      new Array(10).fill(0).map(() => new FormControl(0, {nonNullable: true}))
+    ),
   });
 
   ngOnInit(): void {
@@ -100,6 +104,11 @@ export class CharacterHeaderFormComponent implements OnInit, ControlValueAccesso
     return null;
   }
 
+  protected changeLvlSlots(lvl: number, change: number): void {
+    const ctrl = this.form.controls.spellSlots.controls[lvl];
+    ctrl.setValue(Math.max(0, ctrl.value + change));
+  }
+
   private computeNewCharacterDto(): NewCharacterDto {
     const formValue = this.form.getRawValue();
     return {
@@ -110,6 +119,8 @@ export class CharacterHeaderFormComponent implements OnInit, ControlValueAccesso
       class: formValue.class,
       hp: formValue.hpMax,
       hpMax: formValue.hpMax,
+      skillWithSlots: [],
+      spellSlots: formValue.spellSlots,
     };
   }
 

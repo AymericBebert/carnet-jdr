@@ -1,3 +1,31 @@
+.spell-open {
+  padding: 12px 0 24px;
+}
+
+.spell-closed {
+  padding: 12px 0 0;
+}
+
+.spell-header {
+  cursor: pointer;
+
+  h3 {
+    margin: 0;
+  }
+}
+
+:host > p {
+  margin: 4px 0 0;
+}
+
+.key {
+  font-weight: bold;
+}
+
+.additional {
+  opacity: 0.5;
+}
+
 :host ::ng-deep {
   .spell-details {
     h1, .trad, .source, .classe, .tcoe {
@@ -15,10 +43,6 @@
     br + strong {
       display: inline-block;
       margin-top: 8px;
-
-      > em {
-        //font-style: normal;
-      }
     }
 
     table {
@@ -40,21 +64,4 @@
       }
     }
   }
-}
-
-:host > h3 {
-  //font-variant: small-caps;
-  margin: 12px 0 0;
-}
-
-:host > p {
-  margin: 4px 0 0;
-}
-
-.key {
-  font-weight: bold;
-}
-
-.additional {
-  opacity: 0.5;
 }

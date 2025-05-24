@@ -4,7 +4,6 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {EMPTY} from 'rxjs';
-import {toCharacter} from '../../character/character.model';
 import {spellsFr} from '../spells-fr';
 import {SpellCardComponent} from './spell-card.component';
 

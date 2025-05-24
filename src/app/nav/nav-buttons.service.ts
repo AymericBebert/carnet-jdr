@@ -14,13 +14,13 @@ export class NavButtonsService {
 
   public backRouterNavigate = '';
 
-  private readonly privateNavButtonClicked$ = new Subject<string>();
+  private readonly _navButtonClicked$ = new Subject<string>();
 
   public navButtonClicked$(buttonId?: string): Observable<string> {
     if (buttonId) {
-      return this.privateNavButtonClicked$.pipe(filter(btn => btn === buttonId));
+      return this._navButtonClicked$.pipe(filter(btn => btn === buttonId));
     }
-    return this.privateNavButtonClicked$.asObservable();
+    return this._navButtonClicked$.asObservable();
   }
 
   public setBackRouterLink(backRouterNavigate: string): void {
@@ -46,6 +46,6 @@ export class NavButtonsService {
   }
 
   public navButtonClicked(buttonId: string): void {
-    this.privateNavButtonClicked$.next(buttonId);
+    this._navButtonClicked$.next(buttonId);
   }
 }

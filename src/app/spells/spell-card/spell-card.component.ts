@@ -1,4 +1,4 @@
-import {Component, input} from '@angular/core';
+import {Component, input, signal} from '@angular/core';
 import {Spell} from '../spells.model';
 
 @Component({
@@ -9,4 +9,6 @@ import {Spell} from '../spells.model';
 })
 export class SpellCardComponent {
   public readonly spell = input.required<Spell>();
+
+  public readonly isOpen = signal<boolean>(false);
 }

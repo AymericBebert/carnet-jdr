@@ -6,6 +6,11 @@ import {StorageService} from '../storage/storage.service';
 import {UpdaterService} from '../updater/updater.service';
 import {NavButtonsService} from './nav-buttons.service';
 
+interface NavTool {
+  name: string;
+  icon: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,7 +25,7 @@ export class NavService {
   public readonly pinSideNav = signal<boolean>(false);
   public readonly showBackButton = signal<boolean>(false);
   public readonly navButtons = signal<string[]>([]);
-  public readonly navTools = signal<{ name: string, icon: string }[]>([]);
+  public readonly navTools = signal<NavTool[]>([]);
 
   public readonly notificationBadge = signal<string>('');
   public readonly displayUpdatesAvailable = signal<boolean>(false);
@@ -54,10 +59,6 @@ export class NavService {
 
   public navButtonClicked(buttonId: string): void {
     this.navButtonsService.navButtonClicked(buttonId);
-  }
-
-  public navToolClicked(toolId: string): void {
-    this.navButtonsService.navButtonClicked(toolId);
   }
 
   public setPinSideNav(b: boolean): void {

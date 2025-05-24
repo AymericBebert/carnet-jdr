@@ -1,9 +1,24 @@
 <div style="max-width: 800px; margin: auto">
   @if (character(); as char) {
     <app-character-card [character]="char"></app-character-card>
+
+    <h2 class="section-header">
+      <mat-icon>flare</mat-icon>
+      <span>Pouvoirs</span>
+    </h2>
+
+    <h2 class="section-header">
+      <mat-icon>menu_book</mat-icon>
+      <span>Sorts</span>
+    </h2>
+
+    @for (spellLevel of availableSpells(); track spellLevel.level) {
+      <h2 class="spell-level-header">Niveau {{ spellLevel.level }}</h2>
+      @for (spell of spellLevel.spells; track spell.id) {
+        <app-spell-card [spell]="spell"></app-spell-card>
+      }
+    }
   } @else {
     <p>Personnage non trouvé</p>
   }
-
-  <app-spell-card [spell]="testSpell"></app-spell-card>
 </div>

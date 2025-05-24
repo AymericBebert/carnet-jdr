@@ -20,6 +20,8 @@ export interface CharacterHeader {
   class: CharacterClass;
   hp: number;
   hpMax: number;
+  skillWithSlots: SkillWithSlots[];
+  spellSlots: number[];
 }
 
 export function toCharacterHeader(character: Partial<Character>): CharacterHeader {
@@ -32,6 +34,8 @@ export function toCharacterHeader(character: Partial<Character>): CharacterHeade
     class: character.class || 'Barde',
     hp: character.hp || 0,
     hpMax: character.hpMax || 0,
+    skillWithSlots: character.skillWithSlots || [],
+    spellSlots: character.spellSlots || [],
   };
 }
 
@@ -39,7 +43,6 @@ export type NewCharacterDto = Omit<CharacterHeader, 'id'>
 
 export interface Character extends CharacterHeader {
   hpTemp: number;
-  skillWithSlots: SkillWithSlots[];
   spellChoices: SpellChoice[];
 }
 
@@ -47,7 +50,6 @@ export function toCharacter(character: Partial<Character>): Character {
   return {
     ...toCharacterHeader(character),
     hpTemp: character.hpTemp || 0,
-    skillWithSlots: character.skillWithSlots || [],
     spellChoices: character.spellChoices || [],
   };
 }

@@ -6,6 +6,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NavService} from '../../nav/nav.service';
+import {removeUndefinedValues} from '../../utils/remove-undefined-values';
 import {CharacterHeaderFormComponent} from '../character-header-form/character-header-form.component';
 import {Character, NewCharacterDto, toCharacter, toCharacterHeader} from '../character.model';
 import {CharacterService} from '../character.service';
@@ -55,7 +56,11 @@ export class EditCharacterPageComponent implements OnInit, OnDestroy {
     if (this.form.invalid || !formValue || !character) {
       return;
     }
-    await this.characterService.updateCharacter(character.id, formValue);
+    const update = removeUndefinedValues({
+      ...formValue,
+      hp: undefined,
+    });
+    await this.characterService.updateCharacter(character.id, update);
     void this.router.navigate(['../..'], {relativeTo: this.activatedRoute});
   }
 
