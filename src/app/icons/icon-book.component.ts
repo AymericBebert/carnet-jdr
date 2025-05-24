@@ -38,7 +38,7 @@ import {Component, input} from '@angular/core';
     </svg>
   `,
   host: {
-    style: 'line-height: 0;',
+    style: 'display: block; line-height: 0',
   }
 })
 export class IconBookComponent {

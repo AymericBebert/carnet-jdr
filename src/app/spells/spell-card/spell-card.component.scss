@@ -1,5 +1,13 @@
 .spell-open {
   padding: 12px 0 24px;
+
+  & > p {
+    margin: 4px 0 0;
+  }
+
+  .key {
+    font-weight: bold;
+  }
 }
 
 .spell-closed {
@@ -8,18 +16,15 @@
 
 .spell-header {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  height: 24px;
 
   h3 {
     margin: 0;
+    flex-grow: 1;
   }
-}
-
-:host > p {
-  margin: 4px 0 0;
-}
-
-.key {
-  font-weight: bold;
 }
 
 .additional {
