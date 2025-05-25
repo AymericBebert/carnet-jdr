@@ -10,6 +10,7 @@ import {filter} from 'rxjs/operators';
 import {AbilityCardComponent} from '../../ability/ability-card/ability-card.component';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
+import {SlotsFormComponent} from '../../slots/slots-form/slots-form.component';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
 import {spellsFr} from '../../spells/spells-fr';
 import {Spell} from '../../spells/spells.model';
@@ -38,6 +39,7 @@ interface SpellsInLevel {
     CharacterCardComponent,
     SpellCardComponent,
     AbilityCardComponent,
+    SlotsFormComponent,
   ],
 })
 export class CharacterPageComponent implements OnInit, OnDestroy {

@@ -5,7 +5,7 @@
     <h3 style="margin: 0">{{ ab.name }}</h3>
     <span style="opacity: 0.5; font-size: 0.8em">{{ ab.description }}</span>
   </div>
-  <span>{{ '○'.repeat(ab.maxSlots) }}</span>
+  <app-slots-form [maxSlots]="ab.maxSlots"></app-slots-form>
 </div>
 
 @if (isOpen()) {
