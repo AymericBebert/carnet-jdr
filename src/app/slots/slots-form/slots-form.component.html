@@ -1,12 +1,12 @@
 <div class="slots-wrapper"
-     (mousedown)="startPress($event)"
-     (mouseup)="endPress($event)"
-     (mouseleave)="endPress($event)"
+     (mousedown)="startPress()"
+     (mouseup)="endPress()"
      (touchstart)="startPress($event)"
-     (touchend)="endPress($event)"
+     (touchend)="endPress()"
+     (touchmove)="onTouchMove($event)"
 >
   @for (slotRow of slots(); track $index) {
-    <div style="display: flex; gap: 4px">
+    <div class="slot-row">
       @for (slot of slotRow; track $index) {
         <div class="slot" [class.available]="!slot" [class.burnt]="slot"></div>
       }

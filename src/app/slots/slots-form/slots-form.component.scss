@@ -3,9 +3,16 @@
   flex-direction: column;
   gap: 4px;
 
+  // Stuff for click actions
   cursor: pointer;
   user-select: none;
   -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slot-row {
+  display: flex;
+  gap: 4px;
 }
 
 .slot {

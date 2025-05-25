@@ -39,6 +39,10 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
   private pressTimer: any;
   private clickInitiated = false;
   private isLongPress = false;
+  private lastClickTime = 0;
+
+  private touchStartX = 0;
+  private touchStartY = 0;
 
   // disable right-click menu
   @HostListener('contextmenu', ['$event'])
@@ -66,31 +70,55 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
     return null;
   }
 
-  startPress(event: MouseEvent | TouchEvent): void {
-    event.preventDefault();
+  startPress(event?: TouchEvent): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    clearInterval(this.pressTimer);
+
     this.clickInitiated = true;
 
-    this.pressTimer = setTimeout(() => {
+    // Record the initial touch position for scroll detection
+    if (event?.touches?.length) {
+      this.touchStartX = event.touches[0].clientX;
+      this.touchStartY = event.touches[0].clientY;
+    }
+
+    this.pressTimer = setInterval(() => {
       this.isLongPress = true;
       this.clickInitiated = false;
       this.unBurnSlot();
     }, 500); // long press threshold (ms)
   }
 
-  endPress(_event: MouseEvent | TouchEvent): void {
-    if (!this.clickInitiated) {
+  endPress(): void {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    clearInterval(this.pressTimer);
+
+    // Ignore unwanted cursor leave events, and double clicks
+    const now = Date.now();
+    if (!this.clickInitiated || (now - this.lastClickTime < 300)) {
       this.isLongPress = false;
       return;
     }
+    this.lastClickTime = now;
     this.clickInitiated = false;
-
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    clearTimeout(this.pressTimer);
 
     if (!this.isLongPress) {
       this.burnSlot();
     }
     this.isLongPress = false;
+  }
+
+  onTouchMove(event: TouchEvent): void {
+    if (event.touches.length === 1) {
+      const moveX = event.touches[0].clientX;
+      const moveY = event.touches[0].clientY;
+
+      if (Math.abs(moveX - this.touchStartX) > 10 || Math.abs(moveY - this.touchStartY) > 10) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        clearInterval(this.pressTimer);
+        this.clickInitiated = false;
+      }
+    }
   }
 
   private burnSlot(): void {

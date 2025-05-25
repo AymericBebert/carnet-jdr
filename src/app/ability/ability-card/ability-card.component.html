@@ -1,11 +1,11 @@
 @let ab = ability();
 
-<div style="display: flex; align-items: center; gap: 8px">
+<div style="display: flex; gap: 8px">
   <div style="flex-grow: 1; display: flex; flex-direction: column; cursor: pointer" (click)="isOpen.set(!isOpen())">
     <h3 style="margin: 0">{{ ab.name }}</h3>
     <span style="opacity: 0.5; font-size: 0.8em">{{ ab.description }}</span>
   </div>
-  <app-slots-form [maxSlots]="ab.maxSlots"></app-slots-form>
+  <app-slots-form [maxSlots]="ab.maxSlots" style="margin-top: 4px"></app-slots-form>
 </div>
 
 @if (isOpen()) {
