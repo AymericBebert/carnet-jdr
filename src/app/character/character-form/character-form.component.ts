@@ -103,7 +103,7 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
 
   validate(_control: AbstractControl): ValidationErrors | null {
     if (this.form.invalid) {
-      return {characterHeaderInvalid: true};
+      return {characterInvalid: true};
     }
     return null;
   }

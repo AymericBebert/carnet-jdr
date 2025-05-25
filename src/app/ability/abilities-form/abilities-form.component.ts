@@ -91,8 +91,8 @@ export class AbilitiesFormComponent implements OnInit, ControlValueAccessor, Val
   }
 
   validate(_control: AbstractControl): ValidationErrors | null {
-    if (this.form.invalid) {
-      return {characterHeaderInvalid: true};
+    if (this.isEditing() !== -1 && this.form.invalid) {
+      return {abilitiesInvalid: true};
     }
     return null;
   }

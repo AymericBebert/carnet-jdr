@@ -15,6 +15,9 @@ export const routes: Routes = [
     component: NewCharacterPageComponent,
     data: {
       backRouterNavigate: '/',
+      navTools: [
+        {name: 'Importer perso', icon: 'upload'},
+      ],
     },
   },
   {
@@ -27,6 +30,7 @@ export const routes: Routes = [
       navTools: [
         {name: 'Modifier perso', icon: 'edit'},
         {name: 'Modifier sorts', icon: 'menu_book'},
+        {name: 'Exporter perso', icon: 'download'},
       ],
     },
   },

@@ -13,6 +13,8 @@ import {NavService} from '../../nav/nav.service';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
 import {spellsFr} from '../../spells/spells-fr';
 import {Spell} from '../../spells/spells.model';
+import {cleanForFilename} from '../../utils/clean-for-filename';
+import {downloadJson} from '../../utils/download-as-file';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {Character} from '../character.model';
 import {CharacterService} from '../character.service';
@@ -82,11 +84,16 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(btn => {
         const char = this.character();
+        if (!char) return;
         switch (btn) {
           case 'edit':
-            if (char) {
-              void this.router.navigate(['../..', 'edit-character', char.id], {relativeTo: this.route});
-            }
+            void this.router.navigate(['../..', 'edit-character', char.id], {relativeTo: this.route});
+            break;
+          case 'menu_book':
+            console.log('TODO edit spells');
+            break;
+          case 'download':
+            downloadJson(char, cleanForFilename(char.name) + '.json');
             break;
         }
       });
