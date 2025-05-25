@@ -4,21 +4,18 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {EMPTY} from 'rxjs';
-import {ConfigTestingModule} from '../../testing/config-testing.module';
-import {UpdaterTestingModule} from '../../testing/updater-testing.module';
-import {NewCharacterPageComponent} from './new-character-page.component';
+import {getNewAbility} from '../ability.model';
+import {AbilityCardComponent} from './ability-card.component';
 
-describe('NewCharacterPageComponent', () => {
-  let component: NewCharacterPageComponent;
-  let fixture: ComponentFixture<NewCharacterPageComponent>;
+describe('AbilityCardComponent', () => {
+  let component: AbilityCardComponent;
+  let fixture: ComponentFixture<AbilityCardComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        NewCharacterPageComponent,
-        ConfigTestingModule,
-        UpdaterTestingModule,
+        AbilityCardComponent,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),
@@ -28,8 +25,9 @@ describe('NewCharacterPageComponent', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(NewCharacterPageComponent);
+    fixture = TestBed.createComponent(AbilityCardComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('ability', getNewAbility());
     await fixture.whenStable();
   });
 

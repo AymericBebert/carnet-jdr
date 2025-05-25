@@ -1,11 +1,12 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {Router} from '@angular/router';
-import {CharacterHeaderFormComponent} from '../character-header-form/character-header-form.component';
-import {NewCharacterDto} from '../character.model';
+import {NavService} from '../../nav/nav.service';
+import {CharacterFormComponent} from '../character-form/character-form.component';
+import {CharacterEditDto} from '../character.model';
 import {CharacterService} from '../character.service';
 
 @Component({
@@ -17,14 +18,23 @@ import {CharacterService} from '../character.service';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    CharacterHeaderFormComponent,
+    CharacterFormComponent,
   ],
 })
-export class NewCharacterPageComponent {
+export class NewCharacterPageComponent implements OnInit, OnDestroy {
+  private readonly navService = inject(NavService);
   private readonly characterService = inject(CharacterService);
   private readonly router = inject(Router);
 
-  protected readonly form = new FormControl<NewCharacterDto | null>(null, Validators.required);
+  protected readonly form = new FormControl<CharacterEditDto | null>(null, Validators.required);
+
+  ngOnInit(): void {
+    this.navService.mainTitle.set('Nouveau personnage');
+  }
+
+  ngOnDestroy(): void {
+    this.navService.mainTitle.set('');
+  }
 
   protected async create(): Promise<void> {
     const formValue = this.form.getRawValue();

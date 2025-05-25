@@ -1,0 +1,13 @@
+@let ab = ability();
+
+<div style="display: flex; align-items: center; gap: 8px">
+  <div style="flex-grow: 1; display: flex; flex-direction: column; cursor: pointer" (click)="isOpen.set(!isOpen())">
+    <h3 style="margin: 0">{{ ab.name }}</h3>
+    <span style="opacity: 0.5; font-size: 0.8em">{{ ab.description }}</span>
+  </div>
+  <span>{{ '○'.repeat(ab.maxSlots) }}</span>
+</div>
+
+@if (isOpen()) {
+  <p style="margin: 16px 0 32px; white-space: pre-wrap">{{ ab.details }}</p>
+}

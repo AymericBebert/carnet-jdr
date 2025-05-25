@@ -18,7 +18,7 @@ export class ConfirmService {
   public confirm$(data: ConfirmDialogData = {}, filterTrue = false): Observable<boolean> {
     return this.matDialog.open<ConfirmDialogComponent, ConfirmDialogData, boolean>(
       ConfirmDialogComponent,
-      {data},
+      {data, autoFocus: '.confirm-button'},
     ).afterClosed().pipe(
       map(e => !!e),
       filter(e => !filterTrue || e),

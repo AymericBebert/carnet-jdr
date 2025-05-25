@@ -1,0 +1,92 @@
+@for (ability of abilities(); let i = $index; track ability.id; let first = $first; let last = $last) {
+  @if (isEditing() === i) {
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Utilisations</mat-label>
+      <input matInput type="number" autocomplete="off" [formControl]="form.controls.maxSlots">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Recharge</mat-label>
+      <mat-select [formControl]="form.controls.refillWhen">
+        <mat-option value="manually">Manuellement</mat-option>
+        <mat-option value="longRest">Repos long</mat-option>
+        <mat-option value="longRestDie">Repos long (dé)</mat-option>
+        <mat-option value="shortRest">Repos court</mat-option>
+        <mat-option value="shortRestDie">Repos court (dé)</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    @if (form.controls.refillWhen.value === 'longRestDie' || form.controls.refillWhen.value === 'shortRestDie') {
+      <mat-form-field>
+        <mat-label>Recharge (dé)</mat-label>
+        <input matInput type="number" autocomplete="off" [formControl]="form.controls.refillDie">
+      </mat-form-field>
+    }
+
+    <mat-form-field>
+      <mat-label>Description courte</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.description">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Détails</mat-label>
+      <textarea matInput type="text" autocomplete="off"
+                cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="10"
+                [formControl]="form.controls.details"
+      ></textarea>
+    </mat-form-field>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 24px">
+      <button mat-button (click)="deleteAbility(i)">
+        <mat-icon>close</mat-icon>
+        Supprimer
+      </button>
+      <button mat-button (click)="isEditing.set(-1)">
+        <mat-icon>done</mat-icon>
+        Valider
+      </button>
+    </div>
+
+  } @else {
+
+    <div style="display: flex; align-items: center; gap: 8px">
+      <span style="flex-grow: 1">{{ ability.name }}</span>
+      <span>{{ '○'.repeat(ability.maxSlots) }}</span>
+      @if (isReordering()) {
+        <app-up-down-button [disableUp]="first"
+                            [disableDown]="last"
+                            (up)="moveAbility(i, -1)"
+                            (down)="moveAbility(i, 1)"
+        ></app-up-down-button>
+      } @else {
+        <button mat-icon-button (click)="editAbility(i)" [disabled]="isDisabled()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      }
+    </div>
+  }
+}
+@if (isEditing() === -1) {
+  <div style="display: flex; justify-content: space-between">
+    @if (isReordering()) {
+      <button mat-button (click)="isReordering.set(false)">
+        <mat-icon>done</mat-icon>
+        Valider ordre
+      </button>
+    } @else {
+      <button mat-button (click)="isReordering.set(true)" [disabled]="isDisabled()">
+        <mat-icon>swap_vert</mat-icon>
+        Ré-ordonner
+      </button>
+      <button mat-button (click)="addAbility()" [disabled]="isDisabled()">
+        <mat-icon>add</mat-icon>
+        Ajouter un pouvoir
+      </button>
+    }
+  </div>
+}

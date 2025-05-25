@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {ThemePalette} from '@angular/material/core';
 import {MAT_DIALOG_DATA, MatDialogModule} from '@angular/material/dialog';
@@ -22,6 +22,5 @@ export interface ConfirmDialogData {
   ],
 })
 export class ConfirmDialogComponent {
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ConfirmDialogData) {
-  }
+  protected readonly data = inject<ConfirmDialogData>(MAT_DIALOG_DATA);
 }

@@ -6,15 +6,16 @@ h2.section-header {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin: 24px 0 16px;
 }
 
 h2.spell-level-header {
   background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
   color: var(--mat-toolbar-container-text-color, var(--mat-sys-on-surface));
   padding: 8px;
-  margin: 32px -8px 0;
+  margin: 64px -8px 0;
 
-  app-spell-card + & {
-    margin-top: 64px;
+  &.first {
+    margin-top: 12px;
   }
 }

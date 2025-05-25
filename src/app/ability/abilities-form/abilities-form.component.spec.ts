@@ -4,21 +4,17 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {EMPTY} from 'rxjs';
-import {ConfigTestingModule} from '../../testing/config-testing.module';
-import {UpdaterTestingModule} from '../../testing/updater-testing.module';
-import {NewCharacterPageComponent} from './new-character-page.component';
+import {AbilitiesFormComponent} from './abilities-form.component';
 
-describe('NewCharacterPageComponent', () => {
-  let component: NewCharacterPageComponent;
-  let fixture: ComponentFixture<NewCharacterPageComponent>;
+describe('AbilitiesFormComponent', () => {
+  let component: AbilitiesFormComponent;
+  let fixture: ComponentFixture<AbilitiesFormComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        NewCharacterPageComponent,
-        ConfigTestingModule,
-        UpdaterTestingModule,
+        AbilitiesFormComponent,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),
@@ -28,7 +24,7 @@ describe('NewCharacterPageComponent', () => {
       ],
     });
 
-    fixture = TestBed.createComponent(NewCharacterPageComponent);
+    fixture = TestBed.createComponent(AbilitiesFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

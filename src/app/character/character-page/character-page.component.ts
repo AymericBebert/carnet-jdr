@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
 import {filter} from 'rxjs/operators';
+import {AbilityCardComponent} from '../../ability/ability-card/ability-card.component';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
@@ -34,6 +35,7 @@ interface SpellsInLevel {
     ReactiveFormsModule,
     CharacterCardComponent,
     SpellCardComponent,
+    AbilityCardComponent,
   ],
 })
 export class CharacterPageComponent implements OnInit, OnDestroy {
@@ -102,7 +104,9 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
           title,
           label,
           ...temp ? {initial: this.character()?.hpTemp || undefined} : {},
-        }
+        },
+        autoFocus: 'input',
+        position: {top: '20vh'},
       },
     ).afterClosed().pipe(
       filter(hp => hp != null),

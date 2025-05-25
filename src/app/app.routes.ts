@@ -26,7 +26,6 @@ export const routes: Routes = [
       navButtons: ['menu_book'],
       navTools: [
         {name: 'Modifier perso', icon: 'edit'},
-        {name: 'Modifier pouvoirs', icon: 'flare'},
         {name: 'Modifier sorts', icon: 'menu_book'},
       ],
     },
@@ -37,6 +36,9 @@ export const routes: Routes = [
     resolve: {character: characterResolver},
     data: {
       backRouterNavigate: '[back]',
+      navTools: [
+        {name: 'Supprimer perso', icon: 'delete'},
+      ],
     },
   },
   {

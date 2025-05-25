@@ -9,7 +9,7 @@
         <mat-icon>heart_minus</mat-icon>
       </button>
       <button mat-icon-button aria-label="Augmenter les PV"
-              (click)="changeHp('Augmenter les PV', 'Augmenter de de', false, false)"
+              (click)="changeHp('Augmenter les PV', 'Augmenter de', false, false)"
       >
         <mat-icon>heart_plus</mat-icon>
       </button>
@@ -25,13 +25,17 @@
       <span>Pouvoirs</span>
     </h2>
 
+    @for (ability of char.abilities; track ability.id) {
+      <app-ability-card [ability]="ability" style="margin: 16px 0"></app-ability-card>
+    }
+
     <h2 class="section-header">
       <mat-icon>menu_book</mat-icon>
       <span>Sorts</span>
     </h2>
 
-    @for (spellLevel of availableSpells(); track spellLevel.level) {
-      <h2 class="spell-level-header">Niveau {{ spellLevel.level }}</h2>
+    @for (spellLevel of availableSpells(); track spellLevel.level; let first=$first) {
+      <h2 class="spell-level-header" [class.first]="first">Niveau {{ spellLevel.level }}</h2>
       @for (spell of spellLevel.spells; track spell.id) {
         <app-spell-card [spell]="spell"></app-spell-card>
       }

@@ -1,9 +1,7 @@
 <div style="display: flex; flex-direction: column; align-items: center; max-width: 360px; margin: auto">
-  <h2>Nouveau personnage</h2>
-
-  <app-character-header-form [formControl]="form"
-                             style="align-self: stretch"
-  ></app-character-header-form>
+  <app-character-form [formControl]="form"
+                      style="align-self: stretch"
+  ></app-character-form>
 
   <button type="button" mat-flat-button color="primary" [disabled]="form.invalid" (click)="create()">
     <mat-icon>done</mat-icon>

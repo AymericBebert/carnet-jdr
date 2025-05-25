@@ -1,3 +1,7 @@
+import {Ability, AbilityUsage} from '../ability/ability.model';
+import {SpellChoice} from '../spells/spells.model';
+import {removeUndefinedValues} from '../utils/remove-undefined-values';
+
 export const characterClasses = [
   'Barde',
   'Clerc',
@@ -21,8 +25,6 @@ export interface CharacterHeader {
   hp: number;
   hpMax: number;
   hpTemp: number;
-  skillWithSlots: SkillWithSlots[];
-  spellSlots: number[];
 }
 
 export function toCharacterHeader(character: Partial<Character>): CharacterHeader {
@@ -36,37 +38,36 @@ export function toCharacterHeader(character: Partial<Character>): CharacterHeade
     hp: character.hp || 0,
     hpMax: character.hpMax || 0,
     hpTemp: character.hpTemp || 0,
-    skillWithSlots: character.skillWithSlots || [],
-    spellSlots: character.spellSlots || [],
   };
 }
 
-export type NewCharacterDto = Omit<CharacterHeader, 'id'>
-
 export interface Character extends CharacterHeader {
+  abilities: Ability[];
+  abilityUsages: AbilityUsage[];
+  spellSlots: number[];
   spellChoices: SpellChoice[];
 }
 
 export function toCharacter(character: Partial<Character>): Character {
   return {
     ...toCharacterHeader(character),
-    hpTemp: character.hpTemp || 0,
+    abilities: character.abilities || [],
+    abilityUsages: character.abilityUsages || [],
+    spellSlots: character.spellSlots || [],
     spellChoices: character.spellChoices || [],
   };
 }
 
-export interface SkillWithSlots {
-  name: string;
-  image: string;
-  description: string;
-  slots: number;
-  maxSlots: number;
-  refillLongSleep: number;
-  refillDieLongSleep: number;
-}
+// Remove things that are character live params, not stats
+export type CharacterEditDto = Omit<Character, 'id' | 'hp' | 'hpTemp' | 'abilityUsages' | 'spellChoices'>
 
-export interface SpellChoice {
-  id: string;
-  prepared: boolean;
-  favorite: boolean;
+export function toCharacterEditDto(character: Partial<Character>): CharacterEditDto {
+  return removeUndefinedValues({
+    ...toCharacter(character),
+    id: undefined,
+    hp: undefined,
+    hpTemp: undefined,
+    abilityUsages: undefined,
+    spellChoices: undefined,
+  }) as CharacterEditDto;
 }

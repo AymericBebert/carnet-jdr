@@ -2,7 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {DBSchema, IDBPDatabase, openDB} from 'idb';
 import {ConfirmService} from '../confirm/confirm.service';
 import {getRandomString} from '../utils/get-random-string';
-import {Character, CharacterHeader, NewCharacterDto, toCharacter, toCharacterHeader} from './character.model';
+import {Character, CharacterEditDto, CharacterHeader, toCharacter, toCharacterHeader} from './character.model';
 
 interface CharacterDB extends DBSchema {
   characters: {
@@ -19,16 +19,12 @@ export class CharacterService {
 
   private dbPromise: Promise<IDBPDatabase<CharacterDB>> | null = null;
 
-  public async createCharacter(character: NewCharacterDto): Promise<void> {
+  public async createCharacter(character: CharacterEditDto): Promise<void> {
     const id = getRandomString(8);
-    const newCharacter: Character = {
+    const newCharacter = toCharacter({
       ...character,
       id,
-      hpTemp: 0,
-      skillWithSlots: [],
-      spellChoices: [],
-      spellSlots: [],
-    };
+    });
     const db = await this.getDb();
     await db.put('characters', newCharacter);
   }

@@ -5,10 +5,10 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
+import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
-import {removeUndefinedValues} from '../../utils/remove-undefined-values';
-import {CharacterHeaderFormComponent} from '../character-header-form/character-header-form.component';
-import {Character, NewCharacterDto, toCharacter, toCharacterHeader} from '../character.model';
+import {CharacterFormComponent} from '../character-form/character-form.component';
+import {Character, CharacterEditDto, toCharacter, toCharacterEditDto} from '../character.model';
 import {CharacterService} from '../character.service';
 
 @Component({
@@ -20,11 +20,12 @@ import {CharacterService} from '../character.service';
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
-    CharacterHeaderFormComponent,
+    CharacterFormComponent,
   ],
 })
 export class EditCharacterPageComponent implements OnInit, OnDestroy {
   private readonly navService = inject(NavService);
+  private readonly navButtonsService = inject(NavButtonsService);
   private readonly characterService = inject(CharacterService);
   private readonly router = inject(Router);
   private readonly activatedRoute = inject(ActivatedRoute);
@@ -32,7 +33,7 @@ export class EditCharacterPageComponent implements OnInit, OnDestroy {
 
   protected readonly character = signal<Character | null>(null);
 
-  protected readonly form = new FormControl<NewCharacterDto | null>(null, Validators.required);
+  protected readonly form = new FormControl<CharacterEditDto | null>(null, Validators.required);
 
   ngOnInit(): void {
     this.activatedRoute.data
@@ -41,8 +42,18 @@ export class EditCharacterPageComponent implements OnInit, OnDestroy {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         const char: Character = toCharacter(data.character);
         this.character.set(char);
-        this.form.setValue(toCharacterHeader(char));
+        this.form.setValue(toCharacterEditDto(char));
         this.navService.mainTitle.set(`Modifier ${char.name}`);
+      });
+
+    this.navButtonsService.navButtonClicked$()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(btn => {
+        switch (btn) {
+          case 'delete':
+            void this.delete();
+            break;
+        }
       });
   }
 
@@ -56,17 +67,11 @@ export class EditCharacterPageComponent implements OnInit, OnDestroy {
     if (this.form.invalid || !formValue || !character) {
       return;
     }
-    // We do not want to update some values
-    const update = removeUndefinedValues({
-      ...formValue,
-      hp: undefined,
-      hpTemp: undefined,
-    });
-    await this.characterService.updateCharacter(character.id, update);
-    void this.router.navigate(['../..'], {relativeTo: this.activatedRoute});
+    await this.characterService.updateCharacter(character.id, formValue);
+    void this.router.navigate(['../..', 'character', character.id], {relativeTo: this.activatedRoute});
   }
 
-  protected async delete(): Promise<void> {
+  private async delete(): Promise<void> {
     const character = this.character();
     if (!character) {
       return;

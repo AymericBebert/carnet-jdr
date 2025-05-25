@@ -10,8 +10,9 @@
 <span style="flex-grow: 1"></span>
 
 <mat-icon>favorite</mat-icon>
-<div style="margin: 0 4px 0 -4px; font-weight: bold">
-  <span>{{ char.hp }}/{{ char.hpMax }}</span>
+<div style="margin: 0 4px 0 -4px">
+  <span style="font-weight: bold">{{ char.hp }}</span>
+  <span> / {{ char.hpMax }}</span>
   @if (char.hpTemp) {
     <span style="opacity: 0.5">+{{ char.hpTemp }}</span>
   }

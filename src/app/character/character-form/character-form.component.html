@@ -24,7 +24,17 @@
   <input matSliderThumb [formControl]="form.controls.theme">
 </mat-slider>
 
-<h3>Emplacements de sorts</h3>
+<h2 class="section-header">
+  <mat-icon>flare</mat-icon>
+  <span>Pouvoirs</span>
+</h2>
+
+<app-character-abilities-form [formControl]="form.controls.abilities"></app-character-abilities-form>
+
+<h2 class="section-header">
+  <mat-icon>menu_book</mat-icon>
+  <span>Emplacements de sorts</span>
+</h2>
 
 <div style="display: flex; justify-content: space-between; margin-bottom: 12px">
   @for (lvl of [0, 1, 2, 3, 4]; track $index) {

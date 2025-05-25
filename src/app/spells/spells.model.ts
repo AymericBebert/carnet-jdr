@@ -18,3 +18,10 @@ export interface Spell {
   classes: CharacterClass[];
   details: string;
 }
+
+export interface SpellChoice {
+  id: string;
+  known: boolean;
+  favorite: boolean;
+  prepared: boolean;
+}
