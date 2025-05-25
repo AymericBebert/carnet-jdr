@@ -51,7 +51,7 @@
   }
 
   &.burning::after {
-    background: radial-gradient(circle, #ffc400, orange, red, transparent);
+    background: radial-gradient(circle, white, #ffc400, orange, red, transparent);
     animation: fireburst 300ms ease-out forwards;
   }
 }
@@ -73,11 +73,11 @@
     opacity: 1;
   }
   50% {
-    transform: scale(1.5);
-    opacity: 0.6;
+    transform: scale(3);
+    opacity: 0.8;
   }
   100% {
-    transform: scale(3);
+    transform: scale(8);
     opacity: 0;
   }
 }

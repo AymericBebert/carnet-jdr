@@ -20,27 +20,33 @@
       </button>
     </div>
 
-    <h2 class="section-header">
-      <mat-icon>flare</mat-icon>
-      <span>Pouvoirs</span>
-    </h2>
+    @if (char.abilities.length > 0) {
+      <h2 class="section-header">
+        <mat-icon>flare</mat-icon>
+        <span>Pouvoirs</span>
+      </h2>
 
-    @for (ability of char.abilities; track ability.id) {
-      <app-ability-card [ability]="ability" style="margin: 16px 0"></app-ability-card>
+      @for (ability of char.abilities; track ability.id) {
+        <app-ability-card [ability]="ability" style="margin: 16px 0"></app-ability-card>
+      }
     }
 
-    <h2 class="section-header">
-      <mat-icon>menu_book</mat-icon>
-      <span>Sorts</span>
-    </h2>
+    @let spellsByLevel = availableSpells();
 
-    @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
-      <h2 class="spell-level-header" [class.first]="first">
-        <span>Niveau {{ spellLevel.level }}</span>
-        <app-slots-form [maxSlots]="spellLevel.slots"></app-slots-form>
+    @if (spellsByLevel.length > 0) {
+      <h2 class="section-header">
+        <mat-icon>menu_book</mat-icon>
+        <span>Sorts</span>
       </h2>
-      @for (spell of spellLevel.spells; track spell.id) {
-        <app-spell-card [spell]="spell"></app-spell-card>
+
+      @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
+        <h2 class="spell-level-header" [class.first]="first">
+          <span>Niveau {{ spellLevel.level }}</span>
+          <app-slots-form [maxSlots]="spellLevel.slots"></app-slots-form>
+        </h2>
+        @for (spell of spellLevel.spells; track spell.id) {
+          <app-spell-card [spell]="spell"></app-spell-card>
+        }
       }
     }
   } @else {
