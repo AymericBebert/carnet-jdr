@@ -26,6 +26,7 @@ describe('SlotsFormComponent', () => {
 
     fixture = TestBed.createComponent(SlotsFormComponent);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('maxSlots', 5);
     await fixture.whenStable();
   });
 

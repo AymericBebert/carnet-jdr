@@ -98,19 +98,30 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
     if (currentBurntSlots < this.maxSlots()) {
       this.burntSlots.set(currentBurntSlots + 1);
       this.onChange(this.burntSlots());
+      this.burnHapticFeedback();
     }
   }
 
   private unBurnSlot(): void {
     const currentBurntSlots = this.burntSlots();
     if (currentBurntSlots > 0) {
-      this.triggerHapticFeedback();
       this.burntSlots.set(currentBurntSlots - 1);
       this.onChange(this.burntSlots());
+      void this.unBurnHapticFeedback();
     }
   }
 
-  private triggerHapticFeedback(): void {
+  private burnHapticFeedback(): void {
+    if (navigator.vibrate) {
+      navigator.vibrate(100);
+    }
+  }
+
+  private async unBurnHapticFeedback(): Promise<void> {
+    if (navigator.vibrate) {
+      navigator.vibrate(50);
+    }
+    await new Promise(sleep => setTimeout(sleep, 50));
     if (navigator.vibrate) {
       navigator.vibrate(50);
     }

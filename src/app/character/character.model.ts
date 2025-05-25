@@ -45,6 +45,7 @@ export interface Character extends CharacterHeader {
   abilities: Ability[];
   abilityUsages: AbilityUsage[];
   spellSlots: number[];
+  spellSlotBurns: number[];
   spellChoices: SpellChoice[];
 }
 
@@ -54,12 +55,21 @@ export function toCharacter(character: Partial<Character>): Character {
     abilities: character.abilities || [],
     abilityUsages: character.abilityUsages || [],
     spellSlots: character.spellSlots || [],
+    spellSlotBurns: character.spellSlotBurns || [],
     spellChoices: character.spellChoices || [],
   };
 }
 
 // Remove things that are character live params, not stats
-export type CharacterEditDto = Omit<Character, 'id' | 'hp' | 'hpTemp' | 'abilityUsages' | 'spellChoices'>
+const _notInCharacterEditDto = [
+  'id',
+  'hp',
+  'hpTemp',
+  'abilityUsages',
+  'spellSlotBurns',
+  'spellChoices',
+];
+export type CharacterEditDto = Omit<Character, typeof _notInCharacterEditDto[number]>
 
 export function toCharacterEditDto(character: Partial<Character>): CharacterEditDto {
   return removeUndefinedValues({
@@ -68,6 +78,7 @@ export function toCharacterEditDto(character: Partial<Character>): CharacterEdit
     hp: undefined,
     hpTemp: undefined,
     abilityUsages: undefined,
+    spellSlotBurns: undefined,
     spellChoices: undefined,
   }) as CharacterEditDto;
 }

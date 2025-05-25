@@ -34,7 +34,7 @@
       <span>Sorts</span>
     </h2>
 
-    @for (spellLevel of availableSpells(); track spellLevel.level; let first=$first) {
+    @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
       <h2 class="spell-level-header" [class.first]="first">
         <span>Niveau {{ spellLevel.level }}</span>
         <app-slots-form [maxSlots]="spellLevel.slots"></app-slots-form>
