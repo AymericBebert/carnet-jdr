@@ -5,7 +5,11 @@
     <h3 style="margin: 0">{{ ab.name }}</h3>
     <span style="opacity: 0.5; font-size: 0.8em">{{ ab.description }}</span>
   </div>
-  <app-slots-form [maxSlots]="ab.maxSlots" style="margin-top: 4px"></app-slots-form>
+  <app-slots-form [maxSlots]="ab.maxSlots"
+                  [ngModel]="usage()"
+                  (ngModelChange)="usageChange.emit($event)"
+                  style="margin-top: 4px"
+  ></app-slots-form>
 </div>
 
 @if (isOpen()) {

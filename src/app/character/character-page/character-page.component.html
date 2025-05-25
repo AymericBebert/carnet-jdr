@@ -27,7 +27,11 @@
       </h2>
 
       @for (ability of char.abilities; track ability.id) {
-        <app-ability-card [ability]="ability" style="margin: 16px 0"></app-ability-card>
+        <app-ability-card [ability]="ability"
+                          [usage]="char.abilityUsage[ability.id] || 0"
+                          (usageChange)="setAbilityUsage(ability.id, $event)"
+                          style="margin: 16px 0"
+        ></app-ability-card>
       }
     }
 
@@ -42,7 +46,10 @@
       @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
         <h2 class="spell-level-header" [class.first]="first">
           <span>Niveau {{ spellLevel.level }}</span>
-          <app-slots-form [maxSlots]="spellLevel.slots"></app-slots-form>
+          <app-slots-form [maxSlots]="spellLevel.slots"
+                          [ngModel]="char.spellSlotBurns[spellLevel.level]"
+                          (ngModelChange)="setSpellSlotBurns(spellLevel.level, $event)"
+          ></app-slots-form>
         </h2>
         @for (spell of spellLevel.spells; track spell.id) {
           <app-spell-card [spell]="spell"></app-spell-card>

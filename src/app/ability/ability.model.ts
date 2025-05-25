@@ -27,7 +27,4 @@ export function getNewAbility(): Ability {
   };
 }
 
-export interface AbilityUsage {
-  id: string;
-  usage: number;
-}
+export type AbilityUsage = Record<string, number>;

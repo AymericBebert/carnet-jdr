@@ -1,6 +1,6 @@
 import {Component, computed, DestroyRef, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ReactiveFormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
@@ -40,6 +40,7 @@ interface SpellsInLevel {
     SpellCardComponent,
     AbilityCardComponent,
     SlotsFormComponent,
+    FormsModule,
   ],
 })
 export class CharacterPageComponent implements OnInit, OnDestroy {
@@ -69,8 +70,6 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
       };
     }).filter(s => s.spells.length > 0);
   });
-
-  protected readonly testSpell = spellsFr.find(spell => spell.id === 'dissipation-de-la-magie')!;
 
   ngOnInit(): void {
     this.route.data
@@ -105,7 +104,7 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
     this.navService.mainTitle.set('');
   }
 
-  changeHp(title: string, label: string, negative: boolean, temp: boolean): void {
+  public changeHp(title: string, label: string, negative: boolean, temp: boolean): void {
     this.matDialog.open<HpDialogComponent, HpDialogData, number>(
       HpDialogComponent,
       {
@@ -122,9 +121,7 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(hp => {
       const char = this.character();
-      if (!char) {
-        return;
-      }
+      if (!char) return;
       let hpChange = negative ? -hp : hp;
       if (temp) {
         hpChange = hp - char.hpTemp;
@@ -143,5 +140,25 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
           .catch(err => console.error('Error updating character HP:', err));
       }
     });
+  }
+
+  public setAbilityUsage(abilityId: string, usage: number): void {
+    const char = this.character();
+    if (!char) return;
+    const abilityUsage = {...char.abilityUsage, [abilityId]: usage};
+    this.characterService.updateCharacter(char.id, {abilityUsage})
+      .then(updatedChar => this.character.set(updatedChar))
+      .catch(err => console.error('Error updating character ability usage:', err));
+
+  }
+
+  public setSpellSlotBurns(spellLevel: number, nbBurnt: number): void {
+    const char = this.character();
+    if (!char) return;
+    const spellSlotBurns = [...char.spellSlotBurns];
+    spellSlotBurns[spellLevel] = nbBurnt;
+    this.characterService.updateCharacter(char.id, {spellSlotBurns})
+      .then(updatedChar => this.character.set(updatedChar))
+      .catch(err => console.error('Error updating character spell slot burns:', err));
   }
 }
