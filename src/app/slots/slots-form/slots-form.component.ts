@@ -7,6 +7,12 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
+import {getRandomString} from '../../utils/get-random-string';
+
+interface DisplayedSlot {
+  id: string;
+  burnt: boolean;
+}
 
 @Component({
   selector: 'app-slots-form',
@@ -21,17 +27,20 @@ import {
 export class SlotsFormComponent implements ControlValueAccessor, Validator {
   public readonly maxSlots = input.required<number>();
 
+  private readonly componentId = getRandomString(8);
+
   protected readonly isDisabled = signal<boolean>(false);
 
   private readonly burntSlots = signal<number>(0);
 
-  protected readonly slots = computed<boolean[][]>(() => {
+  protected readonly slots = computed<DisplayedSlot[][]>(() => {
     const maxSlots = this.maxSlots();
     const burntSlots = this.burntSlots();
     const maxSlotsPerRow = 5;
     return Array.from({length: Math.ceil(maxSlots / maxSlotsPerRow)}, (_, i) =>
       Array.from({length: Math.min(maxSlotsPerRow, maxSlots - maxSlotsPerRow * i)}, (_, j) => {
-        return i * maxSlotsPerRow + j < burntSlots;
+        const index = i * maxSlotsPerRow + j;
+        return {id: this.componentId + '-' + index, burnt: index < burntSlots};
       })
     );
   });
@@ -126,6 +135,11 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
     if (currentBurntSlots < this.maxSlots()) {
       this.burntSlots.set(currentBurntSlots + 1);
       this.onChange(this.burntSlots());
+      const slotElement = document.getElementById(`${this.componentId}-${currentBurntSlots}`);
+      if (slotElement) {
+        slotElement.classList.add('burning');
+        setTimeout(() => slotElement.classList.replace('burning', 'burnt'), 300);
+      }
       this.burnHapticFeedback();
     }
   }
@@ -135,6 +149,11 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
     if (currentBurntSlots > 0) {
       this.burntSlots.set(currentBurntSlots - 1);
       this.onChange(this.burntSlots());
+      const slotElement = document.getElementById(`${this.componentId}-${currentBurntSlots - 1}`);
+      if (slotElement) {
+        slotElement.classList.add('filling');
+        setTimeout(() => slotElement.classList.replace('filling', 'available'), 300);
+      }
       void this.unBurnHapticFeedback();
     }
   }

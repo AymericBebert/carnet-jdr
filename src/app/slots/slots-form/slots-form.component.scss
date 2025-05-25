@@ -16,16 +16,68 @@
 }
 
 .slot {
+  position: relative;
   width: 16px;
   height: 16px;
   border-radius: 8px;
   border: none;
+  background-color: #5a3106;
+  overflow: visible;
 
   &.available {
     background-color: #ffc400;
   }
 
-  &.burnt {
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transform-origin: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  &.filling {
     background-color: #5a3106;
+  }
+
+  &.filling::after {
+    background-color: #ffc400;
+    animation: firefill 300ms ease-out forwards;
+  }
+
+  &.burning::after {
+    background: radial-gradient(circle, #ffc400, orange, red, transparent);
+    animation: fireburst 300ms ease-out forwards;
+  }
+}
+
+@keyframes firefill {
+  0% {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fireburst {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
   }
 }

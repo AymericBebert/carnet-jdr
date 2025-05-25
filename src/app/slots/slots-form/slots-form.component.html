@@ -8,7 +8,7 @@
   @for (slotRow of slots(); track $index) {
     <div class="slot-row">
       @for (slot of slotRow; track $index) {
-        <div class="slot" [class.available]="!slot" [class.burnt]="slot"></div>
+        <div [attr.id]="slot.id" class="slot" [class.available]="!slot.burnt" [class.burnt]="slot.burnt"></div>
       }
     </div>
   }
