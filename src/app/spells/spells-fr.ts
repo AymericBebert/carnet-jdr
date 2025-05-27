@@ -1,4 +1,4 @@
-import {Spell} from './spells.model';
+import {Spell} from './spell.model';
 
 /* eslint-disable max-len */
 

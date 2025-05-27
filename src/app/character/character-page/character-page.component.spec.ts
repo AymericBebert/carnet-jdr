@@ -1,11 +1,10 @@
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
-import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {of} from 'rxjs';
 import {ConfigTestingModule} from '../../testing/config-testing.module';
 import {UpdaterTestingModule} from '../../testing/updater-testing.module';
+import {CharacterRootComponent} from '../character-root/character-root.component';
 import {toCharacter} from '../character.model';
 import {CharacterPageComponent} from './character-page.component';
 
@@ -23,9 +22,8 @@ describe('CharacterPageComponent', () => {
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),
-        provideHttpClient(withInterceptorsFromDi()),
-        provideHttpClientTesting(),
         {provide: ActivatedRoute, useValue: {data: of({character: toCharacter({})})}},
+        CharacterRootComponent,
       ],
     });
 

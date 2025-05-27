@@ -2,32 +2,26 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {of} from 'rxjs';
-import {ConfigTestingModule} from '../../testing/config-testing.module';
-import {UpdaterTestingModule} from '../../testing/updater-testing.module';
-import {CharacterRootComponent} from '../character-root/character-root.component';
 import {toCharacter} from '../character.model';
-import {EditCharacterPageComponent} from './edit-character-page.component';
+import {CharacterRootComponent} from './character-root.component';
 
-describe('EditCharacterPageComponent', () => {
-  let component: EditCharacterPageComponent;
-  let fixture: ComponentFixture<EditCharacterPageComponent>;
+describe('CharacterRootComponent', () => {
+  let component: CharacterRootComponent;
+  let fixture: ComponentFixture<CharacterRootComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        EditCharacterPageComponent,
-        ConfigTestingModule,
-        UpdaterTestingModule,
+        CharacterRootComponent,
       ],
       providers: [
         provideExperimentalZonelessChangeDetection(),
         {provide: ActivatedRoute, useValue: {data: of({character: toCharacter({})})}},
-        CharacterRootComponent,
       ],
     });
 
-    fixture = TestBed.createComponent(EditCharacterPageComponent);
+    fixture = TestBed.createComponent(CharacterRootComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

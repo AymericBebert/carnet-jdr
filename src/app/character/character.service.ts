@@ -1,5 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {DBSchema, IDBPDatabase, openDB} from 'idb';
+import {Subject} from 'rxjs';
 import {ConfirmService} from '../confirm/confirm.service';
 import {getRandomString} from '../utils/get-random-string';
 import {Character, CharacterEditDto, CharacterHeader, toCharacter, toCharacterHeader} from './character.model';
@@ -16,6 +17,7 @@ interface CharacterDB extends DBSchema {
 })
 export class CharacterService {
   private readonly confirm = inject(ConfirmService);
+  public readonly characterUpdated$ = new Subject<string>();
 
   private dbPromise: Promise<IDBPDatabase<CharacterDB>> | null = null;
 
@@ -48,6 +50,7 @@ export class CharacterService {
     if (!existing) throw new Error('Character not found');
     const updated = {...existing, ...update};
     await db.put('characters', updated);
+    this.characterUpdated$.next(id);
     return toCharacter(updated);
   }
 

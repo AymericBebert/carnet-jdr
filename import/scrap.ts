@@ -7,7 +7,7 @@ import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
 import {CharacterClass} from '../src/app/character/character.model';
-import {Spell} from '../src/app/spells/spells.model';
+import {Spell} from '../src/app/spells/spell.model';
 
 function strSanitize(str: string): string {
   return str.replace(/['´]/g, '’');

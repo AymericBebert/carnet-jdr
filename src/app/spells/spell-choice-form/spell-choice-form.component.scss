@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+:host::ng-deep {
+  mat-checkbox.compact .mat-internal-form-field > label {
+    padding-left: 0;
+  }
+}

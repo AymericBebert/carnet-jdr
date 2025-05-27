@@ -1,5 +1,5 @@
 import {Ability, AbilityUsage} from '../ability/ability.model';
-import {SpellChoice} from '../spells/spells.model';
+import {SpellChoices} from '../spells/spell.model';
 import {removeUndefinedValues} from '../utils/remove-undefined-values';
 
 export const characterClasses = [
@@ -46,7 +46,7 @@ export interface Character extends CharacterHeader {
   abilityUsage: AbilityUsage;
   spellSlots: number[];
   spellSlotBurns: number[];
-  spellChoices: SpellChoice[];
+  spellChoices: SpellChoices;
 }
 
 export function toCharacter(character: Partial<Character>): Character {
@@ -56,7 +56,7 @@ export function toCharacter(character: Partial<Character>): Character {
     abilityUsage: character.abilityUsage || {},
     spellSlots: character.spellSlots || [],
     spellSlotBurns: (character.spellSlots || []).map((_, i) => character.spellSlotBurns?.[i] || 0),
-    spellChoices: character.spellChoices || [],
+    spellChoices: character.spellChoices || {},
   };
 }
 

@@ -1,7 +1,7 @@
 import {Component, input, signal} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {IconRitualComponent} from '../../icons/icon-ritual.component';
-import {Spell} from '../spells.model';
+import {Spell} from '../spell.model';
 
 @Component({
   selector: 'app-spell-card',

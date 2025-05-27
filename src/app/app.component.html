@@ -79,7 +79,7 @@
         {{ navService.mainTitle() || 'Carnet JdR' }}
       </span>
 
-      @for (buttonId of navService.navButtons(); track buttonId) {
+      @for (buttonId of navService.navButtons(); track $index) {
         <button
           mat-icon-button
           type="button"

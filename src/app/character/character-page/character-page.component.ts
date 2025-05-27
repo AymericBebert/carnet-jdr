@@ -1,4 +1,4 @@
-import {Component, computed, DestroyRef, inject, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, computed, DestroyRef, effect, inject} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -12,12 +12,12 @@ import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
 import {SlotsFormComponent} from '../../slots/slots-form/slots-form.component';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
+import {Spell} from '../../spells/spell.model';
 import {spellsFr} from '../../spells/spells-fr';
-import {Spell} from '../../spells/spells.model';
 import {cleanForFilename} from '../../utils/clean-for-filename';
 import {downloadJson} from '../../utils/download-as-file';
 import {CharacterCardComponent} from '../character-card/character-card.component';
-import {Character} from '../character.model';
+import {CharacterRootComponent} from '../character-root/character-root.component';
 import {CharacterService} from '../character.service';
 import {HpDialogComponent, HpDialogData} from './hp-dialog/hp-dialog.component';
 
@@ -43,7 +43,8 @@ interface SpellsInLevel {
     FormsModule,
   ],
 })
-export class CharacterPageComponent implements OnInit, OnDestroy {
+export class CharacterPageComponent {
+  private readonly characterRoot = inject(CharacterRootComponent);
   private readonly characterService = inject(CharacterService);
   private readonly navService = inject(NavService);
   private readonly navButtonsService = inject(NavButtonsService);
@@ -52,7 +53,7 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
 
-  protected readonly character = signal<Character | null>(null);
+  protected readonly character = this.characterRoot.character;
 
   protected readonly availableSpells = computed<SpellsInLevel[]>(() => {
     const char = this.character();
@@ -71,37 +72,34 @@ export class CharacterPageComponent implements OnInit, OnDestroy {
     }).filter(s => s.spells.length > 0);
   });
 
-  ngOnInit(): void {
-    this.route.data
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(data => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-        const char: Character = data.character;
-        this.character.set(char);
-        this.navService.mainTitle.set(char.name);
-      });
+  constructor() {
+    effect(() => {
+      const char = this.character();
+      if (!char) return;
+      this.navService.mainTitle.set(char.name);
+    });
 
     this.navButtonsService.navButtonClicked$()
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(takeUntilDestroyed())
       .subscribe(btn => {
         const char = this.character();
         if (!char) return;
         switch (btn) {
           case 'edit':
-            void this.router.navigate(['../..', 'edit-character', char.id], {relativeTo: this.route});
+            void this.router.navigate(['edit'], {relativeTo: this.route});
             break;
           case 'menu_book':
-            console.log('TODO edit spells');
+            void this.router.navigate(['spells'], {relativeTo: this.route});
             break;
           case 'download':
             downloadJson(char, cleanForFilename(char.name) + '.json');
             break;
         }
       });
-  }
 
-  ngOnDestroy(): void {
-    this.navService.mainTitle.set('');
+    this.destroyRef.onDestroy(() => {
+      this.navService.mainTitle.set('');
+    });
   }
 
   public changeHp(title: string, label: string, negative: boolean, temp: boolean): void {

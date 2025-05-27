@@ -1,0 +1,17 @@
+<div style="max-width: 800px; margin: auto">
+  @let spellsByLevel = availableSpells();
+
+  @if (spellsByLevel.length > 0) {
+    @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
+      <h2 class="spell-level-header" [class.first]="first">
+        <span>Niveau {{ spellLevel.level }}</span>
+      </h2>
+      @for (spell of spellLevel.spells; track spell.spell.id) {
+        <app-spell-card [spell]="spell.spell"></app-spell-card>
+        <app-spell-choice-form [formControl]="spell.choice"
+                               style="border-bottom: 2px solid #88888888"
+        ></app-spell-choice-form>
+      }
+    }
+  }
+</div>
