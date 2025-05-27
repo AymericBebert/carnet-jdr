@@ -2,6 +2,7 @@ import {provideExperimentalZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
 import {of} from 'rxjs';
+import {CharacterRootComponent} from '../../character/character-root/character-root.component';
 import {toCharacter} from '../../character/character.model';
 import {ConfigTestingModule} from '../../testing/config-testing.module';
 import {UpdaterTestingModule} from '../../testing/updater-testing.module';
@@ -22,6 +23,7 @@ describe('SpellsChoiceComponent', () => {
       providers: [
         provideExperimentalZonelessChangeDetection(),
         {provide: ActivatedRoute, useValue: {data: of({character: toCharacter({})})}},
+        CharacterRootComponent,
       ],
     });
 

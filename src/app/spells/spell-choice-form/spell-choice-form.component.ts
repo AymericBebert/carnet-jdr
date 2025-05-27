@@ -1,4 +1,4 @@
-import {Component, DestroyRef, forwardRef, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, forwardRef, inject, OnInit, output} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -37,10 +37,10 @@ export class SpellChoiceFormComponent implements OnInit, ControlValueAccessor, V
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly form = new FormGroup({
-    known: new FormControl<boolean>(false, {nonNullable: true}),
-    prepared: new FormControl<boolean>(false, {nonNullable: true}),
-    alwaysPrepared: new FormControl<boolean>(false, {nonNullable: true}),
-    favorite: new FormControl<boolean>(false, {nonNullable: true}),
+    known: new FormControl<boolean | null>(null),
+    prepared: new FormControl<boolean | null>(null),
+    alwaysPrepared: new FormControl<boolean | null>(null),
+    favorite: new FormControl<boolean | null>(null),
   });
 
   ngOnInit(): void {
@@ -51,11 +51,11 @@ export class SpellChoiceFormComponent implements OnInit, ControlValueAccessor, V
     });
   }
 
-  writeValue(obj: SpellChoice): void {
-    this.form.patchValue(obj || {});
+  writeValue(obj: SpellChoice<boolean | null>): void {
+    this.form.patchValue(obj || {}, {emitEvent: false});
   }
 
-  registerOnChange(fn: (_: SpellChoice) => void): void {
+  registerOnChange(fn: (_: SpellChoice<boolean | null>) => void): void {
     this.onChange = fn;
   }
 
@@ -78,7 +78,7 @@ export class SpellChoiceFormComponent implements OnInit, ControlValueAccessor, V
     return null;
   }
 
-  private onChange: (_: SpellChoice) => void = (_: SpellChoice) => void 0;
+  private onChange: (_: SpellChoice<boolean | null>) => void = (_: SpellChoice<boolean | null>) => void 0;
 
   private onTouched: () => void = () => void 0;
 }

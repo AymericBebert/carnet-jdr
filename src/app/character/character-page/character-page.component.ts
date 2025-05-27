@@ -13,7 +13,7 @@ import {NavService} from '../../nav/nav.service';
 import {SlotsFormComponent} from '../../slots/slots-form/slots-form.component';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
 import {Spell} from '../../spells/spell.model';
-import {spellsFr} from '../../spells/spells-fr';
+import {SpellService} from '../../spells/spell.service';
 import {cleanForFilename} from '../../utils/clean-for-filename';
 import {downloadJson} from '../../utils/download-as-file';
 import {CharacterCardComponent} from '../character-card/character-card.component';
@@ -46,6 +46,7 @@ interface SpellsInLevel {
 export class CharacterPageComponent {
   private readonly characterRoot = inject(CharacterRootComponent);
   private readonly characterService = inject(CharacterService);
+  private readonly spellService = inject(SpellService);
   private readonly navService = inject(NavService);
   private readonly navButtonsService = inject(NavButtonsService);
   private readonly matDialog = inject(MatDialog);
@@ -60,9 +61,7 @@ export class CharacterPageComponent {
     if (!char) {
       return [];
     }
-    const available = spellsFr
-      .filter(s => char.spellSlots[s.level])
-      .filter(s => s.classes.includes(char.class));
+    const available = this.spellService.getSpells({known: true}, char.spellChoices);
     return char.spellSlots.map((slots, level) => {
       return {
         level,

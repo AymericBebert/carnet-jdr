@@ -13,7 +13,7 @@ h2.section-header {
 
 h2.spell-level-header {
   display: flex;
-  align-items: center;
+  flex-direction: column;
 
   background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
   color: var(--mat-toolbar-container-text-color, var(--mat-sys-on-surface));
@@ -22,9 +22,5 @@ h2.spell-level-header {
 
   &.first {
     margin-top: 12px;
-  }
-
-  & > span {
-    flex-grow: 1;
   }
 }

@@ -19,14 +19,14 @@ export interface Spell {
   details: string;
 }
 
-export interface SpellChoice {
-  known: boolean;
-  prepared: boolean;
-  alwaysPrepared: boolean;
-  favorite: boolean;
+export interface SpellChoice<B = boolean> {
+  known: B;
+  prepared: B;
+  alwaysPrepared: B;
+  favorite: B;
 }
 
-export function toSpellChoice(choice: Partial<SpellChoice>): SpellChoice {
+export function toSpellChoice(choice: Partial<SpellChoice<boolean | null>>): SpellChoice {
   return {
     known: choice.known ?? false,
     prepared: choice.prepared ?? false,
