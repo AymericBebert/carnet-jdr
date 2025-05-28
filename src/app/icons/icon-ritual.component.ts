@@ -4,10 +4,10 @@ import {Component, input} from '@angular/core';
   selector: 'app-icon-ritual',
   template: `
     <svg [attr.width]="size()" [attr.height]="size()" viewBox="0 0 341 341" xmlns="http://www.w3.org/2000/svg">
-      <path id="star" fill="none" stroke="currentColor" opacity="0.1" style="stroke-width:13;stroke-linejoin:bevel"
+      <path id="star" fill="none" stroke="currentColor" opacity="0.2" style="stroke-width:13;stroke-linejoin:bevel"
             d="M 25,219 L 317,219 L 81,45 L 171,324 L 261,45 z"
       />
-      <circle id="circle" fill="none" stroke="currentColor" opacity="0.1" style="stroke-width:13"
+      <circle id="circle" fill="none" stroke="currentColor" opacity="0.2" style="stroke-width:13"
               cx="171" cy="171" r="163"
       />
     </svg>

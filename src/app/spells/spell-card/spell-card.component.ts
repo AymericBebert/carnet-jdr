@@ -1,7 +1,7 @@
 import {Component, input, signal} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {IconRitualComponent} from '../../icons/icon-ritual.component';
-import {Spell} from '../spell.model';
+import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
 
 @Component({
   selector: 'app-spell-card',
@@ -14,6 +14,7 @@ import {Spell} from '../spell.model';
 })
 export class SpellCardComponent {
   public readonly spell = input.required<Spell>();
+  public readonly spellChoice = input<SpellChoice>(toSpellChoice({}));
 
   public readonly isOpen = signal<boolean>(false);
 }

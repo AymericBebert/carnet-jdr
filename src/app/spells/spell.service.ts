@@ -27,7 +27,7 @@ export class SpellService {
       if (filter.known != null && spellChoice.known !== filter.known) {
         return false;
       }
-      if (filter.prepared != null && spellChoice.prepared !== filter.prepared) {
+      if (filter.prepared != null && (spellChoice.prepared || spellChoice.alwaysPrepared) !== filter.prepared) {
         return false;
       }
       if (filter.favorite != null && spellChoice.favorite !== filter.favorite) {

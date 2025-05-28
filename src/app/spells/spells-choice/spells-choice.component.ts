@@ -74,9 +74,9 @@ export class SpellsChoiceComponent {
     name: new FormControl<string | null>(null),
     level: new FormControl<number[] | null>(null),
     classes: new FormControl<CharacterClass[] | null>(null),
-    known: new FormControl<boolean>(false),
-    prepared: new FormControl<boolean>(false),
-    favorite: new FormControl<boolean>(false),
+    known: new FormControl<boolean | null>(null),
+    prepared: new FormControl<boolean | null>(null),
+    favorite: new FormControl<boolean | null>(null),
   });
 
   protected readonly availableSpells$ = new BehaviorSubject<SpellsInLevel[]>([]);

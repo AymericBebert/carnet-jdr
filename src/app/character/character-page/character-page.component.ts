@@ -1,23 +1,25 @@
-import {Component, computed, DestroyRef, effect, inject} from '@angular/core';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {takeUntilDestroyed, toObservable} from '@angular/core/rxjs-interop';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
+import {combineLatest, startWith} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {AbilityCardComponent} from '../../ability/ability-card/ability-card.component';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
 import {SlotsFormComponent} from '../../slots/slots-form/slots-form.component';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
-import {Spell} from '../../spells/spell.model';
+import {Spell, SpellFilter} from '../../spells/spell.model';
 import {SpellService} from '../../spells/spell.service';
 import {cleanForFilename} from '../../utils/clean-for-filename';
 import {downloadJson} from '../../utils/download-as-file';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {CharacterRootComponent} from '../character-root/character-root.component';
+import {CharacterClass} from '../character.model';
 import {CharacterService} from '../character.service';
 import {HpDialogComponent, HpDialogData} from './hp-dialog/hp-dialog.component';
 
@@ -55,28 +57,44 @@ export class CharacterPageComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly character = this.characterRoot.character;
+  private readonly character$ = toObservable(this.character);
 
-  protected readonly availableSpells = computed<SpellsInLevel[]>(() => {
-    const char = this.character();
-    if (!char) {
-      return [];
-    }
-    const available = this.spellService.getSpells({known: true}, char.spellChoices);
-    return char.spellSlots.map((slots, level) => {
-      return {
-        level,
-        slots: level === 0 ? 0 : slots,
-        spells: available.filter(s => s.level === level),
-      };
-    }).filter(s => s.spells.length > 0);
+  protected readonly filterForm = new FormGroup({
+    name: new FormControl<string | null>(null),
+    level: new FormControl<number[] | null>(null),
+    classes: new FormControl<CharacterClass[] | null>(null),
+    known: new FormControl<boolean | null>(true),
+    prepared: new FormControl<boolean | null>(null),
+    favorite: new FormControl<boolean | null>(null),
   });
 
+  protected readonly availableSpells = signal<SpellsInLevel[]>([]);
+
   constructor() {
-    effect(() => {
-      const char = this.character();
-      if (!char) return;
-      this.navService.mainTitle.set(char.name);
-    });
+    this.character$
+      .pipe(takeUntilDestroyed())
+      .subscribe(char => {
+        if (!char) return;
+        this.navService.mainTitle.set(char.name);
+      });
+
+    combineLatest([
+      this.character$,
+      this.filterForm.valueChanges.pipe(startWith(this.filterForm.value)),
+    ])
+      .pipe(takeUntilDestroyed())
+      .subscribe(([char, _]) => {
+        if (!char) return;
+        const available = this.spellService.getSpells(this.getSpellFilter(), char.spellChoices);
+        const availableSpells = char.spellSlots.map((slots, level) => {
+          return {
+            level,
+            slots: level === 0 ? 0 : slots,
+            spells: available.filter(s => s.level === level),
+          };
+        }).filter(s => s.spells.length > 0);
+        this.availableSpells.set(availableSpells);
+      });
 
     this.navButtonsService.navButtonClicked$()
       .pipe(takeUntilDestroyed())
@@ -157,5 +175,17 @@ export class CharacterPageComponent {
     this.characterService.updateCharacter(char.id, {spellSlotBurns})
       .then(updatedChar => this.character.set(updatedChar))
       .catch(err => console.error('Error updating character spell slot burns:', err));
+  }
+
+  private getSpellFilter(): SpellFilter {
+    const filter = this.filterForm.getRawValue();
+    return {
+      name: filter.name?.trim() || null,
+      level: filter.level?.length ? filter.level : null,
+      classes: filter.classes?.length ? filter.classes : null,
+      known: filter.known ?? null,
+      prepared: filter.prepared ?? null,
+      favorite: filter.favorite ?? null,
+    };
   }
 }

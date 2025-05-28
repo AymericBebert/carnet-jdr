@@ -7,8 +7,11 @@
 h2.section-header {
   display: flex;
   align-items: center;
-  gap: 8px;
   margin: 32px 0 16px;
+
+  > mat-icon:first-child {
+    margin-right: 8px;
+  }
 }
 
 h2.spell-level-header {

@@ -7,6 +7,14 @@
 @mixin theme-overrides($light-or-dark) {
   //@include command.component-theme($light-or-dark);
 
+  .color-primary {
+    color: map.get(tc.$primary-palette, 50);
+  }
+
+  .color-warn {
+    color: map.get(tc.$error-palette, 50);
+  }
+
   @if $light-or-dark == light {
     @include theme-overrides-light();
   } @else {

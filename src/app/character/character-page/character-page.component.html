@@ -40,7 +40,29 @@
     @if (spellsByLevel.length > 0) {
       <h2 class="section-header">
         <mat-icon>menu_book</mat-icon>
-        <span>Sorts</span>
+        <span style="flex-grow: 1">Sorts</span>
+        @if (filterForm.controls.favorite.value) {
+          <button mat-icon-button (click)="filterForm.controls.favorite.setValue(null)"
+                  aria-label="Afficher les sorts favoris ou non">
+            <mat-icon class="color-warn">favorite</mat-icon>
+          </button>
+        } @else {
+          <button mat-icon-button (click)="filterForm.controls.favorite.setValue(true)"
+                  aria-label="Afficher les sorts favoris uniquement">
+            <mat-icon class="color-warn" style="opacity: 0.3">favorite</mat-icon>
+          </button>
+        }
+        @if (filterForm.controls.prepared.value) {
+          <button mat-icon-button (click)="filterForm.controls.prepared.setValue(null)"
+                  aria-label="Afficher les sorts préparés ou non">
+            <mat-icon class="color-primary">fact_check</mat-icon>
+          </button>
+        } @else {
+          <button mat-icon-button (click)="filterForm.controls.prepared.setValue(true)"
+                  aria-label="Afficher les sorts préparés uniquement">
+            <mat-icon class="color-primary" style="opacity: 0.3">fact_check</mat-icon>
+          </button>
+        }
       </h2>
 
       @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
@@ -52,7 +74,7 @@
           ></app-slots-form>
         </h2>
         @for (spell of spellLevel.spells; track spell.id) {
-          <app-spell-card [spell]="spell"></app-spell-card>
+          <app-spell-card [spell]="spell" [spellChoice]="char.spellChoices[spell.id]"></app-spell-card>
         }
       }
     }

@@ -1,24 +1,31 @@
 @let sp = spell();
+@let sc = spellChoice();
 
 @if (isOpen()) {
 
   <div class="spell-open">
     <div class="spell-header" (click)="isOpen.set(false)">
       <h3>{{ sp.name }}</h3>
-      @if (sp.verbal) {
-        <span>V</span>
-      }
-      @if (sp.somatic) {
-        <span>S</span>
-      }
-      @if (sp.material) {
-        <span>M</span>
-      }
+      <!--      @if (sp.verbal) {-->
+      <!--        <span>V</span>-->
+      <!--      }-->
+      <!--      @if (sp.somatic) {-->
+      <!--        <span>S</span>-->
+      <!--      }-->
+      <!--      @if (sp.material) {-->
+      <!--        <span>M</span>-->
+      <!--      }-->
       @if (sp.ritual) {
         <app-icon-ritual [size]="20"></app-icon-ritual>
       }
       @if (sp.concentration) {
         <mat-icon>cognition</mat-icon>
+      }
+      @if (sc.favorite) {
+        <mat-icon class="color-warn">favorite</mat-icon>
+      }
+      @if (sc.prepared || sc.alwaysPrepared) {
+        <mat-icon class="color-primary" [style.opacity]="sc.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
       }
     </div>
 
@@ -54,20 +61,26 @@
   <div class="spell-closed">
     <div class="spell-header" (click)="isOpen.set(true)">
       <h3>{{ sp.name }}</h3>
-      @if (sp.verbal) {
-        <span>V</span>
-      }
-      @if (sp.somatic) {
-        <span>S</span>
-      }
-      @if (sp.material) {
-        <span>M</span>
-      }
+      <!--      @if (sp.verbal) {-->
+      <!--        <span>V</span>-->
+      <!--      }-->
+      <!--      @if (sp.somatic) {-->
+      <!--        <span>S</span>-->
+      <!--      }-->
+      <!--      @if (sp.material) {-->
+      <!--        <span>M</span>-->
+      <!--      }-->
       @if (sp.ritual) {
         <app-icon-ritual [size]="20"></app-icon-ritual>
       }
       @if (sp.concentration) {
         <mat-icon>cognition</mat-icon>
+      }
+      @if (sc.favorite) {
+        <mat-icon class="color-warn">favorite</mat-icon>
+      }
+      @if (sc.prepared || sc.alwaysPrepared) {
+        <mat-icon class="color-primary" [style.opacity]="sc.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
       }
     </div>
     <p class="additional" style="margin: 0">{{ sp.description }}</p>
