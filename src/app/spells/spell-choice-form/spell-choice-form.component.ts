@@ -1,4 +1,4 @@
-import {Component, DestroyRef, forwardRef, inject, OnInit, output} from '@angular/core';
+import {Component, DestroyRef, forwardRef, inject, OnInit} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
