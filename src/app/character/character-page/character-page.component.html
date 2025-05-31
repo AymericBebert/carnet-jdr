@@ -4,17 +4,17 @@
 
     <div style="display: flex; justify-content: center; margin-top: 4px">
       <button mat-icon-button aria-label="Diminuer les PV"
-              (click)="changeHp('Diminuer les PV', 'Diminuer de', true, false)"
+              (click)="changeHp('Diminuer les PV de', true, false)"
       >
         <mat-icon>heart_minus</mat-icon>
       </button>
       <button mat-icon-button aria-label="Augmenter les PV"
-              (click)="changeHp('Augmenter les PV', 'Augmenter de', false, false)"
+              (click)="changeHp('Augmenter les PV de', false, false)"
       >
         <mat-icon>heart_plus</mat-icon>
       </button>
       <button mat-icon-button aria-label="PV temporaires" style="opacity: 0.5"
-              (click)="changeHp('Ajuster les PV temporaires', 'PV temporaires', false, true)"
+              (click)="changeHp('PV temporaires',  false, true)"
       >
         <mat-icon>relax</mat-icon>
       </button>

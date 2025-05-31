@@ -119,17 +119,15 @@ export class CharacterPageComponent {
     });
   }
 
-  public changeHp(title: string, label: string, negative: boolean, temp: boolean): void {
+  public changeHp(label: string, negative: boolean, temp: boolean): void {
     this.matDialog.open<HpDialogComponent, HpDialogData, number>(
       HpDialogComponent,
       {
         data: {
-          title,
           label,
           ...temp ? {initial: this.character()?.hpTemp || undefined} : {},
         },
-        autoFocus: 'input',
-        position: {top: '20vh'},
+        autoFocus: '__nope__',
       },
     ).afterClosed().pipe(
       filter(hp => hp != null),
@@ -140,18 +138,11 @@ export class CharacterPageComponent {
       let hpChange = negative ? -hp : hp;
       if (temp) {
         hpChange = hp - char.hpTemp;
-        this.characterService.updateCharacter(char.id, {
-          hpTemp: hp,
-          hp: char.hp + hpChange,
-        })
-          .then(updatedChar => this.character.set(updatedChar))
+        this.characterService.updateCharacter(char.id, {hpTemp: hp, hp: char.hp + hpChange})
           .catch(err => console.error('Error updating character temp HP:', err));
       } else {
         const newHp = Math.min(char.hpMax + char.hpTemp, char.hp + hpChange);
-        this.characterService.updateCharacter(char.id, {
-          hp: newHp,
-        })
-          .then(updatedChar => this.character.set(updatedChar))
+        this.characterService.updateCharacter(char.id, {hp: newHp})
           .catch(err => console.error('Error updating character HP:', err));
       }
     });
@@ -162,9 +153,7 @@ export class CharacterPageComponent {
     if (!char) return;
     const abilityUsage = {...char.abilityUsage, [abilityId]: usage};
     this.characterService.updateCharacter(char.id, {abilityUsage})
-      .then(updatedChar => this.character.set(updatedChar))
       .catch(err => console.error('Error updating character ability usage:', err));
-
   }
 
   public setSpellSlotBurns(spellLevel: number, nbBurnt: number): void {
@@ -173,7 +162,6 @@ export class CharacterPageComponent {
     const spellSlotBurns = [...char.spellSlotBurns];
     spellSlotBurns[spellLevel] = nbBurnt;
     this.characterService.updateCharacter(char.id, {spellSlotBurns})
-      .then(updatedChar => this.character.set(updatedChar))
       .catch(err => console.error('Error updating character spell slot burns:', err));
   }
 

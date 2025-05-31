@@ -19,7 +19,7 @@
   <input matInput type="number" autocomplete="off" [formControl]="form.controls.hpMax">
 </mat-form-field>
 
-<p style="margin-bottom: 0">Theme</p>
+<p style="margin-bottom: 0">Thème</p>
 <mat-slider [max]="100" [min]="0" [step]="1" style="margin-bottom: 20px">
   <input matSliderThumb [formControl]="form.controls.theme">
 </mat-slider>
@@ -28,6 +28,12 @@
   <mat-icon>flare</mat-icon>
   <span>Pouvoirs</span>
 </h2>
+
+@if (creationAid()) {
+  <p class="creation-aid">
+    Capacités ou objets ayant un certain nombre d'utilisations par jour. Vous pourrez les modifier plus tard.
+  </p>
+}
 
 <app-character-abilities-form [formControl]="form.controls.abilities"></app-character-abilities-form>
 

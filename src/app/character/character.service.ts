@@ -27,6 +27,7 @@ export class CharacterService {
       ...character,
       id,
     });
+    newCharacter.hp = newCharacter.hpMax;
     const db = await this.getDb();
     await db.put('characters', newCharacter);
   }

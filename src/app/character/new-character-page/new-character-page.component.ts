@@ -50,7 +50,7 @@ export class NewCharacterPageComponent {
         }
       });
 
-    this.navService.mainTitle.set('Nouveau personnage');
+    this.navService.mainTitle.set('Nouveau perso');
 
     this.destroyRef.onDestroy(() => {
       this.navService.mainTitle.set('');

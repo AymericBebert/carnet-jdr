@@ -72,17 +72,20 @@
   }
 }
 @if (isEditing() === -1) {
-  <div style="display: flex; justify-content: space-between">
+  <div style="display: flex">
     @if (isReordering()) {
       <button mat-button (click)="isReordering.set(false)">
         <mat-icon>done</mat-icon>
         Valider ordre
       </button>
     } @else {
-      <button mat-button (click)="isReordering.set(true)" [disabled]="isDisabled()">
-        <mat-icon>swap_vert</mat-icon>
-        Ré-ordonner
-      </button>
+      @if (abilities().length > 1) {
+        <button mat-button (click)="isReordering.set(true)" [disabled]="isDisabled()">
+          <mat-icon>swap_vert</mat-icon>
+          Ré-ordonner
+        </button>
+      }
+      <div style="flex-grow: 1"></div>
       <button mat-button (click)="addAbility()" [disabled]="isDisabled()">
         <mat-icon>add</mat-icon>
         Ajouter un pouvoir

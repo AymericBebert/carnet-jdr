@@ -1,4 +1,4 @@
-import {Component, DestroyRef, forwardRef, inject, OnInit, signal} from '@angular/core';
+import {Component, DestroyRef, forwardRef, inject, input, OnInit, signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -50,6 +50,8 @@ import {
 })
 export class CharacterFormComponent implements OnInit, ControlValueAccessor, Validator {
   private readonly destroyRef = inject(DestroyRef);
+
+  public readonly creationAid = input<boolean>(false);
 
   protected readonly preview = signal<CharacterHeader>(toCharacterHeader({}));
   protected readonly characterClasses = characterClasses;

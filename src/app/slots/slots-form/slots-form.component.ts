@@ -154,7 +154,7 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
         slotElement.classList.add('filling');
         setTimeout(() => slotElement.classList.replace('filling', 'available'), 300);
       }
-      void this.unBurnHapticFeedback();
+      this.unBurnHapticFeedback();
     }
   }
 
@@ -164,13 +164,9 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
     }
   }
 
-  private async unBurnHapticFeedback(): Promise<void> {
+  private unBurnHapticFeedback(): void {
     if (navigator.vibrate) {
-      navigator.vibrate(50);
-    }
-    await new Promise(sleep => setTimeout(sleep, 50));
-    if (navigator.vibrate) {
-      navigator.vibrate(50);
+      navigator.vibrate([50, 50, 50]);
     }
   }
 

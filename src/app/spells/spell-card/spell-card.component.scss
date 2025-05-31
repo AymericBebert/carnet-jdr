@@ -1,21 +1,25 @@
-.spell-open {
-  padding: 12px 0 24px;
+.spell-card {
+  cursor: pointer;
+  transition: padding 0.2s ease-in-out;
 
-  & > p {
-    margin: 4px 0 0;
+  &.spell-open {
+    padding: 24px 0 48px;
+
+    & > p {
+      margin: 4px 0 0;
+    }
+
+    .key {
+      font-weight: bold;
+    }
   }
 
-  .key {
-    font-weight: bold;
+  &:not(.spell-open) {
+    padding: 12px 0 0;
   }
-}
-
-.spell-closed {
-  padding: 12px 0 0;
 }
 
 .spell-header {
-  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -25,6 +29,10 @@
     margin: 0;
     flex-grow: 1;
   }
+}
+
+.spell-details {
+  opacity: 0.92;
 }
 
 .additional {

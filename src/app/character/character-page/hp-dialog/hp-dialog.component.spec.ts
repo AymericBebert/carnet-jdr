@@ -18,7 +18,6 @@ describe('HpDialogComponent', () => {
         {
           provide: MAT_DIALOG_DATA,
           useValue: {
-            title: 'Test Title',
             label: 'Test label',
           } satisfies HpDialogData,
         },

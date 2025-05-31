@@ -61,6 +61,9 @@
   @include mat.expansion-overrides((
     container-background-color: map.get(tc.$neutral-palette, 17),
   ));
+  @include mat.dialog-overrides((
+    container-color: map.get(tc.$neutral-palette, 12),
+  ));
 
   .mat-drawer-content > router-outlet + * {
     background-color: map.get(tc.$neutral-palette, 6);

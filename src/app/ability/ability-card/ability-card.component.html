@@ -13,5 +13,5 @@
 </div>
 
 @if (isOpen()) {
-  <p style="margin: 16px 0 32px; white-space: pre-wrap">{{ ab.details }}</p>
+  <p class="ability-details" (click)="isOpen.set(false)">{{ ab.details }}</p>
 }
