@@ -1,6 +1,8 @@
 .spell-card {
+  position: relative;
   cursor: pointer;
   transition: padding 0.2s ease-in-out;
+  box-sizing: border-box;
 
   &.spell-open {
     padding: 24px 0 48px;
@@ -16,6 +18,12 @@
 
   &:not(.spell-open) {
     padding: 12px 0 0;
+  }
+
+  .actions {
+    position: absolute;
+    right: -8px;
+    z-index: 1;
   }
 }
 

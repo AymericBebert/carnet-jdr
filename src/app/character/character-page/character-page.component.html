@@ -74,7 +74,10 @@
           ></app-slots-form>
         </h2>
         @for (spell of spellLevel.spells; track spell.id) {
-          <app-spell-card [spell]="spell" [spellChoice]="char.spellChoices[spell.id]"></app-spell-card>
+          <app-spell-card [spell]="spell"
+                          [spellChoice]="char.spellChoices[spell.id]"
+                          (spellChoiceChange)="setSpellChoice(spell.id, $event)"
+          ></app-spell-card>
         }
       }
     }

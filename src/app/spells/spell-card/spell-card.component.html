@@ -19,6 +19,25 @@
   </div>
 
   @if (isOpen()) {
+    <button mat-icon-button class="actions" [matMenuTriggerFor]="spellMenu" (click)="$event.stopPropagation()">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #spellMenu="matMenu">
+      <div mat-menu-item>
+        <mat-checkbox [checked]="sc.favorite"
+                      (change)="changeChoice('favorite')">
+          Favori
+        </mat-checkbox>
+      </div>
+      <div mat-menu-item>
+        <mat-checkbox [checked]="sc.prepared"
+                      [disabled]="sc.alwaysPrepared"
+                      (change)="changeChoice('prepared')">
+          Préparé
+        </mat-checkbox>
+      </div>
+    </mat-menu>
+
     <div class="spell-details" [innerHTML]="sp.details"></div>
 
     <p class="additional">

@@ -13,7 +13,7 @@ import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
 import {SlotsFormComponent} from '../../slots/slots-form/slots-form.component';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
-import {Spell, SpellFilter} from '../../spells/spell.model';
+import {Spell, SpellChoice, SpellFilter} from '../../spells/spell.model';
 import {SpellService} from '../../spells/spell.service';
 import {cleanForFilename} from '../../utils/clean-for-filename';
 import {downloadJson} from '../../utils/download-as-file';
@@ -163,6 +163,15 @@ export class CharacterPageComponent {
     spellSlotBurns[spellLevel] = nbBurnt;
     this.characterService.updateCharacter(char.id, {spellSlotBurns})
       .catch(err => console.error('Error updating character spell slot burns:', err));
+  }
+
+  protected setSpellChoice(spellId: string, choice: SpellChoice): void {
+    const currentChar = this.character();
+    if (!currentChar) return;
+    const spellChoices = currentChar.spellChoices || {};
+    const newChoices = {...spellChoices, [spellId]: choice};
+    this.characterService.updateCharacter(currentChar.id, {spellChoices: newChoices})
+      .catch(err => console.error('Error updating character spell choices:', err));
   }
 
   private getSpellFilter(): SpellFilter {

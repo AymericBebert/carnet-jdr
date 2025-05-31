@@ -1,5 +1,8 @@
-import {Component, input, signal} from '@angular/core';
+import {Component, input, output, signal} from '@angular/core';
+import {MatButtonModule} from '@angular/material/button';
+import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import {IconRitualComponent} from '../../icons/icon-ritual.component';
 import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
 
@@ -9,12 +12,25 @@ import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
   styleUrls: ['./spell-card.component.scss'],
   imports: [
     IconRitualComponent,
+    MatButtonModule,
     MatIconModule,
+    MatCheckbox,
+    MatMenuModule,
   ],
 })
 export class SpellCardComponent {
   public readonly spell = input.required<Spell>();
   public readonly spellChoice = input<SpellChoice>(toSpellChoice({}));
+  public readonly spellChoiceChange = output<SpellChoice>();
 
-  public readonly isOpen = signal<boolean>(false);
+  protected readonly isOpen = signal<boolean>(false);
+
+  public changeChoice(attribute: 'favorite' | 'prepared'): void {
+    const currentChoice = this.spellChoice();
+    const newChoice = {
+      ...currentChoice,
+      [attribute]: !currentChoice[attribute],
+    };
+    this.spellChoiceChange.emit(newChoice);
+  }
 }
