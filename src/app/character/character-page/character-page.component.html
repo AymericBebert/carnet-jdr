@@ -1,4 +1,4 @@
-<div style="max-width: 800px; margin: auto">
+<div style="max-width: 800px; margin: auto" [class.concentrating]="concentrating()">
   @if (character(); as char) {
     <app-character-card [character]="char"></app-character-card>
 
@@ -41,6 +41,17 @@
       <h2 class="section-header">
         <mat-icon>menu_book</mat-icon>
         <span style="flex-grow: 1">Sorts</span>
+        @if (concentrating()) {
+          <button mat-icon-button (click)="concentrating.set(false)"
+                  aria-label="Afficher les sorts avec concentration ou non">
+            <mat-icon>cognition</mat-icon>
+          </button>
+        } @else {
+          <button mat-icon-button (click)="concentrating.set(true)"
+                  aria-label="Afficher les sorts sans concentration uniquement">
+            <mat-icon style="opacity: 0.3">cognition</mat-icon>
+          </button>
+        }
         @if (filterForm.controls.favorite.value) {
           <button mat-icon-button (click)="filterForm.controls.favorite.setValue(null)"
                   aria-label="Afficher les sorts favoris ou non">

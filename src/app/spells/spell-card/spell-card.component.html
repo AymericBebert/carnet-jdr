@@ -1,62 +1,60 @@
 @let sp = spell();
 @let sc = spellChoice();
 
-<div class="spell-card" [class.spell-open]="isOpen()" (click)="isOpen.set(!isOpen())">
-  <div class="spell-header">
-    <h3>{{ sp.name }}</h3>
-    @if (sp.ritual) {
-      <app-icon-ritual [size]="20"></app-icon-ritual>
-    }
-    @if (sp.concentration) {
-      <mat-icon>cognition</mat-icon>
-    }
-    @if (sc.favorite) {
-      <mat-icon class="color-warn">favorite</mat-icon>
-    }
-    @if (sc.prepared || sc.alwaysPrepared) {
-      <mat-icon class="color-primary" [style.opacity]="sc.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
-    }
-  </div>
-
-  @if (isOpen()) {
-    <button mat-icon-button class="actions" [matMenuTriggerFor]="spellMenu" (click)="$event.stopPropagation()">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #spellMenu="matMenu">
-      <div mat-menu-item>
-        <mat-checkbox [checked]="sc.favorite"
-                      (change)="changeChoice('favorite')">
-          Favori
-        </mat-checkbox>
-      </div>
-      <div mat-menu-item>
-        <mat-checkbox [checked]="sc.prepared"
-                      [disabled]="sc.alwaysPrepared"
-                      (change)="changeChoice('prepared')">
-          Préparé
-        </mat-checkbox>
-      </div>
-    </mat-menu>
-
-    <div class="spell-details" [innerHTML]="sp.details"></div>
-
-    <p class="additional">
-      <span class="key">Classes : </span>
-      @for (cl of sp.classes; track cl; let last = $last) {
-        <span>{{ cl + (last ? '' : ', ') }}</span>
-      }
-    </p>
-
-    <p class="additional">
-      <span class="key">Source : </span>
-      <span>{{ sp.source }}</span>
-    </p>
-
-    <p class="additional">
-      <span class="key">VO : </span>
-      <span>{{ sp.vo }}</span>
-    </p>
-  } @else {
-    <p class="additional" style="margin: 0">{{ sp.description }}</p>
+<div class="spell-header">
+  <h3>{{ sp.name }}</h3>
+  @if (sp.ritual) {
+    <app-icon-ritual [size]="20"></app-icon-ritual>
+  }
+  @if (sp.concentration) {
+    <mat-icon>cognition</mat-icon>
+  }
+  @if (sc.favorite) {
+    <mat-icon class="color-warn">favorite</mat-icon>
+  }
+  @if (sc.prepared || sc.alwaysPrepared) {
+    <mat-icon class="color-primary" [style.opacity]="sc.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
   }
 </div>
+
+@if (isOpen()) {
+  <button mat-icon-button class="actions" [matMenuTriggerFor]="spellMenu" (click)="$event.stopPropagation()">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #spellMenu="matMenu">
+    <div mat-menu-item>
+      <mat-checkbox [checked]="sc.favorite"
+                    (change)="changeChoice('favorite')">
+        Favori
+      </mat-checkbox>
+    </div>
+    <div mat-menu-item>
+      <mat-checkbox [checked]="sc.prepared"
+                    [disabled]="sc.alwaysPrepared"
+                    (change)="changeChoice('prepared')">
+        Préparé
+      </mat-checkbox>
+    </div>
+  </mat-menu>
+
+  <div class="spell-details" [innerHTML]="sp.details"></div>
+
+  <p class="additional">
+    <span class="key">Classes : </span>
+    @for (cl of sp.classes; track cl; let last = $last) {
+      <span>{{ cl + (last ? '' : ', ') }}</span>
+    }
+  </p>
+
+  <p class="additional">
+    <span class="key">Source : </span>
+    <span>{{ sp.source }}</span>
+  </p>
+
+  <p class="additional">
+    <span class="key">VO : </span>
+    <span>{{ sp.vo }}</span>
+  </p>
+} @else {
+  <p class="additional" style="margin: 0">{{ sp.description }}</p>
+}

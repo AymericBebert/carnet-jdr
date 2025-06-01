@@ -67,6 +67,7 @@ export class CharacterPageComponent {
     prepared: new FormControl<boolean | null>(null),
     favorite: new FormControl<boolean | null>(null),
   });
+  protected readonly concentrating = signal<boolean>(false);
 
   protected readonly availableSpells = signal<SpellsInLevel[]>([]);
 

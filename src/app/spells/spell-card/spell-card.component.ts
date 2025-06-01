@@ -1,4 +1,4 @@
-import {Component, input, output, signal} from '@angular/core';
+import {Component, HostListener, input, output, signal} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
@@ -17,6 +17,12 @@ import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
     MatCheckbox,
     MatMenuModule,
   ],
+  host: {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '[class.spell-open]': 'isOpen()',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    '[class.concentration]': 'spell().concentration',
+  },
 })
 export class SpellCardComponent {
   public readonly spell = input.required<Spell>();
@@ -24,6 +30,10 @@ export class SpellCardComponent {
   public readonly spellChoiceChange = output<SpellChoice>();
 
   protected readonly isOpen = signal<boolean>(false);
+
+  @HostListener('click') onClick(): void {
+    this.isOpen.set(!this.isOpen());
+  }
 
   public changeChoice(attribute: 'favorite' | 'prepared'): void {
     const currentChoice = this.spellChoice();
