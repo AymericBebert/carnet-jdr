@@ -120,7 +120,7 @@ export class CharacterPageComponent {
     });
   }
 
-  public changeHp(label: string, negative: boolean, temp: boolean): void {
+  protected changeHp(label: string, negative: boolean, temp: boolean): void {
     this.matDialog.open<HpDialogComponent, HpDialogData, number>(
       HpDialogComponent,
       {
@@ -149,7 +149,11 @@ export class CharacterPageComponent {
     });
   }
 
-  public setAbilityUsage(abilityId: string, usage: number): void {
+  protected sleep(): void {
+    console.warn('TODO');
+  }
+
+  protected setAbilityUsage(abilityId: string, usage: number): void {
     const char = this.character();
     if (!char) return;
     const abilityUsage = {...char.abilityUsage, [abilityId]: usage};
@@ -157,7 +161,7 @@ export class CharacterPageComponent {
       .catch(err => console.error('Error updating character ability usage:', err));
   }
 
-  public setSpellSlotBurns(spellLevel: number, nbBurnt: number): void {
+  protected setSpellSlotBurns(spellLevel: number, nbBurnt: number): void {
     const char = this.character();
     if (!char) return;
     const spellSlotBurns = [...char.spellSlotBurns];

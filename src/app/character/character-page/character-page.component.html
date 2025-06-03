@@ -2,7 +2,7 @@
   @if (character(); as char) {
     <app-character-card [character]="char"></app-character-card>
 
-    <div style="display: flex; justify-content: center; margin-top: 4px">
+    <div style="display: flex; justify-content: end; margin-top: 4px">
       <button mat-icon-button aria-label="Diminuer les PV"
               (click)="changeHp('Diminuer les PV de', true, false)"
       >
@@ -17,6 +17,9 @@
               (click)="changeHp('PV temporaires',  false, true)"
       >
         <mat-icon>relax</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Repos" (click)="sleep()">
+        <mat-icon>moon_stars</mat-icon>
       </button>
     </div>
 
