@@ -1,4 +1,4 @@
-import {provideExperimentalZonelessChangeDetection} from '@angular/core';
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 import {HpDialogComponent, HpDialogData} from './hp-dialog.component';
@@ -13,7 +13,7 @@ describe('HpDialogComponent', () => {
         HpDialogComponent,
       ],
       providers: [
-        provideExperimentalZonelessChangeDetection(),
+        provideZonelessChangeDetection(),
         {provide: MatDialogRef, useValue: {close: () => void 0}},
         {
           provide: MAT_DIALOG_DATA,
