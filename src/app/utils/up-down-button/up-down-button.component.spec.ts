@@ -1,4 +1,4 @@
-import {provideExperimentalZonelessChangeDetection} from '@angular/core';
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {UpDownButtonComponent} from './up-down-button.component';
 
@@ -13,7 +13,7 @@ describe('UpDownButtonComponent', () => {
       ],
       declarations: [],
       providers: [
-        provideExperimentalZonelessChangeDetection(),
+        provideZonelessChangeDetection(),
       ],
     });
 

@@ -1,4 +1,4 @@
-import {provideExperimentalZonelessChangeDetection} from '@angular/core';
+import {provideZonelessChangeDetection} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {MatDialogModule} from '@angular/material/dialog';
 import {ConfirmService} from './confirm.service';
@@ -12,7 +12,7 @@ describe('ConfirmService', () => {
         MatDialogModule,
       ],
       providers: [
-        provideExperimentalZonelessChangeDetection(),
+        provideZonelessChangeDetection(),
       ],
     });
     service = TestBed.inject(ConfirmService);

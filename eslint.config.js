@@ -1,7 +1,7 @@
 const eslint = require('@eslint/js');
 const tsEslint = require('typescript-eslint');
 const angularEslint = require('angular-eslint');
-const stylisticTs = require('@stylistic/eslint-plugin-ts');
+const stylistic = require('@stylistic/eslint-plugin');
 
 module.exports = tsEslint.config(
   {
@@ -34,7 +34,7 @@ module.exports = tsEslint.config(
     },
 
     plugins: {
-      '@stylistic/ts': stylisticTs,
+      '@stylistic/ts': stylistic,
     },
 
     rules: {

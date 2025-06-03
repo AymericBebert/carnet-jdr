@@ -1,5 +1,5 @@
 import {provideHttpClient, withFetch} from '@angular/common/http';
-import {isDevMode, provideExperimentalZonelessChangeDetection} from '@angular/core';
+import {isDevMode, provideZonelessChangeDetection} from '@angular/core';
 import {bootstrapApplication} from '@angular/platform-browser';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideRouter} from '@angular/router';
@@ -10,7 +10,7 @@ import {APP_CONFIG, appConfigFactory} from './config/app.config';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(withFetch()),
     {provide: APP_CONFIG, useFactory: appConfigFactory},
