@@ -6,11 +6,12 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {ActivatedRoute, Router} from '@angular/router';
-import {combineLatest, startWith} from 'rxjs';
+import {combineLatest} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {AbilityCardComponent} from '../../ability/ability-card/ability-card.component';
 import {NavButtonsService} from '../../nav/nav-buttons.service';
 import {NavService} from '../../nav/nav.service';
+import {StorageService} from '../../service/storage.service';
 import {SlotsFormComponent} from '../../slots/slots-form/slots-form.component';
 import {SpellCardComponent} from '../../spells/spell-card/spell-card.component';
 import {Spell, SpellChoice, SpellFilter} from '../../spells/spell.model';
@@ -51,6 +52,7 @@ export class CharacterPageComponent {
   private readonly spellService = inject(SpellService);
   private readonly navService = inject(NavService);
   private readonly navButtonsService = inject(NavButtonsService);
+  private readonly storage = inject(StorageService);
   private readonly matDialog = inject(MatDialog);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
@@ -66,8 +68,8 @@ export class CharacterPageComponent {
     known: new FormControl<boolean | null>(true),
     prepared: new FormControl<boolean | null>(null),
     favorite: new FormControl<boolean | null>(null),
+    concentrating: new FormControl<boolean | null>(null),
   });
-  protected readonly concentrating = signal<boolean>(false);
 
   protected readonly availableSpells = signal<SpellsInLevel[]>([]);
 
@@ -77,16 +79,19 @@ export class CharacterPageComponent {
       .subscribe(char => {
         if (!char) return;
         this.navService.mainTitle.set(char.name);
+        this.filterForm.patchValue(this.loadSpellFilter(char.id));
       });
 
     combineLatest([
       this.character$,
-      this.filterForm.valueChanges.pipe(startWith(this.filterForm.value)),
+      this.filterForm.valueChanges,
     ])
       .pipe(takeUntilDestroyed())
       .subscribe(([char, _]) => {
         if (!char) return;
-        const available = this.spellService.getSpells(this.getSpellFilter(), char.spellChoices);
+        const spellFilter = this.getSpellFilter();
+        this.storeSpellFilter(char.id, spellFilter);
+        const available = this.spellService.getSpells(spellFilter, char.spellChoices);
         const availableSpells = char.spellSlots.map((slots, level) => {
           return {
             level,
@@ -188,6 +193,24 @@ export class CharacterPageComponent {
       known: filter.known ?? null,
       prepared: filter.prepared ?? null,
       favorite: filter.favorite ?? null,
+      concentrating: filter.concentrating ?? null,
     };
+  }
+
+  private storeSpellFilter(charId: string, filter: SpellFilter): void {
+    const filterString = JSON.stringify(filter);
+    this.storage.setItem(`spellFilter.${charId}`, filterString);
+  }
+
+  private loadSpellFilter(charId: string): SpellFilter {
+    const filterString = this.storage.getItem(`spellFilter.${charId}`);
+    if (filterString) {
+      try {
+        return JSON.parse(filterString);
+      } catch (e) {
+        console.error('Error parsing spell filter from storage:', e);
+      }
+    }
+    return {};
   }
 }
