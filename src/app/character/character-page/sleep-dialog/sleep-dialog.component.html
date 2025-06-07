@@ -1,0 +1,23 @@
+<mat-dialog-content>
+  <mat-button-toggle-group [(ngModel)]="sleepType">
+    <mat-button-toggle value="long">Repos long</mat-button-toggle>
+    <mat-button-toggle value="short">Repos court</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  @for (upd of toUpdate(); track $index) {
+    <h3 style="margin: 24px 0 8px">{{ upd.name }}</h3>
+    <div style="display: flex; align-items: center">
+      <span style="margin-right: 12px">{{ upd.die }} :</span>
+      <app-tiny-number-choice-form [(ngModel)]="upd.result" [min]="0"></app-tiny-number-choice-form>
+    </div>
+  }
+</mat-dialog-content>
+
+<div mat-dialog-actions align="end">
+  <button mat-button [mat-dialog-close]="null">
+    Annuler
+  </button>
+  <button mat-flat-button (click)="confirm()" type="submit">
+    Confirmer
+  </button>
+</div>

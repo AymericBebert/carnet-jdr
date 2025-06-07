@@ -28,6 +28,7 @@ import {
   CharacterHeader,
   toCharacterHeader
 } from '../character.model';
+import {TinyNumberChoiceFormComponent} from '../tiny-number-choice-form/tiny-number-choice-form.component';
 
 @Component({
   selector: 'app-character-form',
@@ -42,6 +43,7 @@ import {
     ReactiveFormsModule,
     CharacterCardComponent,
     AbilitiesFormComponent,
+    TinyNumberChoiceFormComponent,
   ],
   providers: [
     {provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => CharacterFormComponent)},
@@ -108,11 +110,6 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
       return {characterInvalid: true};
     }
     return null;
-  }
-
-  protected changeLvlSlots(lvl: number, change: number): void {
-    const ctrl = this.form.controls.spellSlots.controls[lvl];
-    ctrl.setValue(Math.max(0, ctrl.value + change));
   }
 
   private computeCharacterEditDto(): CharacterEditDto {

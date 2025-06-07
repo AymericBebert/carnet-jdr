@@ -22,7 +22,8 @@ import {CharacterCardComponent} from '../character-card/character-card.component
 import {CharacterRootComponent} from '../character-root/character-root.component';
 import {CharacterClass} from '../character.model';
 import {CharacterService} from '../character.service';
-import {HpDialogComponent, HpDialogData} from './hp-dialog/hp-dialog.component';
+import {HpDialogComponent, HpDialogData, HpDialogResult} from './hp-dialog/hp-dialog.component';
+import {SleepDialogComponent, SleepDialogData, SleepDialogResult} from './sleep-dialog/sleep-dialog.component';
 
 interface SpellsInLevel {
   level: number;
@@ -126,7 +127,7 @@ export class CharacterPageComponent {
   }
 
   protected changeHp(label: string, negative: boolean, temp: boolean): void {
-    this.matDialog.open<HpDialogComponent, HpDialogData, number>(
+    this.matDialog.open<HpDialogComponent, HpDialogData, HpDialogResult>(
       HpDialogComponent,
       {
         data: {
@@ -155,7 +156,25 @@ export class CharacterPageComponent {
   }
 
   protected sleep(): void {
-    console.warn('TODO');
+    const char0 = this.character();
+    if (!char0) return;
+    this.matDialog.open<SleepDialogComponent, SleepDialogData, SleepDialogResult>(
+      SleepDialogComponent,
+      {
+        data: {
+          character: char0,
+        },
+        autoFocus: '__nope__',
+      },
+    ).afterClosed().pipe(
+      filter(characterUpdates => characterUpdates != null),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(characterUpdates => {
+      const char = this.character();
+      if (!char || char.id !== char0.id) return;
+      this.characterService.updateCharacter(char.id, characterUpdates)
+        .catch(err => console.error('Error updating character after sleep:', err));
+    });
   }
 
   protected setAbilityUsage(abilityId: string, usage: number): void {
