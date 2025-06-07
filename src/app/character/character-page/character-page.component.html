@@ -1,8 +1,8 @@
-<div style="max-width: 800px; margin: auto" [class.concentrating]="concentrating()">
+<div style="max-width: 800px; margin: auto" [class.concentrating]="filterForm.controls.concentrating.value">
   @if (character(); as char) {
     <app-character-card [character]="char"></app-character-card>
 
-    <div style="display: flex; justify-content: center; margin-top: 4px">
+    <div style="display: flex; justify-content: end; margin-top: 4px">
       <button mat-icon-button aria-label="Diminuer les PV"
               (click)="changeHp('Diminuer les PV de', true, false)"
       >
@@ -17,6 +17,9 @@
               (click)="changeHp('PV temporaires',  false, true)"
       >
         <mat-icon>relax</mat-icon>
+      </button>
+      <button mat-icon-button aria-label="Repos" (click)="sleep()">
+        <mat-icon>moon_stars</mat-icon>
       </button>
     </div>
 
@@ -41,13 +44,13 @@
       <h2 class="section-header">
         <mat-icon>menu_book</mat-icon>
         <span style="flex-grow: 1">Sorts</span>
-        @if (concentrating()) {
-          <button mat-icon-button (click)="concentrating.set(false)"
+        @if (filterForm.controls.concentrating.value) {
+          <button mat-icon-button (click)="filterForm.controls.concentrating.setValue(null)"
                   aria-label="Afficher les sorts avec concentration ou non">
             <mat-icon>cognition</mat-icon>
           </button>
         } @else {
-          <button mat-icon-button (click)="concentrating.set(true)"
+          <button mat-icon-button (click)="filterForm.controls.concentrating.setValue(true)"
                   aria-label="Afficher les sorts sans concentration uniquement">
             <mat-icon style="opacity: 0.3">cognition</mat-icon>
           </button>

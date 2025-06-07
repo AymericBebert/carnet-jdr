@@ -10,6 +10,8 @@ export interface HpDialogData {
   initial?: number | undefined;
 }
 
+export type HpDialogResult = number | null;
+
 @Component({
   selector: 'app-hp-dialog',
   templateUrl: './hp-dialog.component.html',
@@ -23,7 +25,7 @@ export interface HpDialogData {
   ],
 })
 export class HpDialogComponent {
-  protected readonly ref = inject<MatDialogRef<HpDialogComponent, number | null>>(MatDialogRef);
+  protected readonly ref = inject<MatDialogRef<HpDialogComponent, HpDialogResult>>(MatDialogRef);
   protected readonly data = inject<HpDialogData>(MAT_DIALOG_DATA);
 
   public readonly rawValue = signal<string>(this.data.initial?.toString() ?? '');

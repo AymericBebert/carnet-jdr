@@ -44,4 +44,6 @@ export interface SpellFilter {
   known?: boolean | null;
   prepared?: boolean | null;
   favorite?: boolean | null;
+  /** Will not be filtered out, but used to shadow spells needing concentration */
+  concentrating?: boolean | null;
 }
