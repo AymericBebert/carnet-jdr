@@ -1,8 +1,10 @@
 <mat-dialog-content>
-  <mat-button-toggle-group [(ngModel)]="sleepType">
-    <mat-button-toggle value="long">Repos long</mat-button-toggle>
-    <mat-button-toggle value="short">Repos court</mat-button-toggle>
-  </mat-button-toggle-group>
+  <div style="display: flex; justify-content: center">
+    <mat-button-toggle-group [(ngModel)]="sleepType">
+      <mat-button-toggle value="long">Repos long</mat-button-toggle>
+      <mat-button-toggle value="short">Repos court</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
 
   @for (upd of toUpdate(); track $index) {
     <h3 style="margin: 24px 0 8px">{{ upd.name }}</h3>

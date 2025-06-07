@@ -1,3 +1,4 @@
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {TinyNumberChoiceFormComponent} from './tiny-number-choice-form.component';
 
@@ -11,7 +12,9 @@ describe('TinyNumberChoiceFormComponent', () => {
       imports: [
         TinyNumberChoiceFormComponent,
       ],
-      providers: [],
+      providers: [
+        provideZonelessChangeDetection(),
+      ],
     });
 
     fixture = TestBed.createComponent(TinyNumberChoiceFormComponent);

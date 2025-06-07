@@ -3,6 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
+import {AbilityUsage} from '../../../ability/ability.model';
 import {Character} from '../../character.model';
 import {TinyNumberChoiceFormComponent} from '../../tiny-number-choice-form/tiny-number-choice-form.component';
 
@@ -13,6 +14,7 @@ export interface SleepDialogData {
 export type SleepDialogResult = Partial<Character>;
 
 interface ToUpdateWithDie {
+  id: string;
   name: string;
   die: string;
   result: number;
@@ -44,6 +46,7 @@ export class SleepDialogComponent {
       if (ability.refillWhen === 'longRestDie' && sleepType === 'long' ||
         ability.refillWhen === 'shortRestDie' && sleepType === 'short') {
         toUpdate.push({
+          id: ability.id,
           name: ability.name,
           die: `1d${ability.refillDie}`,
           result: 0,
@@ -54,17 +57,45 @@ export class SleepDialogComponent {
   });
 
   public confirm(): void {
-    const sleepType = this.sleepType();
     const char = this.data.character;
-    const toUpdate: Partial<Character> = {};
+    const sleepType = this.sleepType();
+    const toUpdate = this.toUpdate();
+    const abilityUsage = this.getCurrentSanitizedAbilityUsage(char);
+
+    const updateToSend: Partial<Character> = {};
 
     if (sleepType === 'long') {
-      toUpdate.hp = char.hpMax;
-      toUpdate.spellSlotBurns = char.spellSlots.map(() => 0);
+      updateToSend.hp = char.hpMax;
+      updateToSend.spellSlotBurns = char.spellSlots.map(() => 0);
     }
 
-    const abilityUsage = {...char.abilityUsage};
+    for (const ability of char.abilities) {
+      if (ability.refillWhen === 'longRest' && sleepType === 'long' ||
+        ability.refillWhen === 'shortRest' && sleepType === 'short') {
+        abilityUsage[ability.id] = 0;
+      }
+      if (ability.refillWhen === 'longRestDie' && sleepType === 'long' ||
+        ability.refillWhen === 'shortRestDie' && sleepType === 'short') {
+        const refill = toUpdate.find(u => u.id === ability.id)?.result ?? 0;
+        abilityUsage[ability.id] = Math.max(abilityUsage[ability.id] - refill, 0);
+      }
+    }
 
-    this.ref.close(toUpdate);
+    updateToSend.abilityUsage = abilityUsage;
+
+    this.ref.close(updateToSend);
+  }
+
+  private getCurrentSanitizedAbilityUsage(char: Character): AbilityUsage {
+    const abilityUsage = {...char.abilityUsage};
+    for (const [abilityId, abilityUsageValue] of Object.entries(abilityUsage)) {
+      if (char.abilities.every(a => a.id !== abilityId)) {
+        delete abilityUsage[abilityId];
+      }
+      if (isNaN(abilityUsageValue)) {
+        abilityUsage[abilityId] = 0;
+      }
+    }
+    return abilityUsage;
   }
 }
