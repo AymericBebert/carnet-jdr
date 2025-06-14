@@ -2,23 +2,26 @@
   display: block;
   position: relative;
   cursor: pointer;
-  transition: padding 0.2s ease-in-out;
   box-sizing: border-box;
 
-  &.spell-open {
-    padding: 24px 0 48px;
+  &:not(.spell-keep-open) {
+    transition: padding 0.2s ease-in-out;
 
-    & > p {
-      margin: 4px 0 0;
+    &.spell-open {
+      padding: 24px 0 48px;
     }
+
+    &:not(.spell-open) {
+      padding: 12px 0 0;
+    }
+  }
+
+  & > p {
+    margin: 4px 0 0;
 
     .key {
       font-weight: bold;
     }
-  }
-
-  &:not(.spell-open) {
-    padding: 12px 0 0;
   }
 
   .actions {

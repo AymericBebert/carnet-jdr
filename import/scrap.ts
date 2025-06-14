@@ -86,6 +86,14 @@ function addDetailsFile(spell: Spell): void {
   const rawDetails = cheerioHtml('.col1').html() || '';
   spell.details = strSanitize(rawDetails
     .replace(/\n/g, ' ')
+    .replace(
+      /(?:<em>)?<a href="https:\/\/www.aidedd.org\/dnd\/sorts.php\?vf=([^&"]+)(?:&[^"]+)?">([^<]+)<\/a>(?:<\/em>)?/g,
+      '<a href="jdr-spell://$1">$2</a>',
+    )
+    .replace(
+      /<a href="https:\/\/www.aidedd.org\/dnd\/monstres.php([^"]+)">([^<]+)<\/a>/g,
+      '<a href="https://www.aidedd.org\/dnd\/monstres.php$1" target="_blank">$2</a>',
+    )
     .replace(/<h1>.*?<\/h1>/g, '')
     .replace(/<div class="trad">.*?<\/div>/g, '')
     .replace(/<div class="classe">.*?<\/div>/g, '')
@@ -130,7 +138,7 @@ function main(): void {
   console.log(spells[0]);
 
   // Generate TypeScript content
-  let tsContent = `import {Spell} from './spells.model';
+  let tsContent = `import {Spell} from './spell.model';
 
 /* eslint-disable max-len */
 

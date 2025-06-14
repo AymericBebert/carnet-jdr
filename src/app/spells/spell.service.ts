@@ -36,4 +36,8 @@ export class SpellService {
       return true;
     });
   }
+
+  public getSpell(spellId: string): Spell | undefined {
+    return spellsFr.find(spell => spell.id === spellId);
+  }
 }

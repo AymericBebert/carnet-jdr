@@ -1,9 +1,10 @@
-import {Component, HostListener, input, output, signal} from '@angular/core';
+import {Component, HostListener, input, linkedSignal, output} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatCheckbox} from '@angular/material/checkbox';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
 import {IconRitualComponent} from '../../icons/icon-ritual.component';
+import {InterceptLinksDirective} from '../../service/intercept-links.directive';
 import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
 
 @Component({
@@ -12,6 +13,7 @@ import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
   styleUrls: ['./spell-card.component.scss'],
   imports: [
     IconRitualComponent,
+    InterceptLinksDirective,
     MatButtonModule,
     MatIconModule,
     MatCheckbox,
@@ -21,22 +23,27 @@ import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
     // eslint-disable-next-line @typescript-eslint/naming-convention
     '[class.spell-open]': 'isOpen()',
     // eslint-disable-next-line @typescript-eslint/naming-convention
+    '[class.spell-keep-open]': 'keepOpen()',
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     '[class.concentration]': 'spell().concentration',
   },
 })
 export class SpellCardComponent {
   public readonly spell = input.required<Spell>();
-  public readonly spellChoice = input<SpellChoice>(toSpellChoice({}));
+  public readonly keepOpen = input<boolean>(false);
+  public readonly spellChoice = input<SpellChoice>();
   public readonly spellChoiceChange = output<SpellChoice>();
 
-  protected readonly isOpen = signal<boolean>(false);
+  protected readonly isOpen = linkedSignal<boolean>(() => this.keepOpen());
 
   @HostListener('click') onClick(): void {
-    this.isOpen.set(!this.isOpen());
+    if (!this.keepOpen()) {
+      this.isOpen.set(!this.isOpen());
+    }
   }
 
   public changeChoice(attribute: 'favorite' | 'prepared'): void {
-    const currentChoice = this.spellChoice();
+    const currentChoice = this.spellChoice() || toSpellChoice({});
     const newChoice = {
       ...currentChoice,
       [attribute]: !currentChoice[attribute],

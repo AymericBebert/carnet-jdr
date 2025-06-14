@@ -9,35 +9,37 @@
   @if (sp.concentration) {
     <mat-icon>cognition</mat-icon>
   }
-  @if (sc.favorite) {
+  @if (sc?.favorite) {
     <mat-icon class="color-warn">favorite</mat-icon>
   }
-  @if (sc.prepared || sc.alwaysPrepared) {
-    <mat-icon class="color-primary" [style.opacity]="sc.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
+  @if (sc?.prepared || sc?.alwaysPrepared) {
+    <mat-icon class="color-primary" [style.opacity]="sc?.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
   }
 </div>
 
 @if (isOpen()) {
-  <button mat-icon-button class="actions" [matMenuTriggerFor]="spellMenu" (click)="$event.stopPropagation()">
-    <mat-icon>more_vert</mat-icon>
-  </button>
-  <mat-menu #spellMenu="matMenu">
-    <div mat-menu-item>
-      <mat-checkbox [checked]="sc.favorite"
-                    (change)="changeChoice('favorite')">
-        Favori
-      </mat-checkbox>
-    </div>
-    <div mat-menu-item>
-      <mat-checkbox [checked]="sc.prepared"
-                    [disabled]="sc.alwaysPrepared"
-                    (change)="changeChoice('prepared')">
-        Préparé
-      </mat-checkbox>
-    </div>
-  </mat-menu>
+  @if (sc) {
+    <button mat-icon-button class="actions" [matMenuTriggerFor]="spellMenu" (click)="$event.stopPropagation()">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #spellMenu="matMenu">
+      <div mat-menu-item>
+        <mat-checkbox [checked]="sc.favorite"
+                      (change)="changeChoice('favorite')">
+          Favori
+        </mat-checkbox>
+      </div>
+      <div mat-menu-item>
+        <mat-checkbox [checked]="sc.prepared"
+                      [disabled]="sc.alwaysPrepared"
+                      (change)="changeChoice('prepared')">
+          Préparé
+        </mat-checkbox>
+      </div>
+    </mat-menu>
+  }
 
-  <div class="spell-details" [innerHTML]="sp.details"></div>
+  <div class="spell-details" [innerHTML]="sp.details" appInterceptLinks></div>
 
   <p class="additional">
     <span class="key">Classes : </span>

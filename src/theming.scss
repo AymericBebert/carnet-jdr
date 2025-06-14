@@ -34,6 +34,10 @@
     container-background-color: map.get(tc.$primary-palette, 95),
   ));
 
+  a {
+    color: map.get(tc.$secondary-palette, 40);
+  }
+
   .mat-drawer-content > router-outlet + * {
     background-color: map.get(tc.$primary-palette, 98);
   }
@@ -64,6 +68,10 @@
   @include mat.dialog-overrides((
     container-color: map.get(tc.$neutral-palette, 12),
   ));
+
+  a {
+    color: map.get(tc.$tertiary-palette, 80);
+  }
 
   .mat-drawer-content > router-outlet + * {
     background-color: map.get(tc.$neutral-palette, 6);

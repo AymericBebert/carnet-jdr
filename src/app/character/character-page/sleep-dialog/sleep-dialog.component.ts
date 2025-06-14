@@ -1,4 +1,4 @@
-import {Component, computed, inject, model} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
@@ -36,7 +36,7 @@ export class SleepDialogComponent {
   protected readonly ref = inject<MatDialogRef<SleepDialogComponent, SleepDialogResult>>(MatDialogRef);
   protected readonly data = inject<SleepDialogData>(MAT_DIALOG_DATA);
 
-  protected readonly sleepType = model<'long' | 'short'>('long');
+  protected readonly sleepType = signal<'long' | 'short'>('long');
 
   public readonly toUpdate = computed<ToUpdateWithDie[]>(() => {
     const sleepType = this.sleepType();
