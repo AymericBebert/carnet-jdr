@@ -9,7 +9,7 @@ import {MatIconModule} from '@angular/material/icon';
   imports: [
     MatButtonModule,
     MatIconModule,
-  ]
+  ],
 })
 export class ImageCropperComponent {
   public readonly imageDataUri = input.required<string | null>();
@@ -39,12 +39,18 @@ export class ImageCropperComponent {
   }
 
   zoomIn(): void {
+    const oldZoom = this.zoom;
     this.zoom += this.zoomStep;
+
+    this.compensatePanForZoom(oldZoom);
     this.redrawCanvas();
   }
 
   zoomOut(): void {
+    const oldZoom = this.zoom;
     this.zoom = Math.max(0.1, this.zoom - this.zoomStep);
+
+    this.compensatePanForZoom(oldZoom);
     this.redrawCanvas();
   }
 
@@ -133,5 +139,19 @@ export class ImageCropperComponent {
     // Draw the image with current pan and zoom
     ctx.drawImage(this.sourceImage, this.panX, this.panY, scaledWidth, scaledHeight);
     ctx.restore();
+  }
+
+  /**
+   * Adjusts the pan values to keep the zoom centered on the canvas.
+   * @param oldZoom The zoom level before the change.
+   */
+  private compensatePanForZoom(oldZoom: number): void {
+    const center = this.cropSize / 2;
+    const zoomRatio = this.zoom / oldZoom;
+
+    // Find the point that was at the center of the canvas
+    // and adjusts the pan to keep that same point at the center after zooming.
+    this.panX = center - (center - this.panX) * zoomRatio;
+    this.panY = center - (center - this.panY) * zoomRatio;
   }
 }
