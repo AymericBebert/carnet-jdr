@@ -12,7 +12,7 @@ export class StorageService {
         this.storage = localStorage;
         return;
       }
-    } catch (e) {
+    } catch {
       console.warn('Could not access localStorage, trying sessionStorage');
     }
 
@@ -21,7 +21,7 @@ export class StorageService {
         this.storage = sessionStorage;
         return;
       }
-    } catch (e) {
+    } catch {
       console.warn('Could not access sessionStorage, using VolatileStorage');
     }
 
@@ -42,7 +42,7 @@ export class StorageService {
 }
 
 class VolatileStorage implements Storage {
-  private store: { [key: string]: string } = {};
+  private store: Record<string, string> = {};
 
   get length(): number {
     return Object.keys(this.store).length;

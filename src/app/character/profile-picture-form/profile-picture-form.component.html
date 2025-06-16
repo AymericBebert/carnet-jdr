@@ -1,0 +1,43 @@
+<div style="display: flex; align-items: center; gap: 8px">
+  @if (picture()) {
+    <!--suppress AngularNgOptimizedImage -->
+    <img [src]="picture()" alt="Image" width="48" height="48">
+  } @else {
+    <div style="background-color: #88888888; width: 48px; height: 48px"></div>
+  }
+
+  @if (!isDisabled()) {
+    <div class="upload-file-button">
+      <input type="file" onclick="this.value = null" accept="image/*" (change)="onFileSelected($event)">
+      <button mat-flat-button>
+        <mat-icon>upload</mat-icon>
+        Importer
+      </button>
+    </div>
+
+    <button mat-flat-button (click)="startCamera()">
+      <mat-icon>photo_camera</mat-icon>
+      Capturer
+    </button>
+
+    <button mat-icon-button (click)="deletePicture()">
+      <mat-icon>clear</mat-icon>
+    </button>
+  }
+</div>
+
+<div class="take-photo" [class.visible]="isTakingPicture()">
+  <video #videoElement autoplay></video>
+  <button mat-flat-button (click)="takePicture()">
+    <mat-icon>photo_camera</mat-icon>
+    Prendre la photo
+  </button>
+</div>
+
+<canvas #canvasElement style="display: none"></canvas>
+
+@if (rawImageDataUri()) {
+  <app-image-cropper [imageDataUri]="rawImageDataUri()"
+                     (imageCropped)="onImageCropped($event)">
+  </app-image-cropper>
+}

@@ -19,6 +19,11 @@
   <input matInput type="number" autocomplete="off" [formControl]="form.controls.hpMax">
 </mat-form-field>
 
+<p style="margin-bottom: 0">Image</p>
+<app-profile-picture-form [formControl]="form.controls.image"
+                          style="margin: 8px 0 16px"
+></app-profile-picture-form>
+
 <p style="margin-bottom: 0">Thème</p>
 <mat-slider [max]="100" [min]="0" [step]="1" style="margin-bottom: 20px">
   <input matSliderThumb [formControl]="form.controls.theme">

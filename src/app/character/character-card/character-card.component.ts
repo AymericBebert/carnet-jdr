@@ -1,4 +1,3 @@
-import {NgOptimizedImage} from '@angular/common';
 import {Component, computed, inject, input} from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {SettingsService} from '../../service/settings.service';
@@ -10,7 +9,6 @@ import {CharacterHeader} from '../character.model';
   styleUrls: ['./character-card.component.scss'],
   imports: [
     MatIconModule,
-    NgOptimizedImage,
   ],
   host: {
     // eslint-disable-next-line @typescript-eslint/naming-convention

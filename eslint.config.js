@@ -28,7 +28,7 @@ module.exports = tsEslint.config(
       sourceType: 'script',
 
       parserOptions: {
-        project: ['tsconfig.json'],
+        project: ['tsconfig.spec.json'],
         createDefaultProgram: true,
       },
     },

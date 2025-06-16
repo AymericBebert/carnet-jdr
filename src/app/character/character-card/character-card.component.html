@@ -1,7 +1,8 @@
 @let char = character();
 
 @if (char.image) {
-  <img [ngSrc]="char.image" alt="Image de {{ char.name }}" width="48" height="48">
+  <!--suppress AngularNgOptimizedImage -->
+  <img [src]="char.image" alt="Image de {{ char.name }}" width="48" height="48">
 } @else {
   <div style="background-color: #88888888; width: 48px; height: 48px"></div>
 }

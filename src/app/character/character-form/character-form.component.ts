@@ -28,6 +28,7 @@ import {
   CharacterHeader,
   toCharacterHeader
 } from '../character.model';
+import {ProfilePictureFormComponent} from '../profile-picture-form/profile-picture-form.component';
 import {TinyNumberChoiceFormComponent} from '../tiny-number-choice-form/tiny-number-choice-form.component';
 
 @Component({
@@ -44,6 +45,7 @@ import {TinyNumberChoiceFormComponent} from '../tiny-number-choice-form/tiny-num
     CharacterCardComponent,
     AbilitiesFormComponent,
     TinyNumberChoiceFormComponent,
+    ProfilePictureFormComponent,
   ],
   providers: [
     {provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => CharacterFormComponent)},

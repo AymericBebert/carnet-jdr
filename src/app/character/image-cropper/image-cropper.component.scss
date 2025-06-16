@@ -1,0 +1,60 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.cropper-viewport {
+  border: 2px dashed var(--mat-sys-surface-variant);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+div.crop-control {
+  position: relative;
+  padding: 48px;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+
+  > button.crop-control-move {
+    position: absolute;
+    padding: 12px 32px 32px 12px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    box-shadow: 0 0 0 1px var(--mat-sys-surface-variant);
+    touch-action: manipulation;
+    user-select: none;
+
+    &:hover {
+      background-color: var(--mat-sys-surface-variant);
+    }
+
+    &.crop-control-move-up {
+      transform: rotate(-135deg);
+      transform-origin: top left;
+    }
+
+    &.crop-control-move-right {
+      transform: rotate(-45deg);
+      transform-origin: top left;
+    }
+
+    &.crop-control-move-down {
+      transform: rotate(45deg);
+      transform-origin: top left;
+    }
+
+    &.crop-control-move-left {
+      transform: rotate(135deg);
+      transform-origin: top left;
+    }
+
+    > mat-icon {
+      pointer-events: none;
+      color: var(--mat-sys-on-surface-variant);
+    }
+  }
+}

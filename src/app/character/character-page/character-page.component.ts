@@ -225,7 +225,7 @@ export class CharacterPageComponent {
     const filterString = this.storage.getItem(`spellFilter.${charId}`);
     if (filterString) {
       try {
-        return JSON.parse(filterString);
+        return JSON.parse(filterString) as SpellFilter;
       } catch (e) {
         console.error('Error parsing spell filter from storage:', e);
       }

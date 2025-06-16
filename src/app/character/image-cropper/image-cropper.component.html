@@ -1,0 +1,40 @@
+<div class="cropper-viewport" [style.width.px]="cropSize" [style.height.px]="cropSize">
+  <canvas #cropperCanvas [width]="cropSize" [height]="cropSize"></canvas>
+</div>
+
+<div style="display: flex; align-items: center; justify-content: center; gap: 16px">
+
+  <div style="display: flex; flex-direction: column; gap: 8px">
+    <button mat-icon-button (click)="zoomIn()">
+      <mat-icon>zoom_in</mat-icon>
+    </button>
+    <button mat-icon-button (click)="zoomOut()">
+      <mat-icon>zoom_out</mat-icon>
+    </button>
+  </div>
+
+  <div class="crop-control">
+    <button class="crop-control-move crop-control-move-up" (click)="pan(0, 1)">
+      <mat-icon>south_east</mat-icon>
+    </button>
+    <button class="crop-control-move crop-control-move-right" (click)="pan(-1, 0)">
+      <mat-icon>south_east</mat-icon>
+    </button>
+    <button class="crop-control-move crop-control-move-down" (click)="pan(0, -1)">
+      <mat-icon>south_east</mat-icon>
+    </button>
+    <button class="crop-control-move crop-control-move-left" (click)="pan(1, 0)">
+      <mat-icon>south_east</mat-icon>
+    </button>
+  </div>
+</div>
+
+<button mat-flat-button (click)="cropAndSave()">
+  <mat-icon>done</mat-icon>
+  Valider l'image
+</button>
+
+<button mat-button (click)="cancel()">
+  <mat-icon>clear</mat-icon>
+  Annuler
+</button>

@@ -9,6 +9,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start:public": "ng serve --host 0.0.0.0",
     "build": "ng build",
     "build:serve": "ng build && npx http-server -p 4700 -c-1 dist/carnet-jdr/browser",
     "build:dev": "ng build --configuration development",
