@@ -1,4 +1,4 @@
-import {Component, DestroyRef, inject, signal} from '@angular/core';
+import {Component, computed, DestroyRef, inject, signal} from '@angular/core';
 import {takeUntilDestroyed, toObservable} from '@angular/core/rxjs-interop';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -61,6 +61,11 @@ export class CharacterPageComponent {
 
   protected readonly character = this.characterRoot.character;
   private readonly character$ = toObservable(this.character);
+
+  protected readonly characterHasSpells = computed<boolean>(() => {
+    const char = this.character();
+    return !!char && char.spellSlots && char.spellSlots.reduce((acc, slots) => acc + slots, 0) > 0;
+  });
 
   protected readonly filterForm = new FormGroup({
     name: new FormControl<string | null>(null),

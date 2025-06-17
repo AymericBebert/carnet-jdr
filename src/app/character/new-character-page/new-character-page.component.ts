@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, DestroyRef, inject} from '@angular/core';
+import {Component, DestroyRef, inject} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {FormControl, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
@@ -10,7 +10,7 @@ import {NavService} from '../../nav/nav.service';
 import {SnackbarService} from '../../service/snackbar.service';
 import {openAndParseJsonFile} from '../../utils/open-local-json-file';
 import {CharacterFormComponent} from '../character-form/character-form.component';
-import {Character, CharacterEditDto, toCharacterEditDto} from '../character.model';
+import {Character, CharacterEditDto, toCharacter} from '../character.model';
 import {CharacterService} from '../character.service';
 
 @Component({
@@ -31,7 +31,6 @@ export class NewCharacterPageComponent {
   private readonly characterService = inject(CharacterService);
   private readonly router = inject(Router);
   private readonly snackbar = inject(SnackbarService);
-  private readonly cdRef = inject(ChangeDetectorRef);
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly form = new FormControl<CharacterEditDto | null>(null, Validators.required);
@@ -69,9 +68,9 @@ export class NewCharacterPageComponent {
 
   private async importCharacter(): Promise<void> {
     try {
-      const data = toCharacterEditDto(await openAndParseJsonFile() as Character);
-      this.form.setValue(data);
-      this.cdRef.detectChanges();
+      const character = toCharacter(await openAndParseJsonFile() as Character);
+      await this.characterService.createCharacter(character);
+      void this.router.navigate(['..']);
     } catch (error) {
       console.error('Error loading JSON file:', error);
     }

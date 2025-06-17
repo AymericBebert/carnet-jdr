@@ -38,9 +38,7 @@
       }
     }
 
-    @let spellsByLevel = availableSpells();
-
-    @if (spellsByLevel.length > 0) {
+    @if (characterHasSpells()) {
       <h2 class="section-header">
         <mat-icon>menu_book</mat-icon>
         <span style="flex-grow: 1">Sorts</span>
