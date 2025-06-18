@@ -67,6 +67,10 @@ export class CharacterPageComponent {
     return !!char && char.spellSlots && char.spellSlots.reduce((acc, slots) => acc + slots, 0) > 0;
   });
 
+  protected readonly characterHasConcentration = signal<boolean>(false);
+  protected readonly characterHasFavorite = signal<boolean>(false);
+  protected readonly characterHasPrepared = signal<boolean>(false);
+
   protected readonly filterForm = new FormGroup({
     name: new FormControl<string | null>(null),
     level: new FormControl<number[] | null>(null),
@@ -86,6 +90,14 @@ export class CharacterPageComponent {
         if (!char) return;
         this.navService.mainTitle.set(char.name);
         this.filterForm.patchValue(this.loadSpellFilter(char.id));
+
+        const allCharSpells = this.spellService.getSpells({known: true}, char.spellChoices);
+        this.characterHasConcentration.set(allCharSpells.some(s => s.concentration));
+        this.characterHasFavorite.set(allCharSpells.some(s => char.spellChoices[s.id]?.favorite));
+        this.characterHasPrepared.set(allCharSpells.some(s => {
+          const sc = char.spellChoices[s.id];
+          return sc && (sc.prepared || sc.alwaysPrepared);
+        }));
       });
 
     combineLatest([

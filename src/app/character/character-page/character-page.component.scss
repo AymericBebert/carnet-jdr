@@ -35,3 +35,11 @@ h2.spell-level-header {
 .concentrating app-spell-card.concentration {
   opacity: 0.3;
 }
+
+.filter-active {
+  background: radial-gradient(circle, var(--mat-sys-surface-variant) 60%, transparent 70%);
+}
+
+.filter-inactive {
+  opacity: 0.3;
+}
