@@ -23,9 +23,11 @@ export class CharacterService {
 
   public async createCharacter(character: CharacterEditDto): Promise<void> {
     const id = getRandomString(8);
+    const currentChars = await this.listCharacters();
     const newCharacter = toCharacter({
       ...character,
       id,
+      order: currentChars.length,
     });
     newCharacter.hp = newCharacter.hpMax;
     const db = await this.getDb();
@@ -35,7 +37,7 @@ export class CharacterService {
   public async listCharacters(): Promise<CharacterHeader[]> {
     const db = await this.getDb();
     const all = await db.getAll('characters');
-    return all.map(char => toCharacterHeader(char));
+    return all.map(char => toCharacterHeader(char)).sort((a, b) => a.order - b.order);
   }
 
   public async getCharacter(id: string): Promise<Character> {
@@ -69,6 +71,20 @@ export class CharacterService {
       return true;
     }
     return false;
+  }
+
+  public async updateCharacterOrder(ids: string[]): Promise<CharacterHeader[]> {
+    const db = await this.getDb();
+    const all = await db.getAll('characters');
+    const updatedCharacters = all.map(char => {
+      const index = ids.indexOf(char.id);
+      if (index !== -1) {
+        char.order = index;
+      }
+      return char;
+    });
+    await Promise.all(updatedCharacters.map(char => db.put('characters', char)));
+    return updatedCharacters.map(char => toCharacterHeader(char)).sort((a, b) => a.order - b.order);
   }
 
   private getDb() {

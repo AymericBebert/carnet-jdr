@@ -11,6 +11,11 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    data: {
+      navTools: [
+        {name: 'Ré-ordonner', icon: 'swap_vert'},
+      ],
+    },
   },
   {
     path: 'new-character',

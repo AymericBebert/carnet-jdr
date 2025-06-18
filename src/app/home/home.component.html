@@ -1,15 +1,36 @@
 <div style="max-width: 800px; margin: auto; text-align: center">
-  @for (char of characters(); track char.id) {
-    <app-character-card [character]="char"
-                        [routerLink]="['character', char.id]"
-                        style="margin-bottom: 16px"
-    ></app-character-card>
+  @for (char of characters(); let i = $index; track char.id; let first = $first; let last = $last) {
+    @if (isReordering()) {
+      <div style="display: flex; align-items: center; margin-bottom: 16px">
+        <app-character-card [character]="char"
+                            [routerLink]="['character', char.id]"
+                            style="flex-grow: 1"
+        ></app-character-card>
+        <app-up-down-button [disableUp]="first"
+                            [disableDown]="last"
+                            (up)="moveCharacter(i, -1)"
+                            (down)="moveCharacter(i, 1)"
+        ></app-up-down-button>
+      </div>
+    } @else {
+      <app-character-card [character]="char"
+                          [routerLink]="['character', char.id]"
+                          style="margin-bottom: 16px"
+      ></app-character-card>
+    }
   } @empty {
     <p class="creation-aid">Vous n'avez pas encore créé de personnage</p>
   }
 
-  <button mat-button color="primary" [routerLink]="'new-character'">
-    <mat-icon>add</mat-icon>
-    Ajouter un personnage
-  </button>
+  @if (isReordering()) {
+    <button mat-flat-button color="primary" (click)="validateOrder()">
+      <mat-icon>done</mat-icon>
+      Valider l'ordre
+    </button>
+  } @else {
+    <button mat-button color="primary" [routerLink]="'new-character'">
+      <mat-icon>add</mat-icon>
+      Ajouter un personnage
+    </button>
+  }
 </div>

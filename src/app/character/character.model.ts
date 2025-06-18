@@ -25,6 +25,7 @@ export interface CharacterHeader {
   hp: number;
   hpMax: number;
   hpTemp: number;
+  order: number;
 }
 
 export function toCharacterHeader(character: Partial<Character>): CharacterHeader {
@@ -38,6 +39,7 @@ export function toCharacterHeader(character: Partial<Character>): CharacterHeade
     hp: character.hp || 0,
     hpMax: character.hpMax || 0,
     hpTemp: character.hpTemp || 0,
+    order: character.order || 0,
   };
 }
 
@@ -47,6 +49,7 @@ export interface Character extends CharacterHeader {
   spellSlots: number[];
   spellSlotBurns: number[];
   spellChoices: SpellChoices;
+  order: number;
 }
 
 export function toCharacter(character: Partial<Character>): Character {
@@ -57,6 +60,7 @@ export function toCharacter(character: Partial<Character>): Character {
     spellSlots: character.spellSlots || [],
     spellSlotBurns: (character.spellSlots || []).map((_, i) => character.spellSlotBurns?.[i] || 0),
     spellChoices: character.spellChoices || {},
+    order: character.order || 0,
   };
 }
 
