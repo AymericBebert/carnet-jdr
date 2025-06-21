@@ -20,8 +20,8 @@ h2.spell-level-header {
 
   background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
   color: var(--mat-toolbar-container-text-color, var(--mat-sys-on-surface));
-  padding: 8px;
-  margin: 64px -8px 0;
+  padding: 8px 16px;
+  margin: 64px -16px 0;
 
   &.first {
     margin-top: 12px;
