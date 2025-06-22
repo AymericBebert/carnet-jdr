@@ -6,6 +6,7 @@ import {EditCharacterPageComponent} from './character/edit-character-page/edit-c
 import {NewCharacterPageComponent} from './character/new-character-page/new-character-page.component';
 import {HomeComponent} from './home/home.component';
 import {SpellsChoiceComponent} from './spells/spells-choice/spells-choice.component';
+import {SpellsListPageComponent} from './spells/spells-list-page/spells-list-page.component';
 
 export const routes: Routes = [
   {
@@ -71,6 +72,13 @@ export const routes: Routes = [
         },
       },
     ]
+  },
+  {
+    path: 'spells',
+    component: SpellsListPageComponent,
+    data: {
+      backRouterNavigate: '/',
+    },
   },
   {
     path: '**',

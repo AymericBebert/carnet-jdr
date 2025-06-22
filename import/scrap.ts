@@ -103,6 +103,10 @@ function addDetailsFile(spell: Spell): void {
     .replace(/\s+/g, ' ')
     .trim()
     .replace(/<br><\/div>$/g, '</div>')
+    .replace(/<div class="description">(.*?<br>.*?)<\/div>$/g, (_, p1: string) => {
+      const paragraphs = p1.split('<br>').map(p => `<p>${p.trim()}</p>`).join('');
+      return `<div class="description">${paragraphs}</div>`;
+    })
   );
 }
 
