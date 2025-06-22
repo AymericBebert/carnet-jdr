@@ -1,7 +1,7 @@
-:host {
-  display: block;
+div.mid-container {
+  max-width: 800px;
+  margin: auto;
   padding: 16px 16px 48px;
-  overflow-x: hidden;
 }
 
 h2.section-header {
@@ -14,18 +14,24 @@ h2.section-header {
   }
 }
 
+.spell-level-wrapper {
+  padding-bottom: 64px;
+}
+
 h2.spell-level-header {
   display: flex;
   align-items: center;
 
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
   background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
   color: var(--mat-toolbar-container-text-color, var(--mat-sys-on-surface));
-  padding: 8px 16px;
-  margin: 64px -16px 0;
+  border-top: 1px solid var(--jdr-background-color);
 
-  &.first {
-    margin-top: 12px;
-  }
+  padding: 8px 16px;
+  margin: 0 -16px;
 
   & > span {
     flex-grow: 1;

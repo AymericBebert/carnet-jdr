@@ -12,7 +12,7 @@ export function appConfigFactory(): AppConfig {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-member-access
   const appConstants: AppConfig = (window as any).APP_CONFIG || {};
   return {
-    version: appConstants.version || 'untagged',
+    version: appConstants.version || 'dev',
     websiteUrl: appConstants.websiteUrl || 'http://localhost:4700',
     debugSocket: appConstants.debugSocket || false,
     debugHttp: appConstants.debugHttp || false,

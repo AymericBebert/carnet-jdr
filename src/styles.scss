@@ -30,7 +30,8 @@ html {
     }
 
     > router-outlet + * {
-      flex-grow: 1;
+      height: calc(100vh - var(--jdr-toolbar-height));
+      overflow: hidden auto;
     }
   }
 
@@ -65,10 +66,32 @@ body {
 }
 
 :root {
+  --jdr-toolbar-height: 64px;
+
   @include mat.expansion-overrides((
     container-text-size: var(--mat-sys-body-medium-size),
   ));
   @include mat.sidenav-overrides((
     container-width: 200px,
   ));
+}
+
+@media (max-width: 599px) {
+  :root {
+    --jdr-toolbar-height: 56px;
+  }
+
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    padding: 0 12px;
+  }
+}
+
+@media (min-width: 599px) and (max-height: 599px) {
+  :root {
+    --jdr-toolbar-height: 48px;
+  }
+
+  .mat-toolbar-row, .mat-toolbar-single-row {
+    height: 48px;
+  }
 }

@@ -63,11 +63,10 @@
 
     .description {
       margin: 16px 0;
-    }
 
-    br + strong {
-      display: inline-block;
-      margin-top: 8px;
+      p {
+        margin: 8px 0;
+      }
     }
 
     table {
