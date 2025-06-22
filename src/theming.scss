@@ -34,6 +34,8 @@
     container-background-color: map.get(tc.$primary-palette, 95),
   ));
 
+  --jdr-background-color: #{map.get(tc.$primary-palette, 98)};
+
   a {
     color: map.get(tc.$secondary-palette, 40);
   }
@@ -68,6 +70,8 @@
   @include mat.dialog-overrides((
     container-color: map.get(tc.$neutral-palette, 12),
   ));
+
+  --jdr-background-color: #{map.get(tc.$neutral-palette, 6)};
 
   a {
     color: map.get(tc.$tertiary-palette, 80);

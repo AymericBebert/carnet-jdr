@@ -1,4 +1,4 @@
-<div style="max-width: 800px; margin: auto" [class.concentrating]="filterForm.controls.concentrating.value">
+<div class="mid-container" [class.concentrating]="filterForm.controls.concentrating.value">
   @if (character(); as char) {
     <app-character-card [character]="char"></app-character-card>
 
@@ -78,19 +78,21 @@
       </h2>
 
       @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
-        <h2 class="spell-level-header" [class.first]="first">
-          <span>Niveau {{ spellLevel.level }}</span>
-          <app-slots-form [maxSlots]="spellLevel.slots"
-                          [ngModel]="char.spellSlotBurns[spellLevel.level]"
-                          (ngModelChange)="setSpellSlotBurns(spellLevel.level, $event)"
-          ></app-slots-form>
-        </h2>
-        @for (spell of spellLevel.spells; track spell.id) {
-          <app-spell-card [spell]="spell"
-                          [spellChoice]="char.spellChoices[spell.id]"
-                          (spellChoiceChange)="setSpellChoice(spell.id, $event)"
-          ></app-spell-card>
-        }
+        <div class="spell-level-wrapper">
+          <h2 class="spell-level-header" [class.first]="first">
+            <span>Niveau {{ spellLevel.level }}</span>
+            <app-slots-form [maxSlots]="spellLevel.slots"
+                            [ngModel]="char.spellSlotBurns[spellLevel.level]"
+                            (ngModelChange)="setSpellSlotBurns(spellLevel.level, $event)"
+            ></app-slots-form>
+          </h2>
+          @for (spell of spellLevel.spells; track spell.id) {
+            <app-spell-card [spell]="spell"
+                            [spellChoice]="char.spellChoices[spell.id]"
+                            (spellChoiceChange)="setSpellChoice(spell.id, $event)"
+            ></app-spell-card>
+          }
+        </div>
       }
     }
   } @else {
