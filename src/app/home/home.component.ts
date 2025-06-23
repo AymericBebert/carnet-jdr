@@ -2,7 +2,7 @@ import {Component, inject, signal} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import {RouterLink} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import {CharacterCardComponent} from '../character/character-card/character-card.component';
 import {CharacterHeader} from '../character/character.model';
 import {CharacterService} from '../character/character.service';
@@ -23,6 +23,7 @@ import {UpDownButtonComponent} from '../utils/up-down-button/up-down-button.comp
   ],
 })
 export class HomeComponent {
+  private readonly route = inject(ActivatedRoute);
   private readonly characterService = inject(CharacterService);
   private readonly navButtonsService = inject(NavButtonsService);
   private readonly snackbar = inject(SnackbarService);
@@ -31,9 +32,13 @@ export class HomeComponent {
   protected readonly isReordering = signal<boolean>(false);
 
   constructor() {
-    this.characterService.listCharacters()
-      .then(chars => this.characters.set(chars))
-      .catch(err => this.snackbar.openError('Error loading characters', err));
+    this.route.data
+      .pipe(takeUntilDestroyed())
+      .subscribe(data => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const chars: CharacterHeader[] = data.characters;
+        this.characters.set(chars);
+      });
 
     this.navButtonsService.navButtonClicked$()
       .pipe(takeUntilDestroyed())

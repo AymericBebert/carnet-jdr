@@ -2,6 +2,7 @@ import {Routes} from '@angular/router';
 import {CharacterPageComponent} from './character/character-page/character-page.component';
 import {characterResolver} from './character/character-resolver';
 import {CharacterRootComponent} from './character/character-root/character-root.component';
+import {charactersResolver} from './character/characters-resolver';
 import {EditCharacterPageComponent} from './character/edit-character-page/edit-character-page.component';
 import {NewCharacterPageComponent} from './character/new-character-page/new-character-page.component';
 import {HomeComponent} from './home/home.component';
@@ -12,6 +13,7 @@ export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    resolve: {characters: charactersResolver},
     data: {
       navTools: [
         {name: 'Ré-ordonner', icon: 'swap_vert'},
