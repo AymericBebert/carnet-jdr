@@ -1,0 +1,96 @@
+/* amiri-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/amiri-v27-latin-regular.woff2') format('woff2');
+}
+
+/* amiri-italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Amiri';
+  font-style: italic;
+  font-weight: 400;
+  src: url('assets/fonts/amiri-v27-latin-italic.woff2') format('woff2');
+}
+
+/* amiri-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Amiri';
+  font-style: normal;
+  font-weight: 700;
+  src: url('assets/fonts/amiri-v27-latin-700.woff2') format('woff2');
+}
+
+/* amiri-700italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Amiri';
+  font-style: italic;
+  font-weight: 700;
+  src: url('assets/fonts/amiri-v27-latin-700italic.woff2') format('woff2');
+}
+
+/* roboto-regular - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/roboto-v48-latin-regular.woff2') format('woff2');
+}
+
+/* roboto-italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: url('assets/fonts/roboto-v48-latin-italic.woff2') format('woff2');
+}
+
+/* roboto-700 - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: url('assets/fonts/roboto-v48-latin-700.woff2') format('woff2');
+}
+
+/* roboto-700italic - latin */
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 700;
+  src: url('assets/fonts/roboto-v48-latin-700italic.woff2') format('woff2');
+}
+
+// Material Symbols
+@font-face {
+  font-family: 'Material Symbols Outlined';
+  font-style: normal;
+  font-weight: 400;
+  src: url('assets/fonts/materialsymbolsoutlined-v254.woff2') format('woff2');
+}
+
+.material-symbols-outlined {
+  //noinspection CssNoGenericFontName
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}

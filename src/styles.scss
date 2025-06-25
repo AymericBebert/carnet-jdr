@@ -1,6 +1,7 @@
 @use '@angular/material' as mat;
 @use 'theme-colors' as tc;
 @use 'theming';
+@use 'fonts';
 
 html {
   color-scheme: light;
