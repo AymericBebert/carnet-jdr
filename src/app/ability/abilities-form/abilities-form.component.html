@@ -56,7 +56,11 @@
 
     <div style="display: flex; align-items: center; gap: 8px">
       <span style="flex-grow: 1">{{ ability.name }}</span>
-      <span>{{ '○'.repeat(ability.maxSlots) }}</span>
+      @if (ability.maxSlots > 10) {
+        <span>{{ ability.maxSlots }} ○</span>
+      } @else {
+        <span>{{ '○'.repeat(ability.maxSlots) }}</span>
+      }
       @if (isReordering()) {
         <app-up-down-button [disableUp]="first"
                             [disableDown]="last"

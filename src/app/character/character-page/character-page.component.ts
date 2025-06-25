@@ -18,11 +18,11 @@ import {Spell, SpellChoice, SpellFilter} from '../../spells/spell.model';
 import {SpellService} from '../../spells/spell.service';
 import {cleanForFilename} from '../../utils/clean-for-filename';
 import {downloadJson} from '../../utils/download-as-file';
+import {ValueDialogComponent, ValueDialogData, ValueDialogResult} from '../../value-dialog/value-dialog.component';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {CharacterRootComponent} from '../character-root/character-root.component';
 import {CharacterClass} from '../character.model';
 import {CharacterService} from '../character.service';
-import {HpDialogComponent, HpDialogData, HpDialogResult} from './hp-dialog/hp-dialog.component';
 import {SleepDialogComponent, SleepDialogData, SleepDialogResult} from './sleep-dialog/sleep-dialog.component';
 
 interface SpellsInLevel {
@@ -144,8 +144,8 @@ export class CharacterPageComponent {
   }
 
   protected changeHp(label: string, negative: boolean, temp: boolean): void {
-    this.matDialog.open<HpDialogComponent, HpDialogData, HpDialogResult>(
-      HpDialogComponent,
+    this.matDialog.open<ValueDialogComponent, ValueDialogData, ValueDialogResult>(
+      ValueDialogComponent,
       {
         data: {
           label,

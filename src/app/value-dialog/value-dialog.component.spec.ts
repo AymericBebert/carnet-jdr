@@ -1,16 +1,16 @@
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
-import {HpDialogComponent, HpDialogData} from './hp-dialog.component';
+import {ValueDialogComponent, ValueDialogData} from './value-dialog.component';
 
-describe('HpDialogComponent', () => {
-  let component: HpDialogComponent;
-  let fixture: ComponentFixture<HpDialogComponent>;
+describe('ValueDialogComponent', () => {
+  let component: ValueDialogComponent;
+  let fixture: ComponentFixture<ValueDialogComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [
-        HpDialogComponent,
+        ValueDialogComponent,
       ],
       providers: [
         provideZonelessChangeDetection(),
@@ -19,12 +19,12 @@ describe('HpDialogComponent', () => {
           provide: MAT_DIALOG_DATA,
           useValue: {
             label: 'Test label',
-          } satisfies HpDialogData,
+          } satisfies ValueDialogData,
         },
       ],
     });
 
-    fixture = TestBed.createComponent(HpDialogComponent);
+    fixture = TestBed.createComponent(ValueDialogComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

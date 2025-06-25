@@ -1,4 +1,5 @@
-import {Component, computed, forwardRef, HostListener, input, signal} from '@angular/core';
+import {Component, computed, DestroyRef, forwardRef, HostListener, inject, input, signal} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -7,7 +8,12 @@ import {
   ValidationErrors,
   Validator
 } from '@angular/forms';
+import {MatIconButton} from '@angular/material/button';
+import {MatDialog} from '@angular/material/dialog';
+import {MatIconModule} from '@angular/material/icon';
+import {filter} from 'rxjs/operators';
 import {getRandomString} from '../../utils/get-random-string';
+import {ValueDialogComponent, ValueDialogData, ValueDialogResult} from '../../value-dialog/value-dialog.component';
 
 interface DisplayedSlot {
   id: string;
@@ -18,23 +24,35 @@ interface DisplayedSlot {
   selector: 'app-slots-form',
   templateUrl: './slots-form.component.html',
   styleUrls: ['./slots-form.component.scss'],
-  imports: [],
+  imports: [
+    MatIconModule,
+    MatIconButton,
+  ],
   providers: [
     {provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => SlotsFormComponent)},
     {provide: NG_VALIDATORS, multi: true, useExisting: forwardRef(() => SlotsFormComponent)},
   ],
 })
 export class SlotsFormComponent implements ControlValueAccessor, Validator {
+  private readonly matDialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
+
   public readonly maxSlots = input.required<number>();
 
   private readonly componentId = getRandomString(8);
 
   protected readonly isDisabled = signal<boolean>(false);
 
-  private readonly burntSlots = signal<number>(0);
+  protected readonly burntSlots = signal<number>(0);
 
-  protected readonly slots = computed<DisplayedSlot[][]>(() => {
+  protected readonly slots = computed<DisplayedSlot[][] | null>(() => {
     const maxSlots = this.maxSlots();
+    if (!maxSlots) {
+      return [];
+    }
+    if (maxSlots > 10) {
+      return null;
+    }
     const burntSlots = this.burntSlots();
     const maxSlotsPerRow = 5;
     return Array.from({length: Math.ceil(maxSlots / maxSlotsPerRow)}, (_, i) =>
@@ -128,6 +146,28 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
         this.clickInitiated = false;
       }
     }
+  }
+
+  protected changeUsage(label: string, negative: boolean): void {
+    const maxSlots = this.maxSlots();
+    const burntSlots = this.burntSlots();
+
+    this.matDialog.open<ValueDialogComponent, ValueDialogData, ValueDialogResult>(
+      ValueDialogComponent,
+      {
+        data: {
+          label,
+        },
+        autoFocus: '__nope__',
+      },
+    ).afterClosed().pipe(
+      filter(changeRes => changeRes != null),
+      takeUntilDestroyed(this.destroyRef),
+    ).subscribe(changeRes => {
+      const change = negative ? -changeRes : changeRes;
+      this.burntSlots.set(Math.min(Math.max(burntSlots - change, 0), maxSlots));
+      this.onChange(this.burntSlots());
+    });
   }
 
   private burnSlot(): void {

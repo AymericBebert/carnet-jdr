@@ -1,6 +1,8 @@
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {ActivatedRoute} from '@angular/router';
+import {of} from 'rxjs';
+import {toCharacterHeader} from '../character/character.model';
 import {HomeComponent} from './home.component';
 
 describe('HomeComponent', () => {
@@ -15,7 +17,7 @@ describe('HomeComponent', () => {
       ],
       providers: [
         provideZonelessChangeDetection(),
-        {provide: ActivatedRoute, useValue: {}},
+        {provide: ActivatedRoute, useValue: {data: of({characters: [toCharacterHeader({})]})}},
       ],
     });
 

@@ -1,15 +1,32 @@
-<div class="slots-wrapper"
-     (mousedown)="startPress()"
-     (mouseup)="endPress()"
-     (touchstart)="startPress($event)"
-     (touchend)="endPress()"
-     (touchmove)="onTouchMove($event)"
->
-  @for (slotRow of slots(); track $index) {
-    <div class="slot-row">
-      @for (slot of slotRow; track $index) {
-        <div [attr.id]="slot.id" class="slot" [class.available]="!slot.burnt" [class.burnt]="slot.burnt"></div>
-      }
-    </div>
-  }
-</div>
+@if (slots(); as slotRows) {
+  <div class="slots-wrapper"
+       (mousedown)="startPress()"
+       (mouseup)="endPress()"
+       (touchstart)="startPress($event)"
+       (touchend)="endPress()"
+       (touchmove)="onTouchMove($event)"
+  >
+    @for (slotRow of slotRows; track $index) {
+      <div class="slot-row">
+        @for (slot of slotRow; track $index) {
+          <div [attr.id]="slot.id" class="slot" [class.available]="!slot.burnt" [class.burnt]="slot.burnt"></div>
+        }
+      </div>
+    }
+  </div>
+} @else {
+  <div style="display: flex; align-items: center">
+    <button mat-icon-button aria-label="Utiliser le pouvoir"
+            (click)="changeUsage('Utiliser le pouvoir', true)"
+    >
+      <mat-icon>flare</mat-icon>
+    </button>
+    <span style="width: 24px; text-align: center; font-weight: bold">{{ maxSlots() - burntSlots() }}</span>
+    <button mat-icon-button aria-label="Recharger le pouvoir"
+            (click)="changeUsage('Recharger le pouvoir', false)"
+            style="opacity: 0.3"
+    >
+      <mat-icon>arrow_warm_up</mat-icon>
+    </button>
+  </div>
+}

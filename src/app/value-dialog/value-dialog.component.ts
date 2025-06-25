@@ -5,17 +5,17 @@ import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 
-export interface HpDialogData {
+export interface ValueDialogData {
   label: string;
   initial?: number | undefined;
 }
 
-export type HpDialogResult = number | null;
+export type ValueDialogResult = number | null;
 
 @Component({
-  selector: 'app-hp-dialog',
-  templateUrl: './hp-dialog.component.html',
-  styleUrls: ['./hp-dialog.component.scss'],
+  selector: 'app-value-dialog',
+  templateUrl: './value-dialog.component.html',
+  styleUrls: ['./value-dialog.component.scss'],
   imports: [
     MatDialogModule,
     MatButtonModule,
@@ -24,9 +24,9 @@ export type HpDialogResult = number | null;
     FormsModule,
   ],
 })
-export class HpDialogComponent {
-  protected readonly ref = inject<MatDialogRef<HpDialogComponent, HpDialogResult>>(MatDialogRef);
-  protected readonly data = inject<HpDialogData>(MAT_DIALOG_DATA);
+export class ValueDialogComponent {
+  protected readonly ref = inject<MatDialogRef<ValueDialogComponent, ValueDialogResult>>(MatDialogRef);
+  protected readonly data = inject<ValueDialogData>(MAT_DIALOG_DATA);
 
   public readonly rawValue = signal<string>(this.data.initial?.toString() ?? '');
 
