@@ -3,6 +3,8 @@
 @use 'theming';
 @use 'fonts';
 
+$main-font: "Brygada 1918";
+
 html {
   color-scheme: light;
   @include mat.theme((
@@ -10,7 +12,7 @@ html {
       primary: tc.$primary-palette,
       tertiary: tc.$tertiary-palette,
     ),
-    typography: Amiri,
+    typography: $main-font,
   ));
 
   &:not([dark-theme=true]) {
@@ -49,7 +51,7 @@ html, body {
 
 body {
   margin: 0;
-  font-family: Amiri, "Times New Roman", serif
+  font-family: $main-font, "Times New Roman", serif;
 }
 
 .hide-focus:focus {
