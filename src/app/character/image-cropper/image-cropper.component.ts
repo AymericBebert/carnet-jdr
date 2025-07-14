@@ -1,6 +1,7 @@
-import {Component, effect, ElementRef, input, output, viewChild} from '@angular/core';
+import {Component, DestroyRef, effect, ElementRef, inject, input, output, viewChild} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {CharacterFormComponent} from '../character-form/character-form.component';
 
 @Component({
   selector: 'app-image-cropper',
@@ -12,6 +13,9 @@ import {MatIconModule} from '@angular/material/icon';
   ],
 })
 export class ImageCropperComponent {
+  private readonly characterFormComponent = inject(CharacterFormComponent);
+  private readonly destroyRef = inject(DestroyRef);
+
   public readonly imageDataUri = input.required<string | null>();
   public readonly imageCropped = output<string | null>();
 
@@ -33,9 +37,19 @@ export class ImageCropperComponent {
       this.redrawCanvas();
     };
 
+    const triggerSave = () => this.cropAndSave();
+
     effect(() => {
-      this.sourceImage.src = this.imageDataUri() || '';
+      const dataUri = this.imageDataUri() || '';
+      this.sourceImage.src = dataUri;
+      if (dataUri) {
+        this.characterFormComponent.addBeforeSaveAction(triggerSave);
+      } else {
+        this.characterFormComponent.removeBeforeSaveAction(triggerSave);
+      }
     });
+
+    this.destroyRef.onDestroy(() => this.characterFormComponent.removeBeforeSaveAction(triggerSave));
   }
 
   zoomIn(): void {

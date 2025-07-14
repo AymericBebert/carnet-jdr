@@ -1,5 +1,6 @@
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {CharacterFormComponent} from '../character-form/character-form.component';
 import {ImageCropperComponent} from './image-cropper.component';
 
 describe('ImageCropperComponent', () => {
@@ -14,6 +15,7 @@ describe('ImageCropperComponent', () => {
       ],
       providers: [
         provideZonelessChangeDetection(),
+        CharacterFormComponent,
       ],
     });
 

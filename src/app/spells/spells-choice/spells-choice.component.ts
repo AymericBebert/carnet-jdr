@@ -1,5 +1,5 @@
-import {Component, DestroyRef, inject, signal} from '@angular/core';
-import {takeUntilDestroyed, toObservable} from '@angular/core/rxjs-interop';
+import {Component, DestroyRef, effect, HostListener, inject} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CharacterRootComponent} from '../../character/character-root/character-root.component';
 import {CharacterService} from '../../character/character.service';
@@ -26,14 +26,20 @@ export class SpellsChoiceComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   protected readonly character = this.characterRoot.character;
-  private readonly character$ = toObservable(this.character);
 
-  private readonly updatedSpellChoices = signal<SpellChoices | null>(null);
+  private updatedSpellChoices: SpellChoices | null = null;
+  private pristine = true;
+
+  @HostListener('window:beforeunload')
+  canDeactivate(): boolean {
+    const char = this.character();
+    if (!char) return true;
+    return this.pristine || JSON.stringify(char.spellChoices) === JSON.stringify(this.updatedSpellChoices);
+  }
 
   constructor() {
-    this.character$.pipe(
-      takeUntilDestroyed(this.destroyRef),
-    ).subscribe(char => {
+    effect(() => {
+      const char = this.character();
       if (!char) return;
       this.navService.mainTitle.set(`Sorts de ${char.name}`);
     });
@@ -55,14 +61,15 @@ export class SpellsChoiceComponent {
 
   protected async save(): Promise<void> {
     const character = this.character();
-    const updatedSpellChoices = this.updatedSpellChoices();
-    if (character && updatedSpellChoices) {
-      await this.characterService.updateCharacter(character.id, {spellChoices: updatedSpellChoices});
+    if (character && this.updatedSpellChoices) {
+      await this.characterService.updateCharacter(character.id, {spellChoices: this.updatedSpellChoices});
+      this.pristine = true;
     }
     void this.router.navigate(['..'], {relativeTo: this.route});
   }
 
   protected setSpellChoices(spellChoices: SpellChoices): void {
-    this.updatedSpellChoices.set(spellChoices);
+    this.updatedSpellChoices = spellChoices;
+    this.pristine = false;
   }
 }

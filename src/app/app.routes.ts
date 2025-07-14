@@ -5,6 +5,7 @@ import {CharacterRootComponent} from './character/character-root/character-root.
 import {charactersResolver} from './character/characters-resolver';
 import {EditCharacterPageComponent} from './character/edit-character-page/edit-character-page.component';
 import {NewCharacterPageComponent} from './character/new-character-page/new-character-page.component';
+import {pendingChangesGuard} from './confirm/pending-changes.guard';
 import {HomeComponent} from './home/home.component';
 import {SpellsChoiceComponent} from './spells/spells-choice/spells-choice.component';
 import {SpellsListPageComponent} from './spells/spells-list-page/spells-list-page.component';
@@ -31,6 +32,7 @@ export const routes: Routes = [
         {name: 'Importer perso', icon: 'upload'},
       ],
     },
+    canDeactivate: [pendingChangesGuard],
   },
   {
     path: 'character/:id',
@@ -61,6 +63,7 @@ export const routes: Routes = [
             {name: 'Supprimer perso', icon: 'delete'},
           ],
         },
+        canDeactivate: [pendingChangesGuard],
       },
       {
         path: 'spells',
@@ -72,6 +75,7 @@ export const routes: Routes = [
             {name: 'Sauvegarder', icon: 'done'},
           ],
         },
+        canDeactivate: [pendingChangesGuard],
       },
     ]
   },

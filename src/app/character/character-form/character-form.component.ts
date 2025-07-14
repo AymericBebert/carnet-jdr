@@ -54,6 +54,7 @@ import {TinyNumberChoiceFormComponent} from '../tiny-number-choice-form/tiny-num
 })
 export class CharacterFormComponent implements OnInit, ControlValueAccessor, Validator {
   private readonly destroyRef = inject(DestroyRef);
+  private readonly beforeSaveActions: (() => void)[] = [];
 
   public readonly creationAid = input<boolean>(false);
 
@@ -112,6 +113,25 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
       return {characterInvalid: true};
     }
     return null;
+  }
+
+  get pristine(): boolean {
+    return this.beforeSaveActions.length === 0;
+  }
+
+  applyBeforeSaveActions(): void {
+    this.beforeSaveActions.forEach(action => action());
+  }
+
+  addBeforeSaveAction(action: () => void): void {
+    this.beforeSaveActions.push(action);
+  }
+
+  removeBeforeSaveAction(action: () => void): void {
+    const index = this.beforeSaveActions.indexOf(action);
+    if (index !== -1) {
+      this.beforeSaveActions.splice(index, 1);
+    }
   }
 
   private computeCharacterEditDto(): CharacterEditDto {
