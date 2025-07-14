@@ -4,7 +4,7 @@
   <!--suppress AngularNgOptimizedImage -->
   <img class="char-image" [src]="char.image" alt="Image de {{ char.name }}" width="48" height="48">
 } @else {
-  <div class="char-image" style="width: 48px; height: 48px"></div>
+  <div class="char-image" style="flex: 0 0 48px; height: 48px"></div>
 }
 <span style="font-weight: bold; font-size: 1.4em">{{ char.name }}</span>
 

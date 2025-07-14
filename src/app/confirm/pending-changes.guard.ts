@@ -21,6 +21,7 @@ export const pendingChangesGuard: CanDeactivateFn<ComponentCanDeactivate> = (com
     inject(ConfirmService).confirm$({
       title: 'Quitter la page ?',
       description: 'Les modifications non enregistrées seront perdues',
-      yesText: 'Confirmer',
+      yesText: 'Quitter sans enregistrer',
+      noText: 'Rester',
     });
 };

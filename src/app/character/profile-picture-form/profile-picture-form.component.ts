@@ -1,4 +1,4 @@
-import {Component, ElementRef, forwardRef, signal, viewChild} from '@angular/core';
+import {Component, DestroyRef, ElementRef, forwardRef, inject, signal, viewChild} from '@angular/core';
 import {
   AbstractControl,
   ControlValueAccessor,
@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatMenuModule} from '@angular/material/menu';
 import {ImageCropperComponent} from '../image-cropper/image-cropper.component';
 
 @Component({
@@ -19,6 +20,7 @@ import {ImageCropperComponent} from '../image-cropper/image-cropper.component';
     ImageCropperComponent,
     MatButtonModule,
     MatIconModule,
+    MatMenuModule,
   ],
   providers: [
     {provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => ProfilePictureFormComponent)},
@@ -26,6 +28,8 @@ import {ImageCropperComponent} from '../image-cropper/image-cropper.component';
   ],
 })
 export class ProfilePictureFormComponent implements ControlValueAccessor, Validator {
+  private readonly destroyRef = inject(DestroyRef);
+
   protected readonly picture = signal<string>('');
   protected readonly isTakingPicture = signal<boolean>(false);
   protected readonly rawImageDataUri = signal<string | null>(null);
@@ -33,7 +37,11 @@ export class ProfilePictureFormComponent implements ControlValueAccessor, Valida
 
   private videoElement = viewChild<ElementRef<HTMLVideoElement>>('videoElement');
   private canvasElement = viewChild<ElementRef<HTMLCanvasElement>>('canvasElement');
+  private stream: MediaStream | null = null;
 
+  constructor() {
+    this.destroyRef.onDestroy(() => this.stopStream());
+  }
 
   writeValue(obj: string): void {
     if (!obj) {
@@ -67,7 +75,7 @@ export class ProfilePictureFormComponent implements ControlValueAccessor, Valida
 
   async startCamera(): Promise<void> {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({
+      this.stream = await navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: 'environment',
           frameRate: {ideal: 30},
@@ -83,7 +91,7 @@ export class ProfilePictureFormComponent implements ControlValueAccessor, Valida
       }
       this.rawImageDataUri.set(null);
       this.isTakingPicture.set(true);
-      video.nativeElement.srcObject = stream;
+      video.nativeElement.srcObject = this.stream;
     } catch (err) {
       console.error('Error accessing the camera', err);
     }
@@ -104,6 +112,7 @@ export class ProfilePictureFormComponent implements ControlValueAccessor, Valida
       console.log('Took picture:', canvas);
       this.rawImageDataUri.set(canvas.toDataURL('image/png', 0.95));
       this.isTakingPicture.set(false);
+      this.stopStream();
     }
   }
 
@@ -118,6 +127,13 @@ export class ProfilePictureFormComponent implements ControlValueAccessor, Valida
   deletePicture(): void {
     this.picture.set('');
     this.onChange('');
+  }
+
+  private stopStream(): void {
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop());
+      this.stream = null;
+    }
   }
 
   private onChange: (_: string) => void = (_: string) => void 0;

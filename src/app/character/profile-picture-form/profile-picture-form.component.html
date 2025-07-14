@@ -3,7 +3,7 @@
     <!--suppress AngularNgOptimizedImage -->
     <img class="char-image" [src]="picture()" alt="Image" width="48" height="48">
   } @else {
-    <div class="char-image" style="width: 48px; height: 48px"></div>
+    <div class="char-image" style="flex: 0 0 48px; height: 48px"></div>
   }
 
   @if (!isDisabled()) {
@@ -20,9 +20,15 @@
       Capturer
     </button>
 
-    <button mat-icon-button (click)="deletePicture()">
-      <mat-icon>clear</mat-icon>
+    <button mat-icon-button [matMenuTriggerFor]="pictureMenu" style="margin: 0 -8px">
+      <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-menu #pictureMenu="matMenu">
+      <button mat-menu-item (click)="deletePicture()">
+        <mat-icon>clear</mat-icon>
+        Supprimer l'image
+      </button>
+    </mat-menu>
   }
 </div>
 
