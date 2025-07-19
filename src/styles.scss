@@ -34,6 +34,7 @@ html {
 
     > router-outlet + * {
       height: calc(100vh - var(--jdr-toolbar-height));
+      box-sizing: border-box;
       overflow: hidden auto;
     }
   }
@@ -42,6 +43,10 @@ html {
     .mat-drawer-content > router-outlet + * {
       border-top-right-radius: 24px;
     }
+  }
+
+  .mat-badge-content {
+    font-family: $main-font, "Times New Roman", serif;
   }
 }
 

@@ -71,11 +71,11 @@ export class SleepDialogComponent {
 
     for (const ability of char.abilities) {
       if (ability.refillWhen === 'longRest' && sleepType === 'long' ||
-        ability.refillWhen === 'shortRest' && sleepType === 'short') {
+        ability.refillWhen === 'shortRest' && (sleepType === 'short' || sleepType === 'long')) {
         abilityUsage[ability.id] = 0;
       }
       if (ability.refillWhen === 'longRestDie' && sleepType === 'long' ||
-        ability.refillWhen === 'shortRestDie' && sleepType === 'short') {
+        ability.refillWhen === 'shortRestDie' && (sleepType === 'short' || sleepType === 'long')) {
         const refill = toUpdate.find(u => u.id === ability.id)?.result ?? 0;
         abilityUsage[ability.id] = Math.max(abilityUsage[ability.id] - refill, 0);
       }
