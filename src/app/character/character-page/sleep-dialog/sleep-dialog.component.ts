@@ -44,7 +44,7 @@ export class SleepDialogComponent {
     const toUpdate: ToUpdateWithDie[] = [];
     for (const ability of char.abilities) {
       if (ability.refillWhen === 'longRestDie' && sleepType === 'long' ||
-        ability.refillWhen === 'shortRestDie' && sleepType === 'short') {
+        ability.refillWhen === 'shortRestDie' && (sleepType === 'short' || sleepType === 'long')) {
         toUpdate.push({
           id: ability.id,
           name: ability.name,
