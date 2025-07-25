@@ -16,3 +16,11 @@
 div.char-image {
   background-color: #88888844;
 }
+
+.char-name {
+  font-weight: bold;
+  font-size: 1.4em;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

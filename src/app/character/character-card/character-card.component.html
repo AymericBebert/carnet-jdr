@@ -6,12 +6,12 @@
 } @else {
   <div class="char-image" style="flex: 0 0 48px; height: 48px"></div>
 }
-<span style="font-weight: bold; font-size: 1.4em">{{ char.name }}</span>
+<span class="char-name">{{ char.name }}</span>
 
 <span style="flex-grow: 1"></span>
 
 <mat-icon>favorite</mat-icon>
-<div style="margin: 0 4px 0 -4px">
+<div style="margin: 0 4px 0 -4px; flex-shrink: 0">
   <span style="font-weight: bold">{{ char.hp }}</span>
   <span> / {{ char.hpMax }}</span>
   @if (char.hpTemp) {

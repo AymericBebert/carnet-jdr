@@ -75,11 +75,12 @@
         <button type="button" aria-label="Back button" mat-icon-button (click)="navService.backClicked()">
           <mat-icon aria-label="Back arrow icon">arrow_back</mat-icon>
         </button>
+      } @else {
+        <app-icon-book routerLink="/" class="main-icon hide-focus"
+                       [size]="deviceService.slimToolbar() ? 32 : 40"
+        ></app-icon-book>
       }
 
-      <app-icon-book routerLink="/" class="main-icon hide-focus"
-                     [size]="deviceService.slimToolbar() ? 32 : 40"
-      ></app-icon-book>
       <span routerLink="/" class="main-title hide-focus">
         {{ navService.mainTitle() || 'Carnet JdR' }}
       </span>
