@@ -1,0 +1,97 @@
+<span>{{ title() }}</span>
+<ng-content></ng-content>
+
+<div class="ornament top-left">
+  <ng-container *ngTemplateOutlet="ornament"></ng-container>
+</div>
+<div class="ornament top-right">
+  <ng-container *ngTemplateOutlet="ornament"></ng-container>
+</div>
+<div class="ornament bottom-left">
+  <ng-container *ngTemplateOutlet="ornament"></ng-container>
+</div>
+<div class="ornament bottom-right">
+  <ng-container *ngTemplateOutlet="ornament"></ng-container>
+</div>
+
+<ng-template #ornament>
+  <svg width="96" height="22" viewBox="0 0 768 176">
+    <path
+      id="corner"
+      style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+      d="m 14,14 31,0 c -5,7 -9,16 -7,25 -9,-2 -18,1 -25,7 z"
+    />
+    @if (level() >= 1) {
+      <path
+        id="curve-s-1"
+        style="fill:none;stroke:currentColor;stroke-width:5.39999;stroke-linecap:round;stroke-linejoin:round"
+        d="M 69,7 C 41,15 47,40 49,49 c 2,9 7,24 6,35 -1,11 -14,26 -19,11"
+      />
+      <path
+        id="curve-s-2"
+        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
+        d="M 7,69 C 15,41 40,47 49,49 c 9,2 24,7 35,6 11,-1 26,-14 11,-19"
+      />
+    }
+    @if (level() >= 2) {
+      <path
+        id="lobe"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 71,55 c 22,19 18,34 18,34 0,0 -19,4 -34,-18"
+      />
+    }
+    @if (level() >= 3) {
+      <path
+        id="curl-start-1"
+        style="fill:none;stroke:currentColor;stroke-width:7.4;stroke-linecap:round;stroke-linejoin:round"
+        d="M 77,28 C 85,30 89,45 75,46 65,48 58,36 63,25 67,16 84,5 107,16"
+      />
+      <path
+        id="curl-start-2"
+        style="fill:none;stroke:currentColor;stroke-width:7.4;stroke-linecap:round;stroke-linejoin:round"
+        d="M 28,77 C 29,86 44,90 46,75 47,65 35,58 24,63 16,67 5,84 16,108"
+      />
+    }
+    @if (level() >= 4) {
+      <path
+        id="curl-mid-1"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 72,15 c 16,-5 28,18 48,20 14,1 23,-4 25,-14 2,-10 -8,-19 -17,-11"
+      />
+      <path
+        id="curl-mid-2"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="M 15,72 C 10,88 33,100 35,120 36,134 31,143 21,145 11,147 2,137 10,128"
+      />
+    }
+    @if (level() >= 5) {
+      <path
+        id="curl-end-1"
+        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
+        d="m 122,35 c 26,5 28,-16 50,-15"
+      />
+      <path
+        id="curl-end-2"
+        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
+        d="m 35,122 c 5,26 -16,28 -15,50"
+      />
+    }
+    @if (level() >= 6) {
+      <path
+        id="curl-2-start-1"
+        style="fill:none;stroke:currentColor;stroke-width:7.4;stroke-linecap:round;stroke-linejoin:round"
+        d="M 187,28 C 195,30 199,45 185,46 175,48 168,36 173,25 177,16 194,5 217,16"
+      />
+      <path
+        id="curl-2-mid-1"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 182,15 c 16,-5 28,18 48,20 14,1 23,-4 25,-14 2,-10 -8,-19 -17,-11"
+      />
+      <path
+        id="curl-2-end-1"
+        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
+        d="m 232,35 c 26,5 28,-16 50,-15"
+      />
+    }
+  </svg>
+</ng-template>

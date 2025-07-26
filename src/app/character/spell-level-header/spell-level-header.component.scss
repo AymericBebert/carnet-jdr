@@ -1,0 +1,48 @@
+:host {
+  font-size: 1.5em;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+
+  background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
+  color: var(--mat-toolbar-container-text-color, var(--mat-sys-on-surface));
+  border-top: 1px solid var(--jdr-background-color);
+
+  padding: 8px 16px;
+  margin: 0 -16px;
+
+  & > span {
+    flex-grow: 1;
+  }
+}
+
+.ornament {
+  position: absolute;
+  height: 22px;
+  width: 96px;
+  color: var(--jdr-ornament-color);
+
+  &.top-left {
+    top: 0;
+    left: 0;
+  }
+
+  &.top-right {
+    top: 0;
+    right: 0;
+    transform: scaleX(-1);
+  }
+
+  &.bottom-left {
+    bottom: 0;
+    left: 0;
+    transform: scaleY(-1);
+  }
+
+  &.bottom-right {
+    bottom: 0;
+    right: 0;
+    transform: scaleX(-1) scaleY(-1);
+  }
+}

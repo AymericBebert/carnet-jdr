@@ -23,6 +23,7 @@ import {CharacterCardComponent} from '../character-card/character-card.component
 import {CharacterRootComponent} from '../character-root/character-root.component';
 import {CharacterClass} from '../character.model';
 import {CharacterService} from '../character.service';
+import {SpellLevelHeaderComponent} from '../spell-level-header/spell-level-header.component';
 import {SleepDialogComponent, SleepDialogData, SleepDialogResult} from './sleep-dialog/sleep-dialog.component';
 
 interface SpellsInLevel {
@@ -41,6 +42,7 @@ interface SpellsInLevel {
     MatInputModule,
     ReactiveFormsModule,
     CharacterCardComponent,
+    SpellLevelHeaderComponent,
     SpellCardComponent,
     AbilityCardComponent,
     SlotsFormComponent,

@@ -21,12 +21,11 @@
 @if (spellsByLevel && spellsByLevel.length > 0) {
   @for (spellLevel of spellsByLevel; track spellLevel.level; let first = $first) {
     <div class="spell-level-wrapper">
-      <h2 class="spell-level-header">
-        <span>Niveau {{ spellLevel.level }}</span>
+      <app-spell-level-header [title]="'Niveau ' + spellLevel.level" [level]="spellLevel.level">
         @if (character()) {
           <app-spell-choice-form [formControl]="globalChoiceForms[spellLevel.level]"></app-spell-choice-form>
         }
-      </h2>
+      </app-spell-level-header>
       @for (spell of spellLevel.spells; track spell.spell.id) {
         <app-spell-card [spell]="spell.spell"></app-spell-card>
         @if (character()) {

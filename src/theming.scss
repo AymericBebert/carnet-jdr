@@ -25,6 +25,7 @@
 @mixin theme-overrides-light() {
   --jdr-background-color: #{map.get(tc.$primary-palette, 98)};
   --jdr-burnt-color: #5a310611;
+  --jdr-ornament-color: #532210;
 
   @include mat.toolbar-overrides((
     container-background-color: map.get(tc.$secondary-palette, 70),
@@ -60,6 +61,7 @@
 @mixin theme-overrides-dark() {
   --jdr-background-color: #{map.get(tc.$neutral-palette, 6)};
   --jdr-burnt-color: #5a310655;
+  --jdr-ornament-color: #ffc400;
 
   @include mat.toolbar-overrides((
     container-background-color: map.get(tc.$primary-palette, 30),

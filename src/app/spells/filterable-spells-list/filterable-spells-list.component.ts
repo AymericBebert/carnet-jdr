@@ -10,6 +10,7 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatSelectModule} from '@angular/material/select';
 import {BehaviorSubject, combineLatest, startWith} from 'rxjs';
 import {Character, CharacterClass, characterClasses, toCharacter} from '../../character/character.model';
+import {SpellLevelHeaderComponent} from '../../character/spell-level-header/spell-level-header.component';
 import {ConfirmService} from '../../confirm/confirm.service';
 import {SpellCardComponent} from '../spell-card/spell-card.component';
 import {SpellChoiceFormComponent} from '../spell-choice-form/spell-choice-form.component';
@@ -36,6 +37,7 @@ interface SpellsInLevel {
     MatIconModule,
     MatInputModule,
     ReactiveFormsModule,
+    SpellLevelHeaderComponent,
     SpellCardComponent,
     MatCheckboxModule,
     MatMenuModule,
