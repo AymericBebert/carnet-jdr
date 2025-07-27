@@ -16,81 +16,107 @@
 
 <ng-template #ornament>
   <svg width="96" height="22" viewBox="0 0 768 176">
+    <defs id="defs1">
+      <linearGradient id="gemLinearGradient">
+        <stop id="stop1" style="stop-color:#ffffff" offset="0.08"/>
+        <stop id="stop2" [style.stop-color]="gemColor()" offset="0.16"/>
+        <stop id="stop3" [style.stop-color]="gemColor()" offset="0.6"/>
+        <stop id="stop4" style="stop-color:#ffffff" offset="1"/>
+      </linearGradient>
+      <radialGradient
+        id="gemRadialGradient"
+        xlink:href="#gemLinearGradient"
+        cx="79"
+        cy="75"
+        fx="79"
+        fy="75"
+        r="18"
+        gradientTransform="matrix(1.0464351,-0.70063923,1.267258,1.8927049,-98.330659,-11.052658)"
+        gradientUnits="userSpaceOnUse"
+      />
+    </defs>
     <path
       id="corner"
       style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-      d="m 14,14 31,0 c -5,7 -9,16 -7,25 -9,-2 -18,1 -25,7 z"
+      d="m 14,14 28,0 c -6,10 -6,13 -5,23 -10,-1 -13,-1 -23,5 z"
     />
     @if (level() >= 1) {
       <path
         id="curve-s-1"
         style="fill:none;stroke:currentColor;stroke-width:5.39999;stroke-linecap:round;stroke-linejoin:round"
-        d="M 69,7 C 41,15 47,40 49,49 c 2,9 7,24 6,35 -1,11 -14,26 -19,11"
+        d="m 65,7 c -20,8 -18,33 -16,42 2,9 7,24 6,35 -1,11 -10,18 -19,11"
       />
       <path
         id="curve-s-2"
         style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
-        d="M 7,69 C 15,41 40,47 49,49 c 9,2 24,7 35,6 11,-1 26,-14 11,-19"
+        d="m 7,65 c 8,-20 33,-18 42,-16 9,2 24,7 35,6 11,-1 18,-10 11,-19"
       />
     }
     @if (level() >= 2) {
       <path
         id="lobe"
         style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-        d="m 71,55 c 22,19 18,34 18,34 0,0 -19,4 -34,-18"
+        d="m 71,55 c 24,15 20,36 20,36 0,0 -24,4 -36,-20"
       />
     }
     @if (level() >= 3) {
       <path
         id="curl-start-1"
-        style="fill:none;stroke:currentColor;stroke-width:7.4;stroke-linecap:round;stroke-linejoin:round"
-        d="M 77,28 C 85,30 89,45 75,46 65,48 58,36 63,25 67,16 84,5 107,16"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 77,28 c 8,2 6,17 -4,15 C 63,42 60,32 63,25 68,15 84,5 107,16"
       />
       <path
         id="curl-start-2"
-        style="fill:none;stroke:currentColor;stroke-width:7.4;stroke-linecap:round;stroke-linejoin:round"
-        d="M 28,77 C 29,86 44,90 46,75 47,65 35,58 24,63 16,67 5,84 16,108"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 28,77 c 2,8 17,6 15,-4 C 42,63 32,60 25,63 15,68 5,84 16,107"
       />
     }
     @if (level() >= 4) {
       <path
         id="curl-mid-1"
         style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-        d="m 72,15 c 16,-5 28,18 48,20 14,1 23,-4 25,-14 2,-10 -8,-19 -17,-11"
+        d="m 72,15 c 16,-5 34,19 48,20 14,1 24,-4 25,-14 1,-10 -8,-16 -17,-11"
       />
       <path
         id="curl-mid-2"
         style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-        d="M 15,72 C 10,88 33,100 35,120 36,134 31,143 21,145 11,147 2,137 10,128"
+        d="m 15,72 c -5,16 19,34 20,48 1,14 -4,24 -14,25 -10,1 -16,-8 -11,-17"
       />
     }
     @if (level() >= 5) {
       <path
         id="curl-end-1"
-        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
-        d="m 122,35 c 26,5 28,-16 50,-15"
+        style="fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round"
+        d="m 121,35 c 29,0 31,-16 53,-15"
       />
       <path
         id="curl-end-2"
-        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
-        d="m 35,122 c 5,26 -16,28 -15,50"
+        style="fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round"
+        d="m 35,121 c 0,29 -16,31 -15,50"
       />
     }
     @if (level() >= 6) {
       <path
+        id="gem"
+        style="fill:url(#gemRadialGradient);stroke:#000000;stroke-width:1;stroke-opacity:0.5"
+        d="m 53,53 c 0,0 13,-2 25,11 13,13 10,25 10,25 0,0 -14,2 -26,-10 C 52,66 53,53 53,53 Z"
+      />
+    }
+    @if (level() >= 7) {
+      <path
         id="curl-2-start-1"
-        style="fill:none;stroke:currentColor;stroke-width:7.4;stroke-linecap:round;stroke-linejoin:round"
-        d="M 187,28 C 195,30 199,45 185,46 175,48 168,36 173,25 177,16 194,5 217,16"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 187,28 c 8,2 6,17 -4,15 C 173,42 170,32 173,25 178,15 194,5 217,16"
       />
       <path
         id="curl-2-mid-1"
-        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-        d="m 182,15 c 16,-5 28,18 48,20 14,1 23,-4 25,-14 2,-10 -8,-19 -17,-11"
+        style="fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round"
+        d="m 182,15 c 16,-5 34,19 48,20 14,1 24,-4 25,-14 1,-10 -8,-16 -17,-11"
       />
       <path
         id="curl-2-end-1"
-        style="fill:none;stroke:currentColor;stroke-width:5.4;stroke-linecap:round;stroke-linejoin:round"
-        d="m 232,35 c 26,5 28,-16 50,-15"
+        style="fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"
+        d="m 231,35 c 29,0 31,-16 53,-15"
       />
     }
   </svg>

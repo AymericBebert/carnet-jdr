@@ -79,7 +79,10 @@
 
       @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
         <div class="spell-level-wrapper">
-          <app-spell-level-header [title]="'Niveau ' + spellLevel.level" [level]="spellLevel.level">
+          <app-spell-level-header [title]="'Niveau ' + spellLevel.level"
+                                  [level]="spellLevel.level"
+                                  [theme]="char.theme"
+          >
             <app-slots-form [maxSlots]="spellLevel.slots"
                             [ngModel]="char.spellSlotBurns[spellLevel.level]"
                             (ngModelChange)="setSpellSlotBurns(spellLevel.level, $event)"
