@@ -13,13 +13,21 @@
 <div class="ornament bottom-right">
   <ng-container *ngTemplateOutlet="ornament"></ng-container>
 </div>
+@if (level() >= 8) {
+  <div class="ornament top">
+    <ng-container *ngTemplateOutlet="middleOrnament"></ng-container>
+  </div>
+  <div class="ornament bottom">
+    <ng-container *ngTemplateOutlet="middleOrnament"></ng-container>
+  </div>
+}
 
 <ng-template #ornament>
   <svg width="96" height="22" viewBox="0 0 768 176">
     <defs id="defs1">
       <linearGradient id="gemLinearGradient">
-        <stop id="stop1" style="stop-color:#ffffff" offset="0.08"/>
-        <stop id="stop2" [style.stop-color]="gemColor()" offset="0.16"/>
+        <stop id="stop1" style="stop-color:#ffffff" offset="0.10"/>
+        <stop id="stop2" [style.stop-color]="'color-mix(in oklab, ' + gemColor() + ' 70%, #000 30%)'" offset="0.12"/>
         <stop id="stop3" [style.stop-color]="gemColor()" offset="0.6"/>
         <stop id="stop4" style="stop-color:#ffffff" offset="1"/>
       </linearGradient>
@@ -31,7 +39,17 @@
         fx="79"
         fy="75"
         r="18"
-        gradientTransform="matrix(1.0464351,-0.70063923,1.267258,1.8927049,-98.330659,-11.052658)"
+        gradientTransform="matrix(1.05,-0.7,1.27,1.89,-98,-11)"
+        gradientUnits="userSpaceOnUse"
+      />
+      <radialGradient
+        xlink:href="#gemLinearGradient"
+        id="gemRadialGradient2"
+        cx="193"
+        cy="30"
+        fx="193"
+        fy="30"
+        r="24"
         gradientUnits="userSpaceOnUse"
       />
     </defs>
@@ -41,6 +59,18 @@
       d="m 14,14 28,0 c -6,10 -6,13 -5,23 -10,-1 -13,-1 -23,5 z"
     />
     @if (level() >= 1) {
+      <path
+        id="curl-start-1"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 77,28 c 8,2 6,17 -4,15 C 63,42 60,32 63,25 68,15 84,5 107,16"
+      />
+      <path
+        id="curl-start-2"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 28,77 c 2,8 17,6 15,-4 C 42,63 32,60 25,63 15,68 5,84 16,107"
+      />
+    }
+    @if (level() >= 2) {
       <path
         id="curve-s-1"
         style="fill:none;stroke:currentColor;stroke-width:5.39999;stroke-linecap:round;stroke-linejoin:round"
@@ -52,23 +82,11 @@
         d="m 7,65 c 8,-20 33,-18 42,-16 9,2 24,7 35,6 11,-1 18,-10 11,-19"
       />
     }
-    @if (level() >= 2) {
+    @if (level() >= 3) {
       <path
         id="lobe"
         style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
         d="m 71,55 c 24,15 20,36 20,36 0,0 -24,4 -36,-20"
-      />
-    }
-    @if (level() >= 3) {
-      <path
-        id="curl-start-1"
-        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-        d="m 77,28 c 8,2 6,17 -4,15 C 63,42 60,32 63,25 68,15 84,5 107,16"
-      />
-      <path
-        id="curl-start-2"
-        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
-        d="m 28,77 c 2,8 17,6 15,-4 C 42,63 32,60 25,63 15,68 5,84 16,107"
       />
     }
     @if (level() >= 4) {
@@ -101,8 +119,6 @@
         style="fill:url(#gemRadialGradient);stroke:#000000;stroke-width:1;stroke-opacity:0.5"
         d="m 53,53 c 0,0 13,-2 25,11 13,13 10,25 10,25 0,0 -14,2 -26,-10 C 52,66 53,53 53,53 Z"
       />
-    }
-    @if (level() >= 7) {
       <path
         id="curl-2-start-1"
         style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
@@ -117,6 +133,108 @@
         id="curl-2-end-1"
         style="fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round"
         d="m 231,35 c 29,0 31,-16 53,-15"
+      />
+    }
+    @if (level() >= 7) {
+      <circle
+        style="fill:none;stroke:currentColor;stroke-width:11"
+        id="gem2-around"
+        cy="33"
+        cx="187"
+        r="16"
+      />
+      <circle
+        style="fill:url(#gemRadialGradient2);stroke:#000000;stroke-width:1;stroke-opacity:0.5"
+        id="gem2"
+        cy="33"
+        cx="187"
+        r="16"
+      />
+    }
+  </svg>
+</ng-template>
+
+<ng-template #middleOrnament>
+  <svg width="96" height="22" viewBox="0 0 768 176">
+    <defs id="defs1">
+      <linearGradient id="gemLinearGradientMid">
+        <stop id="stop1" style="stop-color:#ffffff" offset="0.10"/>
+        <stop id="stop2" [style.stop-color]="'color-mix(in oklab, ' + gemColor() + ' 70%, #000 30%)'" offset="0.12"/>
+        <stop id="stop3" [style.stop-color]="gemColor()" offset="0.6"/>
+        <stop id="stop4" style="stop-color:#ffffff" offset="1"/>
+      </linearGradient>
+      <radialGradient
+        xlink:href="#gemLinearGradientMid"
+        id="gemRadialGradientMid"
+        cx="390"
+        cy="36"
+        fx="390"
+        fy="36"
+        r="32"
+        gradientUnits="userSpaceOnUse"
+      />
+    </defs>
+    <circle
+      style="fill:currentColor"
+      id="gem-mid-around"
+      cy="34"
+      cx="384"
+      r="12"
+    />
+    <path
+      id="curl-mid-1"
+      style="fill:none;stroke:currentColor;stroke-width:8;stroke-linecap:round;stroke-linejoin:round"
+      d="m 432,40 c 32,-20 68,30 96,30 28,2 48,-8 50,-28 2,-20 -20,-32 -34,-15"
+    />
+    <path
+      id="curl-mid-1b"
+      style="fill:none;stroke:currentColor;stroke-width:10;stroke-linecap:round;stroke-linejoin:round"
+      d="m 432,40 c 32,-20 60,35 60,40"
+    />
+    <path
+      id="curl-mid-2"
+      style="fill:none;stroke:currentColor;stroke-width:7;stroke-linecap:round;stroke-linejoin:round"
+      d="m 336,40 c -32,-20 -68,30 -96,30 -28,2 -48,-8 -50,-28 -2,-20 20,-32 34,-15"
+    />
+    <path
+      id="curl-mid-2b"
+      style="fill:none;stroke:currentColor;stroke-width:10;stroke-linecap:round;stroke-linejoin:round"
+      d="m 336,40 c -32,-20 -60,35 -60,40"
+    />
+    @if (level() >= 9) {
+      <circle
+        style="fill:none;stroke:currentColor;stroke-width:14"
+        id="gem-mid-around"
+        cy="38"
+        cx="384"
+        r="24"
+      />
+      <circle
+        style="fill:url(#gemRadialGradientMid);stroke:#000000;stroke-width:1;stroke-opacity:0.5"
+        id="gem-mid"
+        cy="38"
+        cx="384"
+        r="24"
+      />
+      <path
+        id="curl-mid-1c"
+        style="fill:none;stroke:currentColor;stroke-width:8;stroke-linecap:round;stroke-linejoin:round"
+        d="m 515,85 c 10,10 30,12 40,10"
+      />
+      <path
+        id="curl-mid-1d"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 555,82 c 10,0 25,-5 35,-12"
+      />
+      <path
+        id="curl-mid-2c"
+        style="fill:none;stroke:currentColor;stroke-width:8;stroke-linecap:round;stroke-linejoin:round"
+        d="m 253,85 c -10,10 -30,12 -40,10"
+      />
+      <path
+        id="curl-mid-2d"
+        style="fill:none;stroke:currentColor;stroke-width:6;stroke-linecap:round;stroke-linejoin:round"
+        d="m 213,82 c -10,0 -25,-5 -35,-12"
       />
     }
   </svg>
