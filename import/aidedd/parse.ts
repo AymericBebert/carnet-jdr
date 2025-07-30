@@ -1,13 +1,13 @@
 /**
- * Run with `npx tsx import/scrap.ts`
+ * Run with `npx tsx import/aidedd/parse.ts`
  *
- * This script is used to generate spells source files
+ * This script is used to generate spells source file
  */
 import * as cheerio from 'cheerio';
 import fs from 'fs';
 import path from 'path';
-import {CharacterClass} from '../src/app/character/character.model';
-import {Spell} from '../src/app/spells/spell.model';
+import {CharacterClass} from '../../src/app/character/character.model';
+import {Spell} from '../../src/app/spells/spell.model';
 
 function strSanitize(str: string): string {
   return str.replace(/['´]/g, '’');
@@ -92,7 +92,7 @@ function addDetailsFile(spell: Spell): void {
     )
     .replace(
       /<a href="https:\/\/www.aidedd.org\/dnd\/monstres.php([^"]+)">([^<]+)<\/a>/g,
-      '<a href="https://www.aidedd.org\/dnd\/monstres.php$1" target="_blank">$2</a>',
+      '<a href="https://www.aidedd.org/dnd/monstres.php$1" target="_blank">$2</a>',
     )
     .replace(/<h1>.*?<\/h1>/g, '')
     .replace(/<div class="trad">.*?<\/div>/g, '')
@@ -134,10 +134,29 @@ function patchArtificier(spells: Spell[]): void {
   });
 }
 
+function patchNonOgl(spells: Spell[]): void {
+  const nonOglJson = fs.readFileSync(path.resolve(__dirname, 'non-ogl-vf.json'), {encoding: 'utf8'});
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const nonOgl: Record<string, string> = JSON.parse(nonOglJson);
+
+  for (const spell of spells) {
+    if (spell.id in nonOgl) {
+      let replacement = nonOgl[spell.id];
+      replacement = '<em>[Non OGL]</em><p>'
+        + strSanitize(nonOgl[spell.id]).replace(/\n/g, '</p><p>')
+        + '</p>';
+
+      spell.details = spell.details.split('<p class="resume">Description non disponible (non OGL)')[0].trim();
+      spell.details += `<div class="description">${replacement}</div>`;
+    }
+  }
+}
+
 function main(): void {
   const spells = parseIndexFile();
   spells.map(spell => addDetailsFile(spell));
   patchArtificier(spells);
+  patchNonOgl(spells);
 
   console.log(spells[0]);
 
@@ -174,7 +193,7 @@ export const spellsFr: Spell[] = [
   tsContent += '];\n';
 
   // Save to TS file
-  const outputPath = path.resolve(__dirname, '../src/app/spells/spells-fr.ts');
+  const outputPath = path.resolve(__dirname, '../../src/app/spells/spells-fr.ts');
   fs.writeFileSync(outputPath, tsContent, {encoding: 'utf8'});
 
   console.log(`spells-fr.ts successfully written to ${outputPath}`);

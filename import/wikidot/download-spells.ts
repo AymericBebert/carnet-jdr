@@ -1,15 +1,15 @@
 /**
- * Run with `npx tsx import/download.ts`
+ * Run with `npx tsx import/wikidot/download-spells.ts`
  *
- * This script is used to download html files of spell details
+ * This script is used to download html files of spells
  */
 import fs from 'fs';
 import path from 'path';
-import {spellsFr} from '../src/app/spells/spells-fr';
+import {spellsEn} from './spells-en';
 
 async function main(): Promise<void> {
-  for (const spell of spellsFr) {
-    const url = `https://www.aidedd.org/dnd/sorts.php?vf=${encodeURIComponent(spell.id)}`;
+  for (const spell of spellsEn) {
+    const url = `https://dnd5e.wikidot.com/spell:${spell.id}`;
 
     const response = await fetch(url);
     if (!response.ok) {
@@ -18,11 +18,10 @@ async function main(): Promise<void> {
     }
     const htmlContent = await response.text();
 
-    const outputPath = path.resolve(__dirname, 'details', `${spell.id}.html`);
+    const outputPath = path.resolve(__dirname, 'spells', `${spell.id}.html`);
     fs.writeFileSync(outputPath, htmlContent, {encoding: 'utf8'});
     console.log(`Successfully wrote ${outputPath}`);
   }
-
 }
 
 main()
