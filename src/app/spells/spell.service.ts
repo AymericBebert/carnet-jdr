@@ -10,8 +10,9 @@ export class SpellService {
     if (!filter || Object.keys(filter).length === 0) {
       return spellsFr;
     }
+    const filterNameCanonical = filter.name ? this.canonicalForm(filter.name) : null;
     return spellsFr.filter(spell => {
-      if (filter.name != null && !spell.name.toLowerCase().includes(filter.name.toLowerCase())) {
+      if (filterNameCanonical != null && !this.canonicalForm(spell.name).includes(filterNameCanonical)) {
         return false;
       }
       if (filter.level != null && !filter.level.includes(spell.level)) {
@@ -39,5 +40,9 @@ export class SpellService {
 
   public getSpell(spellId: string): Spell | undefined {
     return spellsFr.find(spell => spell.id === spellId);
+  }
+
+  private canonicalForm(text: string): string {
+    return text.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   }
 }

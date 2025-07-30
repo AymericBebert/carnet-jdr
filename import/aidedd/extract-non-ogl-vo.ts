@@ -1,5 +1,5 @@
 /**
- * Run with `npx tsx import/aidedd/patch-non-ogl.ts`
+ * Run with `npx tsx import/aidedd/extract-non-ogl-vo.ts`
  *
  * This script is used to patch "non-ogl" spells from aidedd, inserting the spell details
  */
