@@ -142,12 +142,11 @@ function patchNonOgl(spells: Spell[]): void {
   for (const spell of spells) {
     if (spell.id in nonOgl) {
       let replacement = nonOgl[spell.id];
-      replacement = '<em>[Non OGL]</em><p>'
-        + strSanitize(nonOgl[spell.id]).replace(/\n/g, '</p><p>')
-        + '</p>';
+      replacement = `<p>${strSanitize(nonOgl[spell.id]).replace(/\n/g, '</p><p>')}</p>`;
 
       spell.details = spell.details.split('<p class="resume">Description non disponible (non OGL)')[0].trim();
       spell.details += `<div class="description">${replacement}</div>`;
+      spell.source += ' (non OGL)';
     }
   }
 }
