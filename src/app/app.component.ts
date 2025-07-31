@@ -1,4 +1,5 @@
-import {Component, inject, viewChild} from '@angular/core';
+import {Component, effect, inject, viewChild} from '@angular/core';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatBadgeModule} from '@angular/material/badge';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule, MatIconRegistry} from '@angular/material/icon';
@@ -50,7 +51,7 @@ export class AppComponent {
 
     this.router.events
       .pipe(
-        filter(val => val instanceof NavigationEnd),
+        filter(event => event instanceof NavigationEnd),
         map(() => route),
         map(r => {
           while (r.firstChild) {
@@ -60,6 +61,7 @@ export class AppComponent {
         }),
         filter(r => r.outlet === 'primary'),
         mergeMap(r => r.data),
+        takeUntilDestroyed(),
       )
       .subscribe(data => {
         this.navService.showBackButton.set(data.hasBack as boolean || !!data.backRouterNavigate);
@@ -67,6 +69,8 @@ export class AppComponent {
         this.navService.navTools.set(data.navTools as { name: string, icon: string }[] || []);
         this.navService.setBackRouterLink(data.backRouterNavigate as string);
       });
+
+    effect(() => this.navService.sideNav = this.navDrawer() || null);
   }
 
   public openDrawer(): void {

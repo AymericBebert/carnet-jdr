@@ -56,7 +56,7 @@ export class CharacterPageComponent {
   private readonly navService = inject(NavService);
   private readonly navButtonsService = inject(NavButtonsService);
   private readonly storage = inject(StorageService);
-  private readonly matDialog = inject(MatDialog);
+  private readonly dialog = inject(MatDialog);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
@@ -146,7 +146,7 @@ export class CharacterPageComponent {
   }
 
   protected changeHp(label: string, negative: boolean, temp: boolean): void {
-    this.matDialog.open<ValueDialogComponent, ValueDialogData, ValueDialogResult>(
+    this.dialog.open<ValueDialogComponent, ValueDialogData, ValueDialogResult>(
       ValueDialogComponent,
       {
         data: {
@@ -154,6 +154,7 @@ export class CharacterPageComponent {
           ...temp ? {initial: this.character()?.hpTemp || undefined} : {},
         },
         autoFocus: '__nope__',
+        closeOnNavigation: false,
       },
     ).afterClosed().pipe(
       filter(hp => hp != null),
@@ -177,13 +178,14 @@ export class CharacterPageComponent {
   protected sleep(): void {
     const char0 = this.character();
     if (!char0) return;
-    this.matDialog.open<SleepDialogComponent, SleepDialogData, SleepDialogResult>(
+    this.dialog.open<SleepDialogComponent, SleepDialogData, SleepDialogResult>(
       SleepDialogComponent,
       {
         data: {
           character: char0,
         },
         autoFocus: '__nope__',
+        closeOnNavigation: false,
       },
     ).afterClosed().pipe(
       filter(characterUpdates => characterUpdates != null),

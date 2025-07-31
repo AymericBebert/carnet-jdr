@@ -1,4 +1,5 @@
 import {effect, inject, Injectable, signal} from '@angular/core';
+import {MatSidenav} from '@angular/material/sidenav';
 import {filter} from 'rxjs/operators';
 import {APP_CONFIG, AppConfig} from '../../config/app.config';
 import {DeviceService} from '../service/device.service';
@@ -26,6 +27,9 @@ export class NavService {
   public readonly showBackButton = signal<boolean>(false);
   public readonly navButtons = signal<string[]>([]);
   public readonly navTools = signal<NavTool[]>([]);
+
+  /** The sidenav element, used to access the sidenav state. Set by the AppComponent */
+  public sideNav: MatSidenav | null = null;
 
   public readonly notificationBadge = signal<string>('');
   public readonly displayUpdatesAvailable = signal<boolean>(false);
