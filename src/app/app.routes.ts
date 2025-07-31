@@ -8,15 +8,13 @@ import {NewCharacterPageComponent} from './character/new-character-page/new-char
 import {pendingChangesGuard} from './confirm/pending-changes.guard';
 import {HomeComponent} from './home/home.component';
 import {closeDialogsChildGuard} from './nav/close-dialogs.guard';
-import {closeNavbarChildGuard, closeNavbarGuard} from './nav/close-navbar.guard';
 import {SpellsChoiceComponent} from './spells/spells-choice/spells-choice.component';
 import {SpellsListPageComponent} from './spells/spells-list-page/spells-list-page.component';
 
 export const routes: Routes = [
   {
     path: '',
-    canActivateChild: [closeNavbarChildGuard, closeDialogsChildGuard],
-    canDeactivate: [closeNavbarGuard],
+    canActivateChild: [closeDialogsChildGuard],
     children: [
       {
         path: '',

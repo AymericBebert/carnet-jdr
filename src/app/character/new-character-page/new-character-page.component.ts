@@ -47,7 +47,7 @@ export class NewCharacterPageComponent implements ComponentCanDeactivate {
     this.navButtonsService.navButtonClicked$()
       .pipe(takeUntilDestroyed())
       .subscribe(btn => {
-        switch (btn) {
+        switch (btn.id) {
           case 'done':
             void this.create();
             break;

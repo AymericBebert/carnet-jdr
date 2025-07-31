@@ -43,7 +43,7 @@ export class HomeComponent {
     this.navButtonsService.navButtonClicked$()
       .pipe(takeUntilDestroyed())
       .subscribe(btn => {
-        switch (btn) {
+        switch (btn.id) {
           case 'swap_vert':
             this.isReordering.set(true);
             break;

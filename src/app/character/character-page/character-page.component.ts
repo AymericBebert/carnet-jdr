@@ -127,12 +127,12 @@ export class CharacterPageComponent {
       .subscribe(btn => {
         const char = this.character();
         if (!char) return;
-        switch (btn) {
+        switch (btn.id) {
           case 'edit':
-            void this.router.navigate(['edit'], {relativeTo: this.route});
+            void this.router.navigate(['edit'], {...btn.navigationExtras, relativeTo: this.route});
             break;
           case 'menu_book':
-            void this.router.navigate(['spells'], {relativeTo: this.route});
+            void this.router.navigate(['spells'], {...btn.navigationExtras, relativeTo: this.route});
             break;
           case 'download':
             downloadJson(char, cleanForFilename(char.name) + '.json');

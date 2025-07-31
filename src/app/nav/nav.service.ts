@@ -1,11 +1,9 @@
 import {effect, inject, Injectable, signal} from '@angular/core';
-import {MatSidenav} from '@angular/material/sidenav';
 import {filter} from 'rxjs/operators';
 import {APP_CONFIG, AppConfig} from '../../config/app.config';
 import {DeviceService} from '../service/device.service';
 import {StorageService} from '../storage/storage.service';
 import {UpdaterService} from '../updater/updater.service';
-import {NavButtonsService} from './nav-buttons.service';
 
 interface NavTool {
   name: string;
@@ -16,7 +14,6 @@ interface NavTool {
   providedIn: 'root',
 })
 export class NavService {
-  private readonly navButtonsService = inject(NavButtonsService);
   private readonly deviceService = inject(DeviceService);
   private readonly storageService = inject(StorageService);
   private readonly updater = inject(UpdaterService);
@@ -27,9 +24,6 @@ export class NavService {
   public readonly showBackButton = signal<boolean>(false);
   public readonly navButtons = signal<string[]>([]);
   public readonly navTools = signal<NavTool[]>([]);
-
-  /** The sidenav element, used to access the sidenav state. Set by the AppComponent */
-  public sideNav: MatSidenav | null = null;
 
   public readonly notificationBadge = signal<string>('');
   public readonly displayUpdatesAvailable = signal<boolean>(false);
@@ -51,18 +45,6 @@ export class NavService {
       this.notificationBadge.set('1');
       this.displayUpdatesActivated.set(true);
     });
-  }
-
-  public setBackRouterLink(backRouterNavigate: string): void {
-    this.navButtonsService.setBackRouterLink(backRouterNavigate);
-  }
-
-  public backClicked(): void {
-    this.navButtonsService.backClicked();
-  }
-
-  public navButtonClicked(buttonId: string): void {
-    this.navButtonsService.navButtonClicked(buttonId);
   }
 
   public setPinSideNav(b: boolean): void {
