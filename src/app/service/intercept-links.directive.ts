@@ -22,6 +22,7 @@ export class InterceptLinksDirective {
         event.preventDefault();
         this.dialog.open<SpellDialogComponent, SpellDialogData>(SpellDialogComponent, {
           data: {spell},
+          autoFocus: '.close-button',
           closeOnNavigation: false,
         });
       }
