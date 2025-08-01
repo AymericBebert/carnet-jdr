@@ -7,7 +7,7 @@ import {SpellService} from '../spells/spell.service';
   selector: '[appInterceptLinks]',
 })
 export class InterceptLinksDirective {
-  private readonly matDialog = inject(MatDialog);
+  private readonly dialog = inject(MatDialog);
   private readonly spellService = inject(SpellService);
 
   @HostListener('click', ['$event'])
@@ -20,8 +20,9 @@ export class InterceptLinksDirective {
       if (spell) {
         // Do not follow the link, open the spell dialog instead
         event.preventDefault();
-        this.matDialog.open<SpellDialogComponent, SpellDialogData>(SpellDialogComponent, {
+        this.dialog.open<SpellDialogComponent, SpellDialogData>(SpellDialogComponent, {
           data: {spell},
+          closeOnNavigation: false,
         });
       }
 

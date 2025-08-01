@@ -34,7 +34,7 @@ interface DisplayedSlot {
   ],
 })
 export class SlotsFormComponent implements ControlValueAccessor, Validator {
-  private readonly matDialog = inject(MatDialog);
+  private readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
 
   public readonly maxSlots = input.required<number>();
@@ -152,13 +152,14 @@ export class SlotsFormComponent implements ControlValueAccessor, Validator {
     const maxSlots = this.maxSlots();
     const burntSlots = this.burntSlots();
 
-    this.matDialog.open<ValueDialogComponent, ValueDialogData, ValueDialogResult>(
+    this.dialog.open<ValueDialogComponent, ValueDialogData, ValueDialogResult>(
       ValueDialogComponent,
       {
         data: {
           label,
         },
         autoFocus: '__nope__',
+        closeOnNavigation: false,
       },
     ).afterClosed().pipe(
       filter(changeRes => changeRes != null),

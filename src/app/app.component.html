@@ -1,4 +1,4 @@
-<mat-sidenav-container>
+<mat-sidenav-container (backdropClick)="closeDrawer()">
 
   <mat-sidenav #drawer class="sidenav" fixedInViewport position="end"
                [attr.role]="navService.pinSideNav() ? 'navigation' : 'dialog'"
@@ -26,7 +26,7 @@
       @if (navService.navTools().length > 0) {
         <h3 matSubheader>Actions</h3>
         @for (tool of navService.navTools(); track tool.name) {
-          <mat-list-item (click)="navService.navButtonClicked(tool.icon); closeDrawer()">
+          <mat-list-item (click)="drawerToolClicked(tool.icon)">
             <mat-icon style="margin-right: 8px; vertical-align: middle">{{ tool.icon }}</mat-icon>
             <span style="vertical-align: middle">{{ tool.name }}</span>
           </mat-list-item>
@@ -72,7 +72,7 @@
     <mat-toolbar color="primary">
 
       @if (navService.showBackButton()) {
-        <button type="button" aria-label="Back button" mat-icon-button (click)="navService.backClicked()">
+        <button type="button" aria-label="Back button" mat-icon-button (click)="navButtonsService.backClicked()">
           <mat-icon aria-label="Back arrow icon">arrow_back</mat-icon>
         </button>
       } @else {
@@ -90,7 +90,7 @@
           mat-icon-button
           type="button"
           [attr.aria-label]="'Button' + buttonId"
-          (click)="navService.navButtonClicked(buttonId)">
+          (click)="navButtonsService.navButtonClicked(buttonId)">
           <mat-icon>{{ buttonId }}</mat-icon>
         </button>
       }

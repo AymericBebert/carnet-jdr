@@ -1,9 +1,14 @@
 import {Location} from '@angular/common';
 import {inject, Injectable} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationExtras, Router} from '@angular/router';
 import {Observable, Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {simplifyURL} from '../utils/simplify-url';
+
+interface NavButtonClick {
+  id: string;
+  navigationExtras?: NavigationExtras;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -14,11 +19,11 @@ export class NavButtonsService {
 
   public backRouterNavigate = '';
 
-  private readonly _navButtonClicked$ = new Subject<string>();
+  private readonly _navButtonClicked$ = new Subject<NavButtonClick>();
 
-  public navButtonClicked$(buttonId?: string): Observable<string> {
+  public navButtonClicked$(buttonId?: string): Observable<NavButtonClick> {
     if (buttonId) {
-      return this._navButtonClicked$.pipe(filter(btn => btn === buttonId));
+      return this._navButtonClicked$.pipe(filter(btn => btn.id === buttonId));
     }
     return this._navButtonClicked$.asObservable();
   }
@@ -45,7 +50,7 @@ export class NavButtonsService {
     }
   }
 
-  public navButtonClicked(buttonId: string): void {
-    this._navButtonClicked$.next(buttonId);
+  public navButtonClicked(buttonId: string, navigationExtras?: NavigationExtras): void {
+    this._navButtonClicked$.next({id: buttonId, navigationExtras});
   }
 }

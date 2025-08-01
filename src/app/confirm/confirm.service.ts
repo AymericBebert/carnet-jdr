@@ -8,7 +8,7 @@ import {ConfirmDialogComponent, ConfirmDialogData} from './confirm-dialog/confir
   providedIn: 'root',
 })
 export class ConfirmService {
-  private readonly matDialog = inject(MatDialog);
+  private readonly dialog = inject(MatDialog);
 
   /**
    * Open a confirm dialog, and return the result as an observable
@@ -16,9 +16,13 @@ export class ConfirmService {
    * @param filterTrue If true, only return true values
    */
   public confirm$(data: ConfirmDialogData = {}, filterTrue = false): Observable<boolean> {
-    return this.matDialog.open<ConfirmDialogComponent, ConfirmDialogData, boolean>(
+    return this.dialog.open<ConfirmDialogComponent, ConfirmDialogData, boolean>(
       ConfirmDialogComponent,
-      {data, autoFocus: '.confirm-button'},
+      {
+        data,
+        autoFocus: '.confirm-button',
+        closeOnNavigation: false,
+      },
     ).afterClosed().pipe(
       map(e => !!e),
       filter(e => !filterTrue || e),

@@ -56,7 +56,7 @@ export class EditCharacterPageComponent implements ComponentCanDeactivate {
     this.navButtonsService.navButtonClicked$()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(btn => {
-        switch (btn) {
+        switch (btn.id) {
           case 'done':
             void this.save();
             break;
