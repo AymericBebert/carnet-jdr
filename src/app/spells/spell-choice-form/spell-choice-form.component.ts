@@ -1,4 +1,4 @@
-import {Component, DestroyRef, forwardRef, inject, OnInit} from '@angular/core';
+import {Component, DestroyRef, forwardRef, inject, input, OnInit} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
@@ -35,6 +35,8 @@ import {SpellChoice} from '../spell.model';
 })
 export class SpellChoiceFormComponent implements OnInit, ControlValueAccessor, Validator {
   private readonly destroyRef = inject(DestroyRef);
+
+  public readonly showPrepared = input<boolean>(true);
 
   protected readonly form = new FormGroup({
     known: new FormControl<boolean | null>(null),

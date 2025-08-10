@@ -3,7 +3,10 @@
   font-weight: bold;
 
   display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
   align-items: center;
+  justify-content: end;
 
   background: var(--mat-toolbar-container-background-color, var(--mat-sys-surface));
   color: var(--mat-toolbar-container-text-color, var(--mat-sys-on-surface));

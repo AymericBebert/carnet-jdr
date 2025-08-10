@@ -4,14 +4,16 @@
   Connu
 </mat-checkbox>
 
-@if (form.controls.alwaysPrepared.value) {
-  <mat-checkbox class="compact" checked disabled>Préparé</mat-checkbox>
-} @else {
-  <mat-checkbox [formControl]="form.controls.prepared"
-                [indeterminate]="form.controls.prepared.value === null"
-                class="compact">
-    Préparé
-  </mat-checkbox>
+@if (showPrepared()) {
+  @if (form.controls.alwaysPrepared.value) {
+    <mat-checkbox class="compact" checked disabled>Préparé</mat-checkbox>
+  } @else {
+    <mat-checkbox [formControl]="form.controls.prepared"
+                  [indeterminate]="form.controls.prepared.value === null"
+                  class="compact">
+      Préparé
+    </mat-checkbox>
+  }
 }
 
 <mat-checkbox [formControl]="form.controls.favorite"
@@ -20,15 +22,15 @@
   Favori
 </mat-checkbox>
 
-<div style="margin-right: -4px; flex-grow: 1"></div>
-
-<button mat-icon-button [matMenuTriggerFor]="spellMenu">
-  <mat-icon>more_vert</mat-icon>
-</button>
-<mat-menu #spellMenu="matMenu">
-  <mat-checkbox [formControl]="form.controls.alwaysPrepared"
-                [indeterminate]="form.controls.alwaysPrepared.value === null"
-                style="margin-right: 8px">
-    Toujours préparé
-  </mat-checkbox>
-</mat-menu>
+@if (showPrepared()) {
+  <button mat-icon-button [matMenuTriggerFor]="spellMenu" style="margin-right: -8px">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #spellMenu="matMenu">
+    <mat-checkbox [formControl]="form.controls.alwaysPrepared"
+                  [indeterminate]="form.controls.alwaysPrepared.value === null"
+                  style="margin-right: 8px">
+      Toujours préparé
+    </mat-checkbox>
+  </mat-menu>
+}

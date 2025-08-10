@@ -1,3 +1,4 @@
+import {Location} from '@angular/common';
 import {Component, inject, viewChild} from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {MatBadgeModule} from '@angular/material/badge';
@@ -33,27 +34,27 @@ import {SettingsService} from './service/settings.service';
   ],
 })
 export class AppComponent {
-  readonly matIconReg = inject(MatIconRegistry);
-  readonly navService = inject(NavService);
-  readonly navButtonsService = inject(NavButtonsService);
-  readonly settingsService = inject(SettingsService);
-  readonly deviceService = inject(DeviceService);
+  protected readonly navService = inject(NavService);
+  protected readonly navButtonsService = inject(NavButtonsService);
+  protected readonly settingsService = inject(SettingsService);
+  protected readonly deviceService = inject(DeviceService);
   private readonly config = inject<AppConfig>(APP_CONFIG);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly location = inject(Location);
 
-  public readonly appVersion = this.config.version;
+  protected readonly appVersion = this.config.version;
 
-  readonly navDrawer = viewChild<MatSidenav | null>('drawer');
+  private readonly navDrawer = viewChild<MatSidenav | null>('drawer');
 
   constructor() {
-    this.matIconReg.setDefaultFontSetClass('material-symbols-outlined');
+    inject(MatIconRegistry).setDefaultFontSetClass('material-symbols-outlined');
     this.navService.applyStoredPinSideNav();
 
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd),
-        map(() => this.routeFarthestChild),
+        map(() => AppComponent.getRouteFarthestChild(this.route)),
         filter(r => r.outlet === 'primary'),
         mergeMap(r => r.data),
         takeUntilDestroyed(),
@@ -100,7 +101,7 @@ export class AppComponent {
 
   protected closeDrawer(): void {
     if (this.navDrawer()?.opened && !this.navService.pinSideNav()) {
-      history.back();
+      this.location.back();
     }
   }
 
@@ -119,8 +120,8 @@ export class AppComponent {
     return {replaceUrl: true, queryParams: {sidenav: null}, queryParamsHandling: 'merge'};
   }
 
-  private get routeFarthestChild(): ActivatedRoute {
-    let route = this.route;
+  private static getRouteFarthestChild(initialRoute: ActivatedRoute): ActivatedRoute {
+    let route = initialRoute;
     while (route.firstChild) {
       route = route.firstChild;
     }

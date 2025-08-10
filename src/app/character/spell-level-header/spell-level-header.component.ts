@@ -6,7 +6,7 @@ import {Component, computed, input} from '@angular/core';
   templateUrl: './spell-level-header.component.html',
   styleUrls: ['./spell-level-header.component.scss'],
   imports: [
-    NgTemplateOutlet
+    NgTemplateOutlet,
   ],
 })
 export class SpellLevelHeaderComponent {

@@ -46,6 +46,7 @@ export function toCharacterHeader(character: Partial<Character>): CharacterHeade
 export interface Character extends CharacterHeader {
   abilities: Ability[];
   abilityUsage: AbilityUsage;
+  mustPrepareSpells: boolean;
   spellSlots: number[];
   spellSlotBurns: number[];
   spellChoices: SpellChoices;
@@ -57,6 +58,7 @@ export function toCharacter(character: Partial<Character>): Character {
     ...toCharacterHeader(character),
     abilities: character.abilities || [],
     abilityUsage: character.abilityUsage || {},
+    mustPrepareSpells: character.mustPrepareSpells ?? true,
     spellSlots: character.spellSlots || [],
     spellSlotBurns: (character.spellSlots || []).map((_, i) => character.spellSlotBurns?.[i] || 0),
     spellChoices: character.spellChoices || {},

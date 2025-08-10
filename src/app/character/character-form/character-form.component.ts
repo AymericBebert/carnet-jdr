@@ -17,6 +17,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import {AbilitiesFormComponent} from '../../ability/abilities-form/abilities-form.component';
 import {Ability} from '../../ability/ability.model';
@@ -41,6 +42,7 @@ import {TinyNumberChoiceFormComponent} from '../tiny-number-choice-form/tiny-num
     MatInputModule,
     MatSelectModule,
     MatSliderModule,
+    MatSlideToggleModule,
     ReactiveFormsModule,
     CharacterCardComponent,
     AbilitiesFormComponent,
@@ -65,6 +67,7 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
     name: new FormControl<string>('', {nonNullable: true, validators: Validators.required}),
     image: new FormControl<string>('', {nonNullable: true}),
     theme: new FormControl<number>(0, {nonNullable: true}),
+    mustPrepareSpells: new FormControl<boolean>(true, {nonNullable: true}),
     game: new FormControl<string>('', {nonNullable: true}),
     class: new FormControl<CharacterClass>('Barde', {nonNullable: true}),
     hpMax: new FormControl<number>(0, {nonNullable: true, validators: [Validators.required, Validators.min(0)]}),
@@ -144,6 +147,7 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
       class: formValue.class,
       hpMax: formValue.hpMax,
       abilities: formValue.abilities,
+      mustPrepareSpells: formValue.mustPrepareSpells,
       spellSlots: formValue.spellSlots,
     };
   }
