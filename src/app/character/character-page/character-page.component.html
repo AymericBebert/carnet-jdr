@@ -64,20 +64,22 @@
             <mat-icon class="color-warn">favorite</mat-icon>
           </button>
         }
-        @if (filterForm.controls.prepared.value) {
-          <button mat-icon-button (click)="filterForm.controls.prepared.setValue(null)"
-                  class="filter-active" aria-label="Afficher les sorts préparés ou non">
-            <mat-icon class="color-primary">fact_check</mat-icon>
-          </button>
-        } @else if (characterHasPrepared()) {
-          <button mat-icon-button (click)="filterForm.controls.prepared.setValue(true)"
-                  class="filter-inactive" aria-label="Afficher les sorts préparés uniquement">
-            <mat-icon class="color-primary">fact_check</mat-icon>
-          </button>
+        @if (char.mustPrepareSpells) {
+          @if (filterForm.controls.prepared.value) {
+            <button mat-icon-button (click)="filterForm.controls.prepared.setValue(null)"
+                    class="filter-active" aria-label="Afficher les sorts préparés ou non">
+              <mat-icon class="color-primary">fact_check</mat-icon>
+            </button>
+          } @else if (characterHasPrepared()) {
+            <button mat-icon-button (click)="filterForm.controls.prepared.setValue(true)"
+                    class="filter-inactive" aria-label="Afficher les sorts préparés uniquement">
+              <mat-icon class="color-primary">fact_check</mat-icon>
+            </button>
+          }
         }
       </h2>
 
-      @for (spellLevel of availableSpells(); track spellLevel.level; let first = $first) {
+      @for (spellLevel of availableSpells(); track spellLevel.level) {
         <div class="spell-level-wrapper">
           <app-spell-level-header [title]="'Niveau ' + spellLevel.level"
                                   [level]="spellLevel.level"
@@ -92,6 +94,7 @@
             <app-spell-card [spell]="spell"
                             [spellChoice]="char.spellChoices[spell.id]"
                             (spellChoiceChange)="setSpellChoice(spell.id, $event)"
+                            [showPrepared]="char.mustPrepareSpells"
             ></app-spell-card>
           }
         </div>

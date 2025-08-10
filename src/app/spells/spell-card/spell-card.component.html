@@ -9,11 +9,11 @@
   @if (sp.concentration) {
     <mat-icon>cognition</mat-icon>
   }
-  @if (sc?.favorite) {
+  @if (sc && sc.favorite) {
     <mat-icon class="color-warn">favorite</mat-icon>
   }
-  @if (sc?.prepared || sc?.alwaysPrepared) {
-    <mat-icon class="color-primary" [style.opacity]="sc?.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
+  @if (showPrepared() && sc && (sc.prepared || sc.alwaysPrepared)) {
+    <mat-icon class="color-primary" [style.opacity]="sc.alwaysPrepared ? 0.5 : 1">fact_check</mat-icon>
   }
 </div>
 
@@ -29,13 +29,15 @@
           Favori
         </mat-checkbox>
       </div>
-      <div mat-menu-item>
-        <mat-checkbox [checked]="sc.prepared"
-                      [disabled]="sc.alwaysPrepared"
-                      (change)="changeChoice('prepared')">
-          Préparé
-        </mat-checkbox>
-      </div>
+      @if (showPrepared()) {
+        <div mat-menu-item>
+          <mat-checkbox [checked]="sc.prepared"
+                        [disabled]="sc.alwaysPrepared"
+                        (change)="changeChoice('prepared')">
+            Préparé
+          </mat-checkbox>
+        </div>
+      }
     </mat-menu>
   }
 

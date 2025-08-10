@@ -31,6 +31,7 @@ import {Spell, SpellChoice, toSpellChoice} from '../spell.model';
 export class SpellCardComponent {
   public readonly spell = input.required<Spell>();
   public readonly keepOpen = input<boolean>(false);
+  public readonly showPrepared = input<boolean>(true);
   public readonly spellChoice = input<SpellChoice>();
   public readonly spellChoiceChange = output<SpellChoice>();
 

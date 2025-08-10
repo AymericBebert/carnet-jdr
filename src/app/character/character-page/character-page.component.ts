@@ -96,7 +96,7 @@ export class CharacterPageComponent {
         const allCharSpells = this.spellService.getSpells({known: true}, char.spellChoices);
         this.characterHasConcentration.set(allCharSpells.some(s => s.concentration));
         this.characterHasFavorite.set(allCharSpells.some(s => char.spellChoices[s.id]?.favorite));
-        this.characterHasPrepared.set(allCharSpells.some(s => {
+        this.characterHasPrepared.set(char.mustPrepareSpells && allCharSpells.some(s => {
           const sc = char.spellChoices[s.id];
           return sc && (sc.prepared || sc.alwaysPrepared);
         }));
