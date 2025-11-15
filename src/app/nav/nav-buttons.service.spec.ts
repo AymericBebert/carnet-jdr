@@ -15,7 +15,7 @@ describe('NavButtonsService', () => {
   }));
 
   it('should be created', () => {
-    const service: NavButtonsService = TestBed.inject(NavButtonsService);
+    const service = TestBed.inject(NavButtonsService);
     expect(service).toBeTruthy();
   });
 });

@@ -11,7 +11,8 @@
     <mat-toolbar style="padding: 0 16px">
       <span style="flex-grow: 1">Menu</span>
       @if (navService.pinSideNav()) {
-        <button mat-icon-button type="button" aria-label="Close sidenav" (click)="navService.setPinSideNav(false)">
+        <button mat-icon-button type="button" aria-label="Close sidenav"
+                (click)="$event.stopPropagation(); navService.setPinSideNav(false)">
           <mat-icon aria-label="Side nav close icon"
                     aria-hidden="false"
                     [matBadge]="navService.notificationBadge()"
@@ -57,9 +58,7 @@
       }
 
       <mat-list-item (click)="navService.checkForUpdates()">
-        <span class="very-light-text">
-          Version {{ appVersion }}
-        </span>
+        <span class="very-light-text">Version {{ appVersion }}</span>
       </mat-list-item>
 
     </mat-nav-list>
@@ -81,9 +80,7 @@
         ></app-icon-book>
       }
 
-      <span routerLink="/" class="main-title hide-focus">
-        {{ navService.mainTitle() || 'Carnet JdR' }}
-      </span>
+      <span routerLink="/" class="main-title hide-focus">{{ navService.mainTitle() || 'Carnet JdR' }}</span>
 
       @for (buttonId of navService.navButtons(); track $index) {
         <button
