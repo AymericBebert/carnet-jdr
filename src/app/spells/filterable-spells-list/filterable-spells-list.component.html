@@ -17,12 +17,13 @@
 </div>
 
 @let spellsByLevel = filteredSpellsInLevels$ | async;
+@let char = character();
 
 @if (spellsByLevel && spellsByLevel.length > 0) {
   @for (spellLevel of spellsByLevel; track spellLevel.level) {
     <div class="spell-level-wrapper">
       <app-spell-level-header [title]="'Niveau ' + spellLevel.level" [level]="spellLevel.level">
-        @if (character(); as char) {
+        @if (char) {
           <app-spell-choice-form [formControl]="globalChoiceForms[spellLevel.level]"
                                  [showPrepared]="char.mustPrepareSpells"
           ></app-spell-choice-form>
@@ -30,7 +31,7 @@
       </app-spell-level-header>
       @for (spell of spellLevel.spells; track spell.spell.id) {
         <app-spell-card [spell]="spell.spell"></app-spell-card>
-        @if (character(); as char) {
+        @if (char) {
           <app-spell-choice-form [formControl]="spell.choice"
                                  [showPrepared]="char.mustPrepareSpells"
                                  style="border-bottom: 2px solid #88888888; justify-content: end"

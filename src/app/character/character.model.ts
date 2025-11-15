@@ -1,5 +1,5 @@
 import {Ability, AbilityUsage} from '../ability/ability.model';
-import {SpellChoices} from '../spells/spell.model';
+import {Spell, SpellChoices, toSpellChoice} from '../spells/spell.model';
 import {removeUndefinedValues} from '../utils/remove-undefined-values';
 
 export const characterClasses = [
@@ -50,6 +50,7 @@ export interface Character extends CharacterHeader {
   spellSlots: number[];
   spellSlotBurns: number[];
   spellChoices: SpellChoices;
+  customSpells: Spell[];
   order: number;
 }
 
@@ -61,7 +62,11 @@ export function toCharacter(character: Partial<Character>): Character {
     mustPrepareSpells: character.mustPrepareSpells ?? true,
     spellSlots: character.spellSlots || [],
     spellSlotBurns: (character.spellSlots || []).map((_, i) => character.spellSlotBurns?.[i] || 0),
-    spellChoices: character.spellChoices || {},
+    spellChoices: {
+      ...Object.fromEntries((character.customSpells || []).map(cs => [cs.id, toSpellChoice({known: true})])),
+      ...character.spellChoices || {}
+    },
+    customSpells: character.customSpells || [],
     order: character.order || 0,
   };
 }

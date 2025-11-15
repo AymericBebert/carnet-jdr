@@ -1,4 +1,5 @@
 import {CharacterClass} from '../character/character.model';
+import {getRandomString} from '../utils/get-random-string';
 
 export interface Spell {
   id: string;
@@ -17,6 +18,27 @@ export interface Spell {
   source: string;
   classes: CharacterClass[];
   details: string;
+}
+
+export function getNewSpell(base: Partial<Spell> = {}): Spell {
+  return {
+    id: base.id || getRandomString(8),
+    name: base.name || '',
+    vo: base.vo || '',
+    level: base.level || 0,
+    school: base.school || '',
+    incantation: base.incantation || '',
+    range: base.range || '',
+    verbal: base.verbal || false,
+    somatic: base.somatic || false,
+    material: base.material || false,
+    concentration: base.concentration || false,
+    ritual: base.ritual || false,
+    description: base.description || '',
+    source: base.source || '',
+    classes: base.classes || [],
+    details: base.details || '',
+  };
 }
 
 export interface SpellChoice<B = boolean> {

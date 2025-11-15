@@ -21,6 +21,8 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import {AbilitiesFormComponent} from '../../ability/abilities-form/abilities-form.component';
 import {Ability} from '../../ability/ability.model';
+import {CustomSpellsFormComponent} from '../../spells/custom-spells-form/custom-spells-form.component';
+import {Spell} from '../../spells/spell.model';
 import {CharacterCardComponent} from '../character-card/character-card.component';
 import {
   CharacterClass,
@@ -48,6 +50,7 @@ import {TinyNumberChoiceFormComponent} from '../tiny-number-choice-form/tiny-num
     AbilitiesFormComponent,
     TinyNumberChoiceFormComponent,
     ProfilePictureFormComponent,
+    CustomSpellsFormComponent,
   ],
   providers: [
     {provide: NG_VALUE_ACCESSOR, multi: true, useExisting: forwardRef(() => CharacterFormComponent)},
@@ -75,6 +78,7 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
     spellSlots: new FormArray<FormControl<number>>(
       new Array(10).fill(0).map(() => new FormControl(0, {nonNullable: true}))
     ),
+    customSpells: new FormControl<Spell[]>([], {nonNullable: true}),
   });
 
   ngOnInit(): void {
@@ -149,6 +153,7 @@ export class CharacterFormComponent implements OnInit, ControlValueAccessor, Val
       abilities: formValue.abilities,
       mustPrepareSpells: formValue.mustPrepareSpells,
       spellSlots: formValue.spellSlots,
+      customSpells: formValue.customSpells,
     };
   }
 

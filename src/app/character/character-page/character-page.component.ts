@@ -93,7 +93,7 @@ export class CharacterPageComponent {
         this.navService.mainTitle.set(char.name);
         this.filterForm.patchValue(this.loadSpellFilter(char.id));
 
-        const allCharSpells = this.spellService.getSpells({known: true}, char.spellChoices);
+        const allCharSpells = this.spellService.getSpells({known: true}, char.spellChoices, char.customSpells);
         this.characterHasConcentration.set(allCharSpells.some(s => s.concentration));
         this.characterHasFavorite.set(allCharSpells.some(s => char.spellChoices[s.id]?.favorite));
         this.characterHasPrepared.set(char.mustPrepareSpells && allCharSpells.some(s => {
@@ -111,7 +111,7 @@ export class CharacterPageComponent {
         if (!char) return;
         const spellFilter = this.getSpellFilter();
         this.storeSpellFilter(char.id, spellFilter);
-        const available = this.spellService.getSpells(spellFilter, char.spellChoices);
+        const available = this.spellService.getSpells(spellFilter, char.spellChoices, char.customSpells);
         const availableSpells = char.spellSlots.map((slots, level) => {
           return {
             level,

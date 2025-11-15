@@ -12,11 +12,11 @@ import {BehaviorSubject, combineLatest, startWith} from 'rxjs';
 import {Character, CharacterClass, characterClasses, toCharacter} from '../../character/character.model';
 import {SpellLevelHeaderComponent} from '../../character/spell-level-header/spell-level-header.component';
 import {ConfirmService} from '../../confirm/confirm.service';
+import {adaptFormRecord} from '../../utils/adapt-form';
 import {SpellCardComponent} from '../spell-card/spell-card.component';
 import {SpellChoiceFormComponent} from '../spell-choice-form/spell-choice-form.component';
 import {Spell, SpellChoice, SpellChoices, SpellFilter, toSpellChoice} from '../spell.model';
 import {SpellService} from '../spell.service';
-import {spellsFr} from '../spells-fr';
 
 interface SpellAndChoice {
   spell: Spell;
@@ -70,9 +70,7 @@ export class FilterableSpellsListComponent {
 
   protected readonly filteredSpellsInLevels$ = new BehaviorSubject<SpellsInLevel[]>([]);
 
-  private readonly spellChoicesForm = new FormGroup<Record<string, FormControl<SpellChoice>>>(
-    Object.fromEntries(spellsFr.map(s => [s.id, new FormControl(toSpellChoice({}), {nonNullable: true})]))
-  );
+  private readonly spellChoicesForm = new FormGroup<Record<string, FormControl<SpellChoice>>>({});
 
   protected readonly globalChoiceForms = new Array(10).fill(null).map(
     () => new FormControl<SpellChoice<boolean | null>>(toSpellChoice({}), {nonNullable: true})
@@ -96,7 +94,16 @@ export class FilterableSpellsListComponent {
       takeUntilDestroyed(this.destroyRef),
     ).subscribe(char => {
       if (!char) return;
-      this.spellChoicesForm.patchValue(char.spellChoices, {emitEvent: false});
+      const allSpells = this.spellService.getSpells({}, char.spellChoices, char.customSpells);
+      const allSpellChoices: SpellChoices = Object.fromEntries(
+        allSpells.map(s => [s.id, toSpellChoice(char.spellChoices[s.id] || {})])
+      );
+      adaptFormRecord(
+        this.spellChoicesForm,
+        allSpellChoices,
+        () => new FormControl<SpellChoice>(toSpellChoice({}), {nonNullable: true}),
+        {emitEvent: false},
+      );
 
       this.filterForm.patchValue({
         name: null,
@@ -136,7 +143,7 @@ export class FilterableSpellsListComponent {
   }
 
   private updateFilteredSpellsInLevels(filter: SpellFilter, char: Character): void {
-    const spells = this.spellService.getSpells(filter, char.spellChoices);
+    const spells = this.spellService.getSpells(filter, char.spellChoices, char.customSpells);
     const spellAndChoices = spells.map<SpellAndChoice>(s => ({
       spell: s,
       choice: this.spellChoicesForm.controls[s.id],

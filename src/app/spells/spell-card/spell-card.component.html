@@ -55,10 +55,12 @@
     <span>{{ sp.source }}</span>
   </p>
 
-  <p class="additional">
-    <span class="key">VO : </span>
-    <span>{{ sp.vo }}</span>
-  </p>
+  @if (sp.vo) {
+    <p class="additional">
+      <span class="key">VO : </span>
+      <span>{{ sp.vo }}</span>
+    </p>
+  }
 } @else {
   <p class="additional" style="margin: 0">{{ sp.description }}</p>
 }

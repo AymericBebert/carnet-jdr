@@ -6,12 +6,12 @@ import {spellsFr} from './spells-fr';
   providedIn: 'root',
 })
 export class SpellService {
-  public getSpells(filter?: SpellFilter, spellChoices?: SpellChoices): Spell[] {
+  public getSpells(filter?: SpellFilter, spellChoices?: SpellChoices, customSpells?: Spell[]): Spell[] {
     if (!filter || Object.keys(filter).length === 0) {
-      return spellsFr;
+      return [...spellsFr, ...customSpells || []];
     }
     const filterNameCanonical = filter.name ? this.canonicalForm(filter.name) : null;
-    return spellsFr.filter(spell => {
+    return [...spellsFr, ...customSpells || []].filter(spell => {
       if (filterNameCanonical != null && !this.canonicalForm(spell.name).includes(filterNameCanonical)) {
         return false;
       }

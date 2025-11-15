@@ -1,0 +1,102 @@
+@for (spell of spells(); let i = $index; track spell.id; let first = $first; let last = $last) {
+  @if (isEditing() === i) {
+    <mat-form-field>
+      <mat-label>Nom</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.name">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Niveau</mat-label>
+      <input matInput type="number" autocomplete="off" [formControl]="form.controls.level">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>École</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.school">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Temps d'incantation</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.incantation">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Portée</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.range">
+    </mat-form-field>
+
+    <mat-checkbox [formControl]="form.controls.verbal">Composante verbale</mat-checkbox>
+
+    <mat-checkbox [formControl]="form.controls.somatic">Composante somatique</mat-checkbox>
+
+    <mat-checkbox [formControl]="form.controls.material">Composante matérielle</mat-checkbox>
+
+    <mat-checkbox [formControl]="form.controls.concentration">Concentration</mat-checkbox>
+
+    <mat-checkbox [formControl]="form.controls.ritual">Rituel</mat-checkbox>
+
+    <mat-form-field style="margin-top: 16px">
+      <mat-label>Description courte</mat-label>
+      <input matInput type="text" autocomplete="off" [formControl]="form.controls.description">
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Détails</mat-label>
+      <textarea matInput type="text" autocomplete="off"
+                cdkTextareaAutosize cdkAutosizeMinRows="2" cdkAutosizeMaxRows="10"
+                [formControl]="form.controls.details"
+      ></textarea>
+    </mat-form-field>
+
+    <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 24px">
+      <button mat-button (click)="deleteSpell(i)">
+        <mat-icon>close</mat-icon>
+        Supprimer
+      </button>
+      <button mat-button (click)="isEditing.set(-1)">
+        <mat-icon>done</mat-icon>
+        Valider
+      </button>
+    </div>
+
+  } @else {
+
+    <div style="display: flex; align-items: center; gap: 8px">
+      <span style="flex-grow: 1">{{ spell.name }}</span>
+      <span>Niv. {{ spell.level }}</span>
+      @if (isReordering()) {
+        <app-up-down-button [disableUp]="first"
+                            [disableDown]="last"
+                            (up)="moveSpell(i, -1)"
+                            (down)="moveSpell(i, 1)"
+        ></app-up-down-button>
+      } @else {
+        <button mat-icon-button (click)="editSpell(i)" [disabled]="isDisabled()">
+          <mat-icon>edit</mat-icon>
+        </button>
+      }
+    </div>
+  }
+}
+@if (isEditing() === -1) {
+  <div style="display: flex">
+    @if (isReordering()) {
+      <button mat-button (click)="isReordering.set(false)">
+        <mat-icon>done</mat-icon>
+        Valider ordre
+      </button>
+    } @else {
+      @if (spells().length > 1) {
+        <button mat-button (click)="isReordering.set(true)" [disabled]="isDisabled()">
+          <mat-icon>swap_vert</mat-icon>
+          Ré-ordonner
+        </button>
+      }
+      <div style="flex-grow: 1"></div>
+      <button mat-button (click)="addSpell()" [disabled]="isDisabled()">
+        <mat-icon>add</mat-icon>
+        Ajouter un sort
+      </button>
+    }
+  </div>
+}

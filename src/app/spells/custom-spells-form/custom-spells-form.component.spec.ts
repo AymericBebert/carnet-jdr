@@ -1,23 +1,23 @@
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {AbilitiesFormComponent} from './abilities-form.component';
+import {CustomSpellsFormComponent} from './custom-spells-form.component';
 
-describe('AbilitiesFormComponent', () => {
-  let component: AbilitiesFormComponent;
-  let fixture: ComponentFixture<AbilitiesFormComponent>;
+describe('CustomSpellsFormComponent', () => {
+  let component: CustomSpellsFormComponent;
+  let fixture: ComponentFixture<CustomSpellsFormComponent>;
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [
-        AbilitiesFormComponent,
+        CustomSpellsFormComponent,
       ],
       providers: [
         provideZonelessChangeDetection(),
       ],
     });
 
-    fixture = TestBed.createComponent(AbilitiesFormComponent);
+    fixture = TestBed.createComponent(CustomSpellsFormComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
