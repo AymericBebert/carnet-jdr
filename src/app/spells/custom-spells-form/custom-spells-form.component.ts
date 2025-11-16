@@ -21,6 +21,10 @@ import {CharacterClass, characterClasses} from '../../character/character.model'
 import {UpDownButtonComponent} from '../../utils/up-down-button/up-down-button.component';
 import {getNewSpell, Spell} from '../spell.model';
 
+interface SpellForForm extends Spell {
+  duration: string;
+}
+
 @Component({
   selector: 'app-custom-spells-form',
   templateUrl: './custom-spells-form.component.html',
@@ -54,6 +58,7 @@ export class CustomSpellsFormComponent implements OnInit, ControlValueAccessor, 
     level: new FormControl<number>(0, {nonNullable: true}),
     school: new FormControl<string>('', {nonNullable: true}),
     incantation: new FormControl<string>('', {nonNullable: true}),
+    duration: new FormControl<string>('', {nonNullable: true}),
     range: new FormControl<string>('', {nonNullable: true}),
     verbal: new FormControl<boolean>(false, {nonNullable: true}),
     somatic: new FormControl<boolean>(false, {nonNullable: true}),
@@ -75,7 +80,7 @@ export class CustomSpellsFormComponent implements OnInit, ControlValueAccessor, 
         return;
       }
       const spells = [...this.spells()];
-      spells[isEditing] = this.form.getRawValue();
+      spells[isEditing] = this.innerToOuter(this.form.getRawValue());
       this.spells.set(spells);
       this.onChange(spells);
     });
@@ -113,7 +118,7 @@ export class CustomSpellsFormComponent implements OnInit, ControlValueAccessor, 
     const newSpell = getNewSpell({source: 'Perso', classes: [...characterClasses]});
     this.isEditing.set(current.length);
     this.spells.set([...current, newSpell]);
-    this.form.setValue(newSpell);
+    this.form.setValue(this.outerToInner(newSpell));
   }
 
   public moveSpell(i: number, offset: number): void {
@@ -130,7 +135,7 @@ export class CustomSpellsFormComponent implements OnInit, ControlValueAccessor, 
 
   public editSpell(i: number): void {
     this.isEditing.set(i);
-    this.form.setValue(this.spells()[i], {emitEvent: false});
+    this.form.setValue(this.outerToInner(this.spells()[i]), {emitEvent: false});
   }
 
   public deleteSpell(i: number): void {
@@ -145,4 +150,43 @@ export class CustomSpellsFormComponent implements OnInit, ControlValueAccessor, 
   private onChange: (_: Spell[]) => void = (_: Spell[]) => void 0;
 
   private onTouched: () => void = () => void 0;
+
+  private innerToOuter(spell: SpellForForm): Spell {
+    const {duration, details, ...spellRest} = spell;
+    let newDetails = `<div class="ecole">niveau ${spell.level}${spell.school ? ` - ${spell.school}` : ''}</div>`;
+    if (spell.incantation) {
+      newDetails += `<div class="t"><strong>Temps d’incantation</strong> : ${spell.incantation}</div>`;
+    }
+    if (spell.range) {
+      newDetails += `<div class="r"><strong>Portée</strong> : ${spell.range}</div>`;
+    }
+    const components = [
+      spell.verbal ? 'V' : '',
+      spell.somatic ? 'S' : '',
+      spell.material ? 'M' : '',
+    ].filter(c => !!c).join(', ');
+    if (components) {
+      newDetails += `<div class="c"><strong>Composantes</strong> : ${components}</div>`;
+    }
+    if (duration) {
+      newDetails += `<div class="d"><strong>Durée</strong> : ${duration}</div>`;
+    }
+    if (details) {
+      newDetails += `<div class="description"><p>${details.replaceAll('\n', '</p><p>')}</p></div>`;
+    }
+    return {
+      ...spellRest,
+      details: newDetails,
+    };
+  }
+
+  private outerToInner(spell: Spell): SpellForForm {
+    const durationMatch = spell.details.match(/<div class="d"><strong>Durée<\/strong> : (.*?)<\/div>/);
+    const detailsMatch = spell.details.match(/<div class="description"><p>(.*?)<\/p><\/div>/);
+    return {
+      ...spell,
+      duration: durationMatch ? durationMatch[1] : '',
+      details: detailsMatch ? detailsMatch[1].replaceAll('</p><p>', '\n') : spell.details,
+    };
+  }
 }
