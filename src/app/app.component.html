@@ -15,8 +15,7 @@
                 (click)="$event.stopPropagation(); navService.setPinSideNav(false)">
           <mat-icon aria-label="Side nav close icon"
                     aria-hidden="false"
-                    [matBadge]="navService.notificationBadge()"
-                    matBadgeColor="warn">
+                    [matBadge]="navService.notificationBadge()">
             menu
           </mat-icon>
         </button>
@@ -37,7 +36,7 @@
       <h3 matSubheader>Paramètres</h3>
 
       <mat-list-item>
-        <mat-slide-toggle color="accent" [checked]="settingsService.darkMode()"
+        <mat-slide-toggle [checked]="settingsService.darkMode()"
                           (change)="settingsService.setDarkMode($event.checked)">
           Mode sombre
         </mat-slide-toggle>
@@ -45,15 +44,15 @@
 
       @if (navService.displayUpdatesAvailable()) {
         <mat-list-item (click)="navService.update()">
-          <mat-icon color="warn" style="margin-right: 5px">update</mat-icon>
-          <span>MàJ disponible</span>
+          <mat-icon class="color-warn" style="margin-right: 8px; vertical-align: middle">update</mat-icon>
+          <span style="vertical-align: middle">MàJ disponible</span>
         </mat-list-item>
       }
 
       @if (navService.displayUpdatesActivated()) {
-        <mat-list-item>
-          <mat-icon style="margin-right: 5px">sync</mat-icon>
-          <span>MàJ activée</span>
+        <mat-list-item (click)="navService.refreshPage()">
+          <mat-icon style="margin-right: 8px; vertical-align: middle">sync</mat-icon>
+          <span style="vertical-align: middle">MàJ activée</span>
         </mat-list-item>
       }
 
@@ -68,7 +67,7 @@
   <mat-sidenav-content>
 
     <!-- Toolbar on top -->
-    <mat-toolbar color="primary">
+    <mat-toolbar>
 
       @if (navService.showBackButton()) {
         <button type="button" aria-label="Back button" mat-icon-button (click)="navButtonsService.backClicked()">
@@ -96,8 +95,7 @@
         <button mat-icon-button type="button" aria-label="Open sidenav" (click)="openDrawer()">
           <mat-icon aria-label="Side nav toggle icon"
                     aria-hidden="false"
-                    [matBadge]="navService.notificationBadge()"
-                    matBadgeColor="warn">
+                    [matBadge]="navService.notificationBadge()">
             menu
           </mat-icon>
         </button>

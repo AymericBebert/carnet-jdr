@@ -79,4 +79,10 @@
   <span>Sorts personnalisés</span>
 </h2>
 
+@if (creationAid()) {
+  <p class="creation-aid">
+    Sorts non disponibles dans les règles officielles. Vous pourrez les modifier plus tard.
+  </p>
+}
+
 <app-custom-spells-form [formControl]="form.controls.customSpells"></app-custom-spells-form>
