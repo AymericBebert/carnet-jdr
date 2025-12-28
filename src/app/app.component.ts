@@ -10,10 +10,10 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {ActivatedRoute, NavigationEnd, NavigationExtras, Router, RouterModule} from '@angular/router';
 import {filter, map, mergeMap} from 'rxjs/operators';
-import {APP_CONFIG, AppConfig} from '../config/app.config';
+import {APP_CONFIG} from '../config/app.config';
 import {IconBookComponent} from './icons/icon-book.component';
 import {NavButtonsService} from './nav/nav-buttons.service';
-import {NavService} from './nav/nav.service';
+import {NavService, NavTool} from './nav/nav.service';
 import {DeviceService} from './service/device.service';
 import {SettingsService} from './service/settings.service';
 
@@ -23,6 +23,7 @@ import {SettingsService} from './service/settings.service';
   styleUrls: ['./app.component.scss'],
   imports: [
     RouterModule,
+    IconBookComponent,
     MatBadgeModule,
     MatButtonModule,
     MatIconModule,
@@ -30,7 +31,6 @@ import {SettingsService} from './service/settings.service';
     MatSidenavModule,
     MatSlideToggleModule,
     MatToolbarModule,
-    IconBookComponent,
   ],
 })
 export class AppComponent {
@@ -38,7 +38,7 @@ export class AppComponent {
   protected readonly navButtonsService = inject(NavButtonsService);
   protected readonly settingsService = inject(SettingsService);
   protected readonly deviceService = inject(DeviceService);
-  private readonly config = inject<AppConfig>(APP_CONFIG);
+  private readonly config = inject(APP_CONFIG);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly location = inject(Location);
@@ -105,9 +105,9 @@ export class AppComponent {
     }
   }
 
-  protected drawerToolClicked(icon: string): void {
+  protected drawerToolClicked(tool: NavTool): void {
     this.navButtonsService.navButtonClicked(
-      icon,
+      tool.icon,
       this.navService.pinSideNav() ? undefined : this.removeSidenavQueryParam,
     );
   }

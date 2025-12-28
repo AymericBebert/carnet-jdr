@@ -77,7 +77,7 @@ body {
 }
 
 :root {
-  --jdr-toolbar-height: 64px;
+  --mat-toolbar-standard-height: 64px;
 
   @include mat.expansion-overrides((
     container-text-size: var(--mat-sys-body-medium-size),
@@ -89,7 +89,7 @@ body {
 
 @media (max-width: 599px) {
   :root {
-    --jdr-toolbar-height: 56px;
+    --mat-toolbar-standard-height: 56px;
   }
 
   .mat-toolbar-row, .mat-toolbar-single-row {
@@ -97,9 +97,9 @@ body {
   }
 }
 
-@media (min-width: 599px) and (max-height: 599px) {
+@media (min-width: 600px) and (max-height: 599px) {
   :root {
-    --jdr-toolbar-height: 48px;
+    --mat-toolbar-standard-height: 48px;
   }
 
   .mat-toolbar-row, .mat-toolbar-single-row {

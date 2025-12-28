@@ -13,7 +13,7 @@ export const closeDialogsChildGuard: CanActivateChildFn = (
   const router = inject(Router);
   const dialog = inject(MatDialog);
 
-  if (router.getCurrentNavigation()?.trigger === 'popstate' && dialog.openDialogs.length > 0) {
+  if (router.currentNavigation()?.trigger === 'popstate' && dialog.openDialogs.length > 0) {
     dialog.openDialogs.at(-1)?.close();
     return false;
   }

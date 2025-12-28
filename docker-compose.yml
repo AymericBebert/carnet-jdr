@@ -10,7 +10,6 @@ services:
       - LETSENCRYPT_HOST=carnet-jdr.example.com
       - LETSENCRYPT_EMAIL=contact@example.com
       - APP_SHORT_NAME=JdR
-      - NGX_websiteUrl="https://carnet-jdr.example.com"
     networks:
       - proxy
 

@@ -26,7 +26,7 @@
       @if (navService.navTools().length > 0) {
         <h3 matSubheader>Actions</h3>
         @for (tool of navService.navTools(); track tool.name) {
-          <mat-list-item (click)="drawerToolClicked(tool.icon)">
+          <mat-list-item (click)="drawerToolClicked(tool)">
             <mat-icon style="margin-right: 8px; vertical-align: middle">{{ tool.icon }}</mat-icon>
             <span style="vertical-align: middle">{{ tool.name }}</span>
           </mat-list-item>
@@ -42,17 +42,15 @@
         </mat-slide-toggle>
       </mat-list-item>
 
-      @if (navService.displayUpdatesAvailable()) {
-        <mat-list-item (click)="navService.update()">
-          <mat-icon class="color-warn" style="margin-right: 8px; vertical-align: middle">update</mat-icon>
-          <span style="vertical-align: middle">MàJ disponible</span>
-        </mat-list-item>
-      }
-
       @if (navService.displayUpdatesActivated()) {
         <mat-list-item (click)="navService.refreshPage()">
           <mat-icon style="margin-right: 8px; vertical-align: middle">sync</mat-icon>
           <span style="vertical-align: middle">MàJ activée</span>
+        </mat-list-item>
+      } @else if (navService.displayUpdatesAvailable()) {
+        <mat-list-item (click)="navService.update()">
+          <mat-icon class="color-warn" style="margin-right: 8px; vertical-align: middle">update</mat-icon>
+          <span style="vertical-align: middle">MàJ disponible</span>
         </mat-list-item>
       }
 
@@ -67,7 +65,7 @@
   <mat-sidenav-content>
 
     <!-- Toolbar on top -->
-    <mat-toolbar>
+    <mat-toolbar [class.slim]="deviceService.slimToolbar()">
 
       @if (navService.showBackButton()) {
         <button type="button" aria-label="Back button" mat-icon-button (click)="navButtonsService.backClicked()">

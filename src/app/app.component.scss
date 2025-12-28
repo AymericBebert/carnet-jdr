@@ -28,6 +28,10 @@ app-icon-book.main-icon {
   margin: 0 2px 0 -2px;
 }
 
+mat-toolbar.slim > app-icon-book.main-icon {
+  margin: 0 6px 0 2px;
+}
+
 @media (max-width: 340px) {
   .main-title {
     font-size: 16px;

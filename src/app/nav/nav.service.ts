@@ -5,7 +5,7 @@ import {DeviceService} from '../service/device.service';
 import {StorageService} from '../storage/storage.service';
 import {UpdaterService} from '../updater/updater.service';
 
-interface NavTool {
+export interface NavTool {
   name: string;
   icon: string;
 }
