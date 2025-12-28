@@ -76,6 +76,17 @@ body {
   opacity: 0.5;
 }
 
+.mat-mdc-list-item-unscoped-content {
+  & > mat-icon {
+    vertical-align: middle;
+
+    & + span {
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+  }
+}
+
 :root {
   --mat-toolbar-standard-height: 64px;
 

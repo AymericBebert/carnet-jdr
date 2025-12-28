@@ -27,8 +27,8 @@
         <h3 matSubheader>Actions</h3>
         @for (tool of navService.navTools(); track tool.name) {
           <mat-list-item (click)="drawerToolClicked(tool)">
-            <mat-icon style="margin-right: 8px; vertical-align: middle">{{ tool.icon }}</mat-icon>
-            <span style="vertical-align: middle">{{ tool.name }}</span>
+            <mat-icon>{{ tool.icon }}</mat-icon>
+            <span>{{ tool.name }}</span>
           </mat-list-item>
         }
       }
@@ -44,13 +44,13 @@
 
       @if (navService.displayUpdatesActivated()) {
         <mat-list-item (click)="navService.refreshPage()">
-          <mat-icon style="margin-right: 8px; vertical-align: middle">sync</mat-icon>
-          <span style="vertical-align: middle">MàJ activée</span>
+          <mat-icon>sync</mat-icon>
+          <span>MàJ activée</span>
         </mat-list-item>
       } @else if (navService.displayUpdatesAvailable()) {
         <mat-list-item (click)="navService.update()">
-          <mat-icon class="color-warn" style="margin-right: 8px; vertical-align: middle">update</mat-icon>
-          <span style="vertical-align: middle">MàJ disponible</span>
+          <mat-icon class="color-warn">update</mat-icon>
+          <span>MàJ disponible</span>
         </mat-list-item>
       }
 
