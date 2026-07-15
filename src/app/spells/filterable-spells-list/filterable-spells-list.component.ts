@@ -104,6 +104,7 @@ export class FilterableSpellsListComponent {
         () => new FormControl<SpellChoice>(toSpellChoice({}), {nonNullable: true}),
         {emitEvent: false},
       );
+      this.spellChoicesForm.patchValue(char.spellChoices, {emitEvent: false});
 
       this.filterForm.patchValue({
         name: null,

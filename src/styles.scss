@@ -34,7 +34,7 @@ html {
     }
 
     > router-outlet + * {
-      height: calc(100vh - var(--jdr-toolbar-height));
+      height: calc(100vh - var(--mat-toolbar-standard-height));
       box-sizing: border-box;
       overflow: hidden auto;
     }
