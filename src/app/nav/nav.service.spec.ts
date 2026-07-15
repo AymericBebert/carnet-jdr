@@ -1,5 +1,3 @@
-import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
-import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {provideZonelessChangeDetection} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {ConfigTestingModule} from '../testing/config-testing.module';
@@ -14,8 +12,6 @@ describe('NavService', () => {
     ],
     providers: [
       provideZonelessChangeDetection(),
-      provideHttpClient(withXhr(), withInterceptorsFromDi()),
-      provideHttpClientTesting(),
     ],
   }));
 

@@ -1,5 +1,3 @@
-import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
-import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {provideZonelessChangeDetection} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -21,8 +19,6 @@ describe('AppComponent', () => {
       ],
       providers: [
         provideZonelessChangeDetection(),
-        provideHttpClient(withXhr(), withInterceptorsFromDi()),
-        provideHttpClientTesting(),
         {provide: ActivatedRoute, useValue: {queryParamMap: EMPTY}},
       ],
     }).compileComponents();
