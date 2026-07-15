@@ -17,7 +17,7 @@ import {ImageCropperComponent} from '../image-cropper/image-cropper.component';
   templateUrl: './profile-picture-form.component.html',
   styleUrls: ['./profile-picture-form.component.scss'],
   imports: [
-    ImageCropperComponent,
+    forwardRef(() => ImageCropperComponent),
     MatButtonModule,
     MatIconModule,
     MatMenuModule,

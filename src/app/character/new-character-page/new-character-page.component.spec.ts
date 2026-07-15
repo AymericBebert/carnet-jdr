@@ -1,4 +1,4 @@
-import {provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {provideHttpClient, withInterceptorsFromDi, withXhr} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
@@ -22,7 +22,7 @@ describe('NewCharacterPageComponent', () => {
       ],
       providers: [
         provideZonelessChangeDetection(),
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withXhr(), withInterceptorsFromDi()),
         provideHttpClientTesting(),
         {provide: ActivatedRoute, useValue: {paramMap: EMPTY}},
       ],

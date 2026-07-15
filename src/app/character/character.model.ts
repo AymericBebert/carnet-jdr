@@ -91,5 +91,5 @@ export function toCharacterEditDto(character: Partial<Character>): CharacterEdit
     abilityUsages: undefined,
     spellSlotBurns: undefined,
     spellChoices: undefined,
-  }) as CharacterEditDto;
+  }) satisfies CharacterEditDto;
 }
