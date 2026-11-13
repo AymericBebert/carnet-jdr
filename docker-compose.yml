@@ -2,7 +2,7 @@ version: "3"
 
 services:
   carnet_jdr:
-    image: aymericbernard/carnet-jdr:latest
+    image: aymericbernard/carnet-jdr:$VERSION
     container_name: carnet_jdr
     restart: always
     environment:
